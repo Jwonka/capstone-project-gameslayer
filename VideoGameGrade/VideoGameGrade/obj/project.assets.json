@@ -8,23 +8,23 @@
     "net7.0": []
   },
   "packageFolders": {
-    "C:\\Users\\Tom\\.nuget\\packages\\": {},
+    "C:\\Users\\Jwerl\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Tom\\Documents\\GitHub\\capstone-project-gameslayer\\VideoGameGrade\\VideoGameGrade\\VideoGameGrade.csproj",
+      "projectUniqueName": "C:\\Users\\Jwerl\\Documents\\cvtc\\capstone\\capstone-project-gameslayer\\VideoGameGrade\\VideoGameGrade\\VideoGameGrade.csproj",
       "projectName": "VideoGameGrade",
-      "projectPath": "C:\\Users\\Tom\\Documents\\GitHub\\capstone-project-gameslayer\\VideoGameGrade\\VideoGameGrade\\VideoGameGrade.csproj",
-      "packagesPath": "C:\\Users\\Tom\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Tom\\Documents\\GitHub\\capstone-project-gameslayer\\VideoGameGrade\\VideoGameGrade\\obj\\",
+      "projectPath": "C:\\Users\\Jwerl\\Documents\\cvtc\\capstone\\capstone-project-gameslayer\\VideoGameGrade\\VideoGameGrade\\VideoGameGrade.csproj",
+      "packagesPath": "C:\\Users\\Jwerl\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Jwerl\\Documents\\cvtc\\capstone\\capstone-project-gameslayer\\VideoGameGrade\\VideoGameGrade\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\Tom\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Jwerl\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
