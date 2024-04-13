@@ -23,7 +23,20 @@ https://github.com/it-sd-capstone/capstone-project-gameslayer
  Microsoft Library Manager
 
 3. Run xUnitTest
-   Go to test -> run all. That should open Test Explorer with four tests running two that pass, one that fails, and one that is skipped. 
+   Go to test -> run all. That should open Test Explorer with four tests running two that pass, one that fails, and one that is skipped.
+   
+5. MySQL Workbench
+To connect with MySQL workbench clients, follow the steps below.
+Click the + symbol in the MySQL Connections tab to add a new connection.
+Enter a name for the connection in the Connection name field.
+Select Standard (TCP/IP) as the Connection Type.
+Enter videogamegrade.mysql.database.azure.com in the hostname field.
+Enter gamegradeadmin as your username and then enter your Password caspstone2024!.
+Go to the SSL tab and update the Use SSL field to Require.
+In the SSL CA File field, enter the file location of the DigiCertGlobalRootCA.crt.pem file.
+Click Test Connection to test the connection.
+If the connection is successful, click OK to save the connection.
+
 
 ## Authors 
 
