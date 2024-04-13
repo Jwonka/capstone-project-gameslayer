@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VideoGameGrade", "VideoGameGrade\VideoGameGrade.csproj", "{134EABDA-D1CB-4233-9613-8E5EBAC2EBA4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VideoGameGrade", "VideoGameGrade\VideoGameGrade.csproj", "{134EABDA-D1CB-4233-9613-8E5EBAC2EBA4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "xUnitTest", "xUnitTest\xUnitTest.csproj", "{B77D12C2-7E69-4705-89A9-BC1DE349A27E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{134EABDA-D1CB-4233-9613-8E5EBAC2EBA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{134EABDA-D1CB-4233-9613-8E5EBAC2EBA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{134EABDA-D1CB-4233-9613-8E5EBAC2EBA4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B77D12C2-7E69-4705-89A9-BC1DE349A27E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B77D12C2-7E69-4705-89A9-BC1DE349A27E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B77D12C2-7E69-4705-89A9-BC1DE349A27E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B77D12C2-7E69-4705-89A9-BC1DE349A27E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
