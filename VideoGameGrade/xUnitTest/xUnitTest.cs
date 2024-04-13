@@ -1,3 +1,9 @@
+using System;
+using System.Data;
+using System.Data.SqlClient;
+using Dapper;
+using MySqlConnector;
+
 namespace testGameSlayer
 {
     public class xUnitTest
@@ -38,6 +44,33 @@ namespace testGameSlayer
         public void thisTestShouldBeSkipped()
         {
             Assert.False(false, "This should not appear");
+        }
+    }
+    public class dBConnectionTest 
+    {
+
+        private const string connectionString = "Server=videogamegrade.mysql.database.azure.com;Uid=gamegradeadmin;Pwd=capstone2024!;SslMode=Required;";
+        private readonly IDbConnection connection;
+
+        public dBConnectionTest()
+        {
+            connection = new MySqlConnection(connectionString);
+        }
+
+        [Fact]
+        public void doesItConnect() 
+        {
+            connection.Open();
+
+            var results = connection.Query("SELECT * FROM videogamegrade_db.test_table");
+
+            //Somthing for a later time
+            //foreach (var row in results) 
+            //{
+            //    Console.WriteLine(row[0]);
+            //}
+
+            connection.Dispose();
         }
     }
 }
