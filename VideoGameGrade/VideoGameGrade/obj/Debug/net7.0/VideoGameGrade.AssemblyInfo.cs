@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("VideoGameGrade")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+82fe5cad295baf6dc1158904fe9143474000f81a")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ed7b01881ce81dc2186e078a82e4af7aacbdd0df")]
 [assembly: System.Reflection.AssemblyProductAttribute("VideoGameGrade")]
 [assembly: System.Reflection.AssemblyTitleAttribute("VideoGameGrade")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -18,8 +18,16 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = C:\Users\Tom\Documents\GitHub\capstone-project-gameslayer\VideoGameGrade\VideoGameGrade
 build_property._RazorSourceGeneratorDebug = 
 
+[C:/Users/Tom/Documents/GitHub/capstone-project-gameslayer/VideoGameGrade/VideoGameGrade/Pages/ContactUs.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ29udGFjdFVzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Tom/Documents/GitHub/capstone-project-gameslayer/VideoGameGrade/VideoGameGrade/Pages/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXJyb3IuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Tom/Documents/GitHub/capstone-project-gameslayer/VideoGameGrade/VideoGameGrade/Pages/Gallery.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcR2FsbGVyeS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Tom/Documents/GitHub/capstone-project-gameslayer/VideoGameGrade/VideoGameGrade/Pages/Index.cshtml]
@@ -30,8 +38,16 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJpdmFjeS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/Tom/Documents/GitHub/capstone-project-gameslayer/VideoGameGrade/VideoGameGrade/Pages/Profile.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJvZmlsZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Tom/Documents/GitHub/capstone-project-gameslayer/VideoGameGrade/VideoGameGrade/Pages/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Tom/Documents/GitHub/capstone-project-gameslayer/VideoGameGrade/VideoGameGrade/Pages/TestPage.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVGVzdFBhZ2UuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Tom/Documents/GitHub/capstone-project-gameslayer/VideoGameGrade/VideoGameGrade/Pages/_ViewImports.cshtml]
