@@ -10,7 +10,8 @@ namespace VideoGameGrade.Pages
 
         public void OnGet()
         {
-            string connectionString = "Server=videogamegrade.mysql.database.azure.com;Uid=gamegradeadmin;Pwd=capstone2024!;Database=videogamegrade;SslMode=Required;";
+            // Construct the connection string
+            string connectionString = "Server=videogamegrade.mysql.database.azure.com;Uid=gamegradeadmin;Pwd=capstone2024!;SslMode=Required;";
 
             using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
