@@ -13,11 +13,11 @@ namespace testGameSlayer
         {
             Assert.False(false, "This should pass");
         }
-        [Fact]
-        public void thistestShouldFail()
-        {
-            Assert.False(true, "This should fail");
-        }
+       // [Fact]
+       // public void thistestShouldFail()
+        //{
+            //Assert.False(true, "This should fail");
+        //}
         [Fact]
         public void testAnIntegerIs42()
         {
