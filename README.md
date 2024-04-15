@@ -24,7 +24,12 @@ https://github.com/it-sd-capstone/capstone-project-gameslayer
  Azure Data Lake and Stream Analytics Tools
  Microsoft Library Manager
 
-3. Run xUnitTest
+ 4. Make sure these packages are installed:
+ MySql.Data
+ xunit
+ xunit.analyzers
+
+5. Run xUnitTest
    Go to test -> run all. That should open Test Explorer with four tests running two that pass, one that fails, and one that is skipped. 
 
 ## Authors 
