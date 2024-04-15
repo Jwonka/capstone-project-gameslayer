@@ -10,7 +10,9 @@ Make sure you have Visual Studio 17.9.6 installed.
 1. Clone the repository.
 https://github.com/it-sd-capstone/capstone-project-gameslayer
 
-2. Make sure to have these extensions installed: 
+2. Open Visual Studio and create a new project. Choose ASP.NET Core Web App (Razor Pages).
+
+3. Make sure to have these extensions installed: 
  xUnit.net.TestGenerator2022
  SQL Server Data Tools - SQL Editor
  HLSL Tools for Visual Studio
