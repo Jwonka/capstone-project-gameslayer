@@ -3,11 +3,11 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace VideoGameGrade.Pages
 {
-    public class GalleryModel : PageModel
+    public class GameCollectionModel : PageModel
     {
-        private readonly ILogger<GalleryModel> _logger;
+        private readonly ILogger<GameCollectionModel> _logger;
 
-        public GalleryModel(ILogger<GalleryModel> logger)
+        public GameCollectionModel(ILogger<GameCollectionModel> logger)
         {
             _logger = logger;
         }
