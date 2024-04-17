@@ -7,3 +7,32 @@
 <div class="text-center">
     <h1 class="display-4">Check out our Game Collection</h1>
     <p>Here we have our favorite classic games.</p>
+</div>
+
+
+<p>
+    @Html.ActionLink("Add Game", "Add Game")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(GameCollectionModel => GameCollectionModel)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Game)
+        </th>
+        <th>
+            @Html.DisplayNameFor(game => game)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model)
+        </th>
+        <th></th>
+    </tr>
+</table>

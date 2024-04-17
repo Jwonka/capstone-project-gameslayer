@@ -1,40 +1,33 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 using MySql.Data.MySqlClient;
+using VideoGameGrade.Classes;
 
 namespace VideoGameGrade.Pages
 {
     public class GameCollectionModel : PageModel
     {
         private readonly ILogger<GameCollectionModel> _logger;
+        public JsonContent Game;
+        public IEnumerable<Game> Games { get; set; }    
 
         public bool DatabaseConnected { get; set; }
 
         public GameCollectionModel(ILogger<GameCollectionModel> logger)
         {
             _logger = logger;
+     
+        }
+
+        protected void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Game>();
         }
 
         public void OnGet()
-        {
-             
-             // Construct the connection string
-             string connectionString = "Server=videogamegrade.mysql.database.azure.com;Uid=gamegradeadmin;Pwd=capstone2024!;SslMode=Required;";
-
-            using (MySqlConnection connection = new MySqlConnection(connectionString))
-            {
-                try
-                {
-                    connection.Open();
-                    DatabaseConnected = connection.State == System.Data.ConnectionState.Open;
-                }
-                catch (Exception ex)
-                { 
-                    _logger.LogError(ex, "An error occurred in GameCollection.");
-              
-                    DatabaseConnected = false;
-                }
-            }
+        {   
+       
         }
     }
 }
