@@ -20,3 +20,13 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.contact-form {
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+
+    .contact-form .form-group {
+        margin-bottom: 20px;
+    }
