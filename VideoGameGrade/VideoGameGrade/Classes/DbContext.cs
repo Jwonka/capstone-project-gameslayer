@@ -9,5 +9,16 @@ namespace VideoGameGrade.Classes
             : base(options) 
         {
         }
+        public virtual DbSet<Game> Game {  get; set; }
+    }
+    public class GameController
+    {
+        private readonly AppDbContext _context;
+
+        public GameController(AppDbContext context)
+        {
+  
+            _context = context;
+        }
     }
 }
