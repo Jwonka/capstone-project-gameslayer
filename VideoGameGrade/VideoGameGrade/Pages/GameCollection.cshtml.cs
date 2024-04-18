@@ -39,9 +39,9 @@ namespace VideoGameGrade.Pages
                                 GamesInfo gamesInfo = new GamesInfo();
                                 gamesInfo.gameId = reader.GetInt32(0);
                                 gamesInfo.gameTitle = reader.IsDBNull(1) ? string.Empty: reader.GetString(1);
-                                gamesInfo.gameCompany = reader.IsDBNull(2) ? string.Empty : reader.GetString(2);
-                                gamesInfo.gamePublisher = reader.IsDBNull(3) ? string.Empty : reader.GetString(3);
-                                gamesInfo.gameDesc = reader.IsDBNull(4) ? string.Empty : reader.GetString(4);
+                                gamesInfo.gamePublisher = reader.IsDBNull(2) ? string.Empty : reader.GetString(2);
+                                gamesInfo.gameConsole = reader.IsDBNull(3) ? string.Empty : reader.GetString(3);
+                                gamesInfo.gameCategory = reader.IsDBNull(4) ? string.Empty : reader.GetString(4);
                                 gamesInfo.gameRating = reader.GetInt32(5);
                                 gamesInfo.gameQuiz = reader.IsDBNull(6) ? string.Empty : reader.GetString(6);
                                 gamesInfo.gameImage = reader.IsDBNull(7) ? string.Empty : reader.GetString(7);
@@ -70,9 +70,9 @@ namespace VideoGameGrade.Pages
         [DisplayName("Game Title")]
         public string gameTitle { get; set; }
 
-        public string gameCompany { get; set; }
         public string gamePublisher { get; set; }
-        public string gameDesc { get; set; }
+        public string gameConsole { get; set; }
+        public string gameCategory { get; set; }
         public int gameRating { get; set; }
         public string gameQuiz { get; set; }
         public string gameImage { get; set; }
