@@ -41,8 +41,9 @@
                 <td>@game.gameImage</td>
                 <td>@game.gameAnswer</td>
                 <td>
-                    <a class="btn btn-primary btn-sm" href="/Game/Edit?id=">Edit</a>
-                    <a class="btn btn-danger btn-sm" href="/Game/Delete?id=">Delete</a>
+                    <a class="btn btn-primary btn-sm" href="/Game/Edit?id=@game.gameId">Edit</a>
+                    <a class="btn btn-primary btn-sm" href="/Game/Rate?id=@game.gameId">Rate</a>
+                    <a class="btn btn-danger btn-sm" href="/Game/Delete?id=@game.gameId">Delete</a>
                 </td>
             </tr>
         }

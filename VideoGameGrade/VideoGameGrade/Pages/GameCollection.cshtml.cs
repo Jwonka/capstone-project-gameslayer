@@ -20,16 +20,11 @@ namespace VideoGameGrade.Pages
      
         }
 
-        protected void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<Game>();
-        }
-
         public void OnGet()
         {   
             try
             {
-                string connectionString = "Server=videogamegrade.mysql.database.azure.com;Uid=gamegradeadmin;Pwd=capstone2024!;SslMode=Required;";
+                string connectionString = "Server=videogamegrade.mysql.database.azure.com;Database=videogamegrade_db;Uid=gamegradeadmin;Pwd=capstone2024!;SslMode=Required;";
 
                 using (MySqlConnection connection = new MySqlConnection(connectionString)) 
                 { 
@@ -43,14 +38,14 @@ namespace VideoGameGrade.Pages
                             {
                                 GamesInfo gamesInfo = new GamesInfo();
                                 gamesInfo.gameId = reader.GetInt32(0);
-                                gamesInfo.gameTitle = "" + reader.GetString(1);
-                                gamesInfo.gameCompany = "" + reader.GetString(2);
-                                gamesInfo.gamePublisher = "" + reader.GetString(3);
-                                gamesInfo.gameDesc = "" + reader.GetString(4);
+                                gamesInfo.gameTitle = reader.IsDBNull(1) ? string.Empty: reader.GetString(1);
+                                gamesInfo.gameCompany = reader.IsDBNull(2) ? string.Empty : reader.GetString(2);
+                                gamesInfo.gamePublisher = reader.IsDBNull(3) ? string.Empty : reader.GetString(3);
+                                gamesInfo.gameDesc = reader.IsDBNull(4) ? string.Empty : reader.GetString(4);
                                 gamesInfo.gameRating = reader.GetInt32(5);
-                                gamesInfo.gameQuiz = "" + reader.GetString(6);
-                                gamesInfo.gameImage = "" + reader.GetString(7);
-                                gamesInfo.gameAnswer = "" + reader.GetString(8);
+                                gamesInfo.gameQuiz = reader.IsDBNull(6) ? string.Empty : reader.GetString(6);
+                                gamesInfo.gameImage = reader.IsDBNull(7) ? string.Empty : reader.GetString(7);
+                                gamesInfo.gameAnswer = reader.IsDBNull(8) ? string.Empty : reader.GetString(8);
 
                                 gamesList.Add(gamesInfo);
                             }
@@ -64,23 +59,23 @@ namespace VideoGameGrade.Pages
             }
        
         }
+    }
 
-        public class GamesInfo
-        {
-            [Key]
-            public int gameId { get; set; }
+    public class GamesInfo
+    {
+        [Key]
+        public int gameId { get; set; }
 
-            [Required]
-            [DisplayName("Game Title")]
-            public string gameTitle { get; set; }
+        [Required]
+        [DisplayName("Game Title")]
+        public string gameTitle { get; set; }
 
-            public string gameCompany { get; set; }
-            public string gamePublisher { get; set; }
-            public string gameDesc { get; set; }
-            public int gameRating { get; set; }
-            public string gameQuiz { get; set; }
-            public string gameImage { get; set; }
-            public string gameAnswer { get; set; }
-        }
+        public string gameCompany { get; set; }
+        public string gamePublisher { get; set; }
+        public string gameDesc { get; set; }
+        public int gameRating { get; set; }
+        public string gameQuiz { get; set; }
+        public string gameImage { get; set; }
+        public string gameAnswer { get; set; }
     }
 }
