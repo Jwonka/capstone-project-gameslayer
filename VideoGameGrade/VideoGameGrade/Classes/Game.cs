@@ -13,9 +13,9 @@ namespace VideoGameGrade.Classes
         [DisplayName("Game Title")]
         public string gameTitle { get; set; }
 
-        public string gameCompany { get; set; }     
-        public string gamePublisher { get; set; }
-        public string gameDesc { get; set; }
+        public string gamePublisher{ get; set; }
+        public string gameConsole { get; set; }
+        public string gameCategory { get; set; }
         public string gameRating { get; set; }
         public string gameQuiz { get; set; }
         public string gameImage { get; set; }
