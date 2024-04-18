@@ -6,6 +6,7 @@ Comment or rate your favorite game! Also, find useful information/ tips and play
 
 ## Run
 Make sure you have Visual Studio 17.9.6 installed.
+Make sure you have MySql Workbench 8.0 installed.
 
 1. Clone the repository.
 https://github.com/it-sd-capstone/capstone-project-gameslayer
@@ -22,8 +23,25 @@ https://github.com/it-sd-capstone/capstone-project-gameslayer
  Azure Data Lake and Stream Analytics Tools
  Microsoft Library Manager
 
-3. Run xUnitTest
+ 3. Make sure these packages are installed on both solutions:
+ MySql.Data
+ xunit
+ xunit.analyzers
+ coverlet.collector
+ Dapper
+ Microsoft.Net.Test.Sdk
+ MySqlConnector
+ xunit.runner.visualstudio
+ 
+ 4. Open VideoGameGrade and hit the play button to start website.
+
+## Test 
+1. Open xUnitTest.cs
+2.  Run xUnitTest
    Go to test -> run all. That should open Test Explorer with four tests running two that pass, one that fails, and one that is skipped. 
+
+   
+
 
 ## Authors 
 
