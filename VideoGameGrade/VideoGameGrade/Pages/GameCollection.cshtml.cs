@@ -5,6 +5,7 @@ using MySql.Data.MySqlClient;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
 using VideoGameGrade.Classes;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 
 namespace VideoGameGrade.Pages
 {
@@ -78,4 +79,6 @@ namespace VideoGameGrade.Pages
         public string gameImage { get; set; }
         public string gameAnswer { get; set; }
     }
+
+   
 }
