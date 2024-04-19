@@ -7,7 +7,7 @@ builder.Services.AddRazorPages();
 
 builder.Services.AddDbContext<VideoGameGrade.Classes.AppDbContext>
     (options =>
-     
+     builder.Services.Configure<SendGridSettings>(builder.Configuration.GetSection("SendGrid")); //SendGrid configuration
     builder.Configuration.GetConnectionString
     ("DefaultConnection")
     );
