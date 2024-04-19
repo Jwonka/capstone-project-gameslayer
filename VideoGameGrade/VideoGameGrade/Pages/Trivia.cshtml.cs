@@ -1,12 +1,36 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 using MySql.Data.MySqlClient;
+using VideoGameGrade.Classes;
 
 namespace VideoGameGrade.Pages
 {
+   
     public class TriviaModel : PageModel
     {
+      //  private readonly DbContext _context;
         public List<TriviaList> triviaGame = new List<TriviaList>();
+
+      //  public TriviaModel(DbContext context)
+      //  {
+      //      _context = context;
+     //   }
+        
+       /* public async Task<IActionResult> OnPostAsync(int gameId)
+        {
+            
+            var item = await _context.Game.SingleOrDefaultAsync(g => g.Id == gameId);    
+            if(item != null)
+            {
+                return RedirectToPage("/GameCollection", new { Id = gameId });
+            }
+            else
+            {
+                return NotFound();
+            }
+        }*/
+
         public void OnGet()
         {
             try
@@ -15,7 +39,7 @@ namespace VideoGameGrade.Pages
                 using (MySqlConnection connection = new MySqlConnection(connectionString))
                 {
                     connection.Open();
-                    String sql = "SELECT gameId, gameTitle, gameQuiz, gameAnswer FROM gametable WHERE gameID = 1";
+                    String sql = "SELECT gameId, gameTitle, gameQuiz, gameAnswer FROM gametable";
                     using (MySqlCommand command = new MySqlCommand(sql, connection))
                     {
                         using(MySqlDataReader reader = command.ExecuteReader())
