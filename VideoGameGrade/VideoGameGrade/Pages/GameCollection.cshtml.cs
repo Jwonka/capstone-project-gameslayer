@@ -82,8 +82,11 @@ namespace VideoGameGrade.Pages
             for (int i = 0; i < gamesList.Count(); i++)
             {
                 // Check if searchGame has a value
-                if (!string.IsNullOrEmpty(searchGame))
-                { 
+                if (!string.IsNullOrEmpty(searchGame)  && !string.IsNullOrWhiteSpace(searchGame))
+                {
+                    // Strip searchGame of whitespace from beginning and end
+                    searchGame = searchGame.Trim();
+
                     // If it is an integer search by gameId
                     if (int.TryParse(searchGame, out number) && number.Equals(gamesList[i].gameId))
                     {
@@ -95,7 +98,7 @@ namespace VideoGameGrade.Pages
                     if (!number.Equals(gamesList[i].gameId) && i == gamesList.Count() - 1)
                     {
                         gamesList.Clear();
-                        ViewData["SearchMessage"] = "That game is not in our database.";
+                        ViewData["SearchMessage"] = "Our records do not match your request";
                         return;
                     }
 
@@ -110,7 +113,7 @@ namespace VideoGameGrade.Pages
                     if (!searchGame.ToLower().Equals(gamesList[i].gameTitle.ToLower()) && i == gamesList.Count() - 1)
                     {
                         gamesList.Clear();
-                        ViewData["SearchMessage"] = "That game is not in our database.";
+                        ViewData["SearchMessage"] = "Our records do not match your request";
                         return;
                     }
 
@@ -125,7 +128,7 @@ namespace VideoGameGrade.Pages
                     if (!searchGame.ToLower().Equals(gamesList[i].gamePublisher.ToLower()) && i == gamesList.Count() - 1)
                     {
                         gamesList.Clear();
-                        ViewData["SearchMessage"] = "That game is not in our database.";
+                        ViewData["SearchMessage"] = "Our records do not match your request";
                         return;
                     }
 
@@ -140,7 +143,7 @@ namespace VideoGameGrade.Pages
                     if (!searchGame.ToLower().Equals(gamesList[i].gameConsole.ToLower()) && i == gamesList.Count() - 1)
                     {
                         gamesList.Clear();
-                        ViewData["SearchMessage"] = "That game is not in our database.";
+                        ViewData["SearchMessage"] = "Our records do not match your request";
                         return;
                     }
 
@@ -155,7 +158,7 @@ namespace VideoGameGrade.Pages
                     if (!searchGame.ToLower().Equals(gamesList[i].gameCategory.ToLower()) && i == gamesList.Count() - 1)
                     {
                         gamesList.Clear();
-                        ViewData["SearchMessage"] = "That game is not in our database.";
+                        ViewData["SearchMessage"] = "Our records do not match your request";
                         return;
                     }
                 }
@@ -165,7 +168,7 @@ namespace VideoGameGrade.Pages
                 }
             }
         }
-    
+ 
         public class GamesInfo
         {
             [Key]
@@ -184,6 +187,4 @@ namespace VideoGameGrade.Pages
             public string gameAnswer { get; set; }
         }
     }
-
-   
 }
