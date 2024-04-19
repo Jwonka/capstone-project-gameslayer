@@ -5,9 +5,8 @@ using MySql.Data.MySqlClient;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
 using VideoGameGrade.Classes;
-using Org.BouncyCastle.Bcpg;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 using static VideoGameGrade.Pages.GameCollectionModel;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 
 namespace VideoGameGrade.Pages
 {
@@ -140,4 +139,6 @@ namespace VideoGameGrade.Pages
             public string gameAnswer { get; set; }
         }
     }
+
+   
 }
