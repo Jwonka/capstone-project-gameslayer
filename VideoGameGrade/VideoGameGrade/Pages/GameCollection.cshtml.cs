@@ -113,6 +113,51 @@ namespace VideoGameGrade.Pages
                         ViewData["SearchMessage"] = "That game is not in our database.";
                         return;
                     }
+
+                    // Search for publisher regardless of capitilization
+                    if (searchGame.ToLower().Equals(gamesList[i].gamePublisher.ToLower()))
+                    {
+                        gamesList = gamesList.Where(Game => Game.gamePublisher.ToLower().Contains(searchGame.ToLower())).ToList();
+                        return;
+                    }
+
+                    // No game found display message
+                    if (!searchGame.ToLower().Equals(gamesList[i].gamePublisher.ToLower()) && i == gamesList.Count() - 1)
+                    {
+                        gamesList.Clear();
+                        ViewData["SearchMessage"] = "That game is not in our database.";
+                        return;
+                    }
+
+                    // Search for Console regardless of capitilization
+                    if (searchGame.ToLower().Equals(gamesList[i].gameConsole.ToLower()))
+                    {
+                        gamesList = gamesList.Where(Game => Game.gameConsole.ToLower().Contains(searchGame.ToLower())).ToList();
+                        return;
+                    }
+
+                    // No game found display message
+                    if (!searchGame.ToLower().Equals(gamesList[i].gameConsole.ToLower()) && i == gamesList.Count() - 1)
+                    {
+                        gamesList.Clear();
+                        ViewData["SearchMessage"] = "That game is not in our database.";
+                        return;
+                    }
+
+                    // Search for Category regardless of capitilization
+                    if (searchGame.ToLower().Equals(gamesList[i].gameCategory.ToLower()))
+                    {
+                        gamesList = gamesList.Where(Game => Game.gameCategory.ToLower().Contains(searchGame.ToLower())).ToList();
+                        return;
+                    }
+
+                    // No game found display message
+                    if (!searchGame.ToLower().Equals(gamesList[i].gameCategory.ToLower()) && i == gamesList.Count() - 1)
+                    {
+                        gamesList.Clear();
+                        ViewData["SearchMessage"] = "That game is not in our database.";
+                        return;
+                    }
                 }
                 else
                 {
