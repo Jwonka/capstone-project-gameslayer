@@ -7,8 +7,6 @@
 <div class="text-center">
     <h1 class="display-4">Check out our Game Collection</h1>
     <p>Here we have our favorite classic games.</p>
-<<<<<<< Updated upstream
-=======
 </div>
 <div class ="text-center">
     @if (ViewData["SearchMessage"] != null)
@@ -43,7 +41,7 @@
                 <td>@game.gamePublisher</td>
                 <td>@game.gameConsole</td>
                 <td>@game.gameCategory</td>
-                <td>@game.gameRating</td>
+                <td>@game.gameRating</td>          
                 <td><img src="@game.gameImage" alt="Game Image" style="width: 100px; height: auto;" /></td>
                 <td>
                     <a class="btn btn-outline-info btn-sm" href="/Trivia?id=@game.gameId" name="gameId">Quiz</a>
@@ -54,4 +52,3 @@
         }
     </tbody>
 </table>
->>>>>>> Stashed changes

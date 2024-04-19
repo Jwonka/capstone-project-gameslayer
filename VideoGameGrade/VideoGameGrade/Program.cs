@@ -1,23 +1,16 @@
-<<<<<<< Updated upstream
-=======
 using Microsoft.EntityFrameworkCore;
-using VideoGameGrade.Pages;
 
->>>>>>> Stashed changes
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
-<<<<<<< Updated upstream
-=======
-builder.Services.Configure<SendGridSettings>(builder.Configuration.GetSection("SendGrid")); //SendGrid configuration
+
 builder.Services.AddDbContext<VideoGameGrade.Classes.AppDbContext>
     (options =>
-     
+     builder.Services.Configure<SendGridSettings>(builder.Configuration.GetSection("SendGrid")); //SendGrid configuration
     builder.Configuration.GetConnectionString
     ("DefaultConnection")
     );
->>>>>>> Stashed changes
 
 var app = builder.Build();
 
