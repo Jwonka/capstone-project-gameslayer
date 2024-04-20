@@ -18,7 +18,7 @@ namespace VideoGameGrade.Classes
         public string gameCategory { get; set; }
         public string gameRating { get; set; }
         public string gameQuiz { get; set; }
-        public string gameImage { get; set; }
+        public byte[] gameImage { get; set; }
         public string gameAnswer { get; set; }
     }
 }
