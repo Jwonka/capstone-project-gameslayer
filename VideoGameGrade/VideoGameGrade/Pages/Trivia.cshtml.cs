@@ -117,6 +117,7 @@ namespace VideoGameGrade.Pages
             newQuestion.gameAnswer = "";
 
             successMsg = "New question was entered successfully!";
+            OnGet();
         }
 
       
