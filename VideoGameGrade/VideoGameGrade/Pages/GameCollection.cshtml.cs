@@ -7,6 +7,7 @@ using System.ComponentModel;
 using VideoGameGrade.Classes;
 using static VideoGameGrade.Pages.GameCollectionModel;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
+using System;
 
 namespace VideoGameGrade.Pages
 {
@@ -77,95 +78,129 @@ namespace VideoGameGrade.Pages
                 _logger.LogError("Exception occurred: " + ex.ToString());
                 Console.WriteLine("Exception: " + ex.ToString());
             }
-            int number;
 
-            for (int i = 0; i < gamesList.Count(); i++)
+            int number;
+            List<GamesInfo> match = new List<GamesInfo>();
+
+            // Check if searchGame has a value
+            if (!string.IsNullOrEmpty(searchGame) && !string.IsNullOrWhiteSpace(searchGame))
             {
-                // Check if searchGame has a value
-                if (!string.IsNullOrEmpty(searchGame)  && !string.IsNullOrWhiteSpace(searchGame))
+                foreach (var game in gamesList)
                 {
-                    // Strip searchGame of whitespace from beginning and end
-                    searchGame = searchGame.Trim();
+                    string gTitle = game.gameTitle.Trim().ToLower();
+                    string gPub = game.gamePublisher.Trim().ToLower();
+                    string console = game.gameConsole.Trim().ToLower();
+                    string gCat = game.gameCategory.Trim().ToLower();
+
+                    // Strip searchGame of whitespace and convert to lowercase for verification
+                    searchGame = searchGame.Trim().ToLower();
 
                     // If it is an integer search by gameId
-                    if (int.TryParse(searchGame, out number) && number.Equals(gamesList[i].gameId))
+                    if (int.TryParse(searchGame, out number) && number.Equals(game.gameId))
                     {
-                        gamesList = gamesList.Where(Game => Game.gameId.Equals(number)).ToList();
-                        return;
+                        match.Add(game);
                     }
 
-                    // No game found display message
-                    if (!number.Equals(gamesList[i].gameId) && i == gamesList.Count() - 1)
+                    // Check for matches by title  or  publisher
+                    if (searchGame.Equals(gTitle) || searchGame.Equals(gPub))
                     {
-                        gamesList.Clear();
-                        ViewData["SearchMessage"] = "Our records do not match your request";
-                        return;
+                        match.Add(game);
                     }
 
-                    // Search for title regardless of capitilization
-                    if (searchGame.ToLower().Equals(gamesList[i].gameTitle.ToLower()))
+                    // Check for matching consoles
+                    if (searchGame.Contains("nintendo") && console.Contains("nintendo") && !match.Contains(game))
                     {
-                        gamesList = gamesList.Where(Game => Game.gameTitle.ToLower().Contains(searchGame.ToLower())).ToList();
-                        return;
+                        match.Add(game);
+                    }
+                    else if (searchGame.Contains("playstation") && console.Contains("playstation") && !match.Contains(game))
+                    {
+                        match.Add(game);
+                    }
+                    else if (searchGame.Contains("xbox") && console.Contains("xbox") && !match.Contains(game))
+                    {
+                        match.Add(game);
+                    }
+                    else if (searchGame.Contains("pc") && console.Contains("pc") && !match.Contains(game))
+                    {
+                        match.Add(game);
+                    }
+                    else if (searchGame.Contains("steamdeck") && console.Contains("steamdeck") && !match.Contains(game))
+                    {
+                        match.Add(game);
                     }
 
-                    // No game found display message
-                    if (!searchGame.ToLower().Equals(gamesList[i].gameTitle.ToLower()) && i == gamesList.Count() - 1)
+                    // Check for matching category
+                    if (searchGame.Contains("action") && gCat.Contains("action") && !match.Contains(game))
                     {
-                        gamesList.Clear();
-                        ViewData["SearchMessage"] = "Our records do not match your request";
-                        return;
+                        match.Add(game);
                     }
-
-                    // Search for publisher regardless of capitilization
-                    if (searchGame.ToLower().Equals(gamesList[i].gamePublisher.ToLower()))
+                    else if (searchGame.Contains("adventure") && gCat.Contains("adventure") && !match.Contains(game))
                     {
-                        gamesList = gamesList.Where(Game => Game.gamePublisher.ToLower().Contains(searchGame.ToLower())).ToList();
-                        return;
+                        match.Add(game);
                     }
-
-                    // No game found display message
-                    if (!searchGame.ToLower().Equals(gamesList[i].gamePublisher.ToLower()) && i == gamesList.Count() - 1)
+                    else if ((searchGame.Contains("role playing game") && gCat.Contains("role playing game") || searchGame.Contains("rpg") && gCat.Contains("rpg")) && !match.Contains(game))
                     {
-                        gamesList.Clear();
-                        ViewData["SearchMessage"] = "Our records do not match your request";
-                        return;
+                        match.Add(game);
                     }
-
-                    // Search for Console regardless of capitilization
-                    if (searchGame.ToLower().Equals(gamesList[i].gameConsole.ToLower()))
+                    else if (searchGame.Contains("platformer") && gCat.Contains("platformer") && !match.Contains(game))
                     {
-                        gamesList = gamesList.Where(Game => Game.gameConsole.ToLower().Contains(searchGame.ToLower())).ToList();
-                        return;
+                        match.Add(game);
                     }
-
-                    // No game found display message
-                    if (!searchGame.ToLower().Equals(gamesList[i].gameConsole.ToLower()) && i == gamesList.Count() - 1)
+                    else if (searchGame.Contains("platform") && gCat.Contains("platform") && !match.Contains(game))
                     {
-                        gamesList.Clear();
-                        ViewData["SearchMessage"] = "Our records do not match your request";
-                        return;
+                        match.Add(game);
                     }
-
-                    // Search for Category regardless of capitilization
-                    if (searchGame.ToLower().Equals(gamesList[i].gameCategory.ToLower()))
+                    else if (searchGame.Contains("2d") && gCat.Contains("2d") && !match.Contains(game))
                     {
-                        gamesList = gamesList.Where(Game => Game.gameCategory.ToLower().Contains(searchGame.ToLower())).ToList();
-                        return;
+                        match.Add(game);
                     }
-
-                    // No game found display message
-                    if (!searchGame.ToLower().Equals(gamesList[i].gameCategory.ToLower()) && i == gamesList.Count() - 1)
+                    else if (searchGame.Contains("3d") && gCat.Contains("3d") && !match.Contains(game))
                     {
-                        gamesList.Clear();
-                        ViewData["SearchMessage"] = "Our records do not match your request";
-                        return;
+                        match.Add(game);
+                    }
+                    else if (searchGame.Contains("shooter") && gCat.Contains("shooter") && !match.Contains(game))
+                    {
+                        match.Add(game);
+                    }
+                    else if (searchGame.Contains("strategy") && gCat.Contains("strategy") && !match.Contains(game))
+                    {
+                        match.Add(game);
+                    }
+                    else if (searchGame.Contains("sports") && gCat.Contains("sports") && !match.Contains(game))
+                    {
+                        match.Add(game);
+                    }
+                    else if (searchGame.Contains("puzzle") && gCat.Contains("puzzle") && !match.Contains(game))
+                    {
+                        match.Add(game);
+                    }
+                    else if (searchGame.Contains("simulation") && gCat.Contains("simulation") && !match.Contains(game))
+                    {
+                        match.Add(game);
+                    }
+                    else if (searchGame.Contains("horror") && gCat.Contains("horror") && !match.Contains(game))
+                    {
+                        match.Add(game);
+                    }
+                    else if (searchGame.Contains("racing") && gCat.Contains("racing") && !match.Contains(game))
+                    {
+                        match.Add(game);
                     }
                 }
+                if (match.Count > 0)
+                {
+                    gamesList = match;
+                }
+
                 else
                 {
-                    return;
+                    gamesList.Clear();
+                    ViewData["SearchMessage"] = "Our records to not match your request";
                 }
+            }
+            else
+            {
+                return;
             }
         }
  
