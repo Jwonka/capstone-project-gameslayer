@@ -190,12 +190,13 @@ namespace VideoGameGrade.Pages
                 if (match.Count > 0)
                 {
                     gamesList = match;
+                    return;
                 }
-
                 else
                 {
                     gamesList.Clear();
                     ViewData["SearchMessage"] = "Our records to not match your request";
+                    return;
                 }
             }
             else
