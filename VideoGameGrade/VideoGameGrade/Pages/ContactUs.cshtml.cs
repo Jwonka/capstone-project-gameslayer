@@ -1,23 +1,18 @@
+using Dapper;
+using System.Data;
 using System.ComponentModel.DataAnnotations;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.Extensions.Logging;
-using SendGrid;
-using SendGrid.Helpers.Mail;
-using Microsoft.Extensions.Options;
 
 namespace VideoGameGrade.Pages
 {
     public class ContactUsModel : PageModel
     {
-        private readonly ILogger<ContactUsModel> _logger;
-        private readonly SendGridSettings _sendGridSettings;
+        private readonly IDbConnection _connection;
 
-        public ContactUsModel(ILogger<ContactUsModel> logger, IOptions<SendGridSettings> sendGridSettings)
+        public ContactUsModel(IDbConnection connection)
         {
-            _logger = logger;
-            _sendGridSettings = sendGridSettings.Value;
+            _connection = connection;
         }
 
         [BindProperty]
@@ -34,52 +29,37 @@ namespace VideoGameGrade.Pages
                 return Page();
             }
 
-            var client = new SendGridClient(_sendGridSettings.ApiKey);
-            var msg = new SendGridMessage()
-            {
-                From = new EmailAddress(_sendGridSettings.SenderEmail, "VideoGameGrade Support"),
-                Subject = "New Contact Us Message",
-                PlainTextContent = $"Name: {ContactForm.Name}\nEmail: {ContactForm.Email}\nMessage: {ContactForm.Message}"
-            };
-            msg.AddTo(new EmailAddress("receiver@example.com", "Receiver Name"));
+            var sql = "INSERT INTO Contacts (Name, Email, Message) VALUES (@Name, @Email, @Message);";
 
-            try
+            var result = await _connection.ExecuteAsync(sql, new
             {
-                var response = await client.SendEmailAsync(msg);
-                if (!response.IsSuccessStatusCode)
-                {
-                    throw new Exception($"Failed to send email. Status code: {response.StatusCode}");
-                }
+                Name = ContactForm.Name,
+                Email = ContactForm.Email,
+                Message = ContactForm.Message
+            });
 
-                _logger.LogInformation("Email sent successfully to {Recipient}", "receiver@example.com");
+            if (result > 0)
+            {
+                return RedirectToPage("/ContactUsConfirmation");
             }
-            catch (Exception ex)
+            else
             {
-                _logger.LogError(ex, "Error sending message from {Email}", ContactForm.Email);
-                ModelState.AddModelError("", "An error occurred while sending your message.");
+                ModelState.AddModelError("", "An error occurred while processing your request.");
                 return Page();
             }
-
-            return RedirectToPage("/ContactUsConfirmation");
-        }
-
-        public class ContactFormModel
-        {
-            [Required(ErrorMessage = "Name is required")]
-            public string Name { get; set; }
-
-            [Required(ErrorMessage = "Email is required")]
-            [EmailAddress(ErrorMessage = "Invalid email format")]
-            public string Email { get; set; }
-
-            [Required(ErrorMessage = "Message is required")]
-            public string Message { get; set; }
         }
     }
 
-    public class SendGridSettings
+    public class ContactFormModel
     {
-        public string ApiKey { get; set; }
-        public string SenderEmail { get; set; }
+        [Required(ErrorMessage = "Name is required")]
+        public string Name { get; set; }
+
+        [Required(ErrorMessage = "Email is required")]
+        [EmailAddress(ErrorMessage = "Invalid email format")]
+        public string Email { get; set; }
+
+        [Required(ErrorMessage = "Message is required")]
+        public string Message { get; set; }
     }
 }
