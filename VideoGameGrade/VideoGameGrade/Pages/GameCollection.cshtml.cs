@@ -138,7 +138,7 @@ namespace VideoGameGrade.Pages
                     {
                         match.Add(game);
                     }
-                    else if ((searchGame.Contains("role playing game") && gCat.Contains("role playing game") || searchGame.Contains("rpg") && gCat.Contains("rpg")) && !match.Contains(game))
+                    else if ((searchGame.Contains("role playing game") && gCat.Contains("role playing game") && !match.Contains(game) || searchGame.Contains("rpg") && gCat.Contains("rpg")) && !match.Contains(game))
                     {
                         match.Add(game);
                     }
