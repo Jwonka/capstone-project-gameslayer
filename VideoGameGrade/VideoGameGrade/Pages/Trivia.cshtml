@@ -8,6 +8,7 @@
 <button onclick="toggleVisible()">Create Question</button>
 
 
+
 @if (Model.errorMsg.Length > 0){
     <div class='alert alert-warning alert-dismissible fade show' role='alert'>
         <strong>@Model.errorMsg</strong>
@@ -17,6 +18,12 @@
 <div id="question" style="display: none;">
     <form method="post">
         @Html.AntiForgeryToken()
+        @if (Request.Query.TryGetValue("id", out var gameID))
+        {
+            var gameIdValue = gameID.ToString();
+            <label id="gameIdValue">Game ID: @gameIdValue</label>
+        }
+         <br />
         <label>Question:</label>
         <input type="text" name="gameQuiz"
                id="question" class="form-control" value="@Model.newQuestion.gameQuiz" /><br />
@@ -24,8 +31,10 @@
         <input type="text" name="gameAnswer"
                id="answer" class="form-control" value="@Model.newQuestion.gameAnswer"/></<br />
         <input type="submit" />
+        
     </form>
     </div>
+    
 
     @if(Model.successMsg.Length>0){
         <div class="row mb-3">
@@ -49,22 +58,24 @@
     }
 </script>
 
-<div style.display="block">
-<table class="table">
-<thread class="text-white">
-    <tr>
+
+<div style.display="block" >
+    <table class="table">
+<thread>
+            <tr class="text-white">
         <th>ID</th>
         <th>Name</th>
         <th>Question</th>
         <th>Answer</th>
-    </tr>
+                <th></th>
+            </tr>
 </thread>
 <tbody class="text-white">
     
     @foreach(var item in Model.triviaGame){
 
         <tr>
-            <td>@item.gameId</td>
+            <td>@item.gameIdValue</td>
             <td>@item.gameName</td>
             <td>@item.gameQuiz</td>
             <td><input type="text" name="quizAnswer" id="quizAnswer" class="form-control" /></td>
