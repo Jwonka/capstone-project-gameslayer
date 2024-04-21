@@ -49,23 +49,29 @@
     }
 </script>
 
+<div style.display="block">
 <table class="table">
 <thread class="text-white">
     <tr>
         <th>ID</th>
         <th>Name</th>
         <th>Question</th>
+        <th>Answer</th>
     </tr>
 </thread>
 <tbody class="text-white">
+    
     @foreach(var item in Model.triviaGame){
-        
+
         <tr>
             <td>@item.gameId</td>
             <td>@item.gameName</td>
             <td>@item.gameQuiz</td>
-        </tr>
-    }
+            <td><input type="text" name="quizAnswer" id="quizAnswer" class="form-control" /></td>
+            <td><button type="submit" class="form-control" id="quizSubmit">Submit</button></td>
+                </tr>
+        }
     
 </tbody>
 </table>
+</div>

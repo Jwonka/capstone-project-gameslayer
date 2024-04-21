@@ -9,27 +9,8 @@ namespace VideoGameGrade.Pages
    
     public class TriviaModel : PageModel
     {
-      //  private readonly DbContext _context;
         public List<TriviaList> triviaGame = new List<TriviaList>();
-
-      //  public TriviaModel(DbContext context)
-      //  {
-      //      _context = context;
-     //   }
         
-       /* public async Task<IActionResult> OnPostAsync(int gameId)
-        {
-            
-            var item = await _context.Game.SingleOrDefaultAsync(g => g.Id == gameId);    
-            if(item != null)
-            {
-                return RedirectToPage("/GameCollection", new { Id = gameId });
-            }
-            else
-            {
-                return NotFound();
-            }
-        }*/
 
         public void OnGet()
         {
@@ -39,7 +20,7 @@ namespace VideoGameGrade.Pages
                 using (MySqlConnection connection = new MySqlConnection(connectionString))
                 {
                     connection.Open();
-                    String sql = "SELECT gameId, gameTitle, gameQuiz, gameAnswer FROM gametable";
+                    String sql = "SELECT gametable.gameID, gametable.gameTitle, triviatable.gameQuiz, triviatable.gameAnswer\r\n FROM triviatable\r\n INNER JOIN gametable ON gametable.gameID = triviatable.gameID;";
                     using (MySqlCommand command = new MySqlCommand(sql, connection))
                     {
                         using(MySqlDataReader reader = command.ExecuteReader())
@@ -85,15 +66,18 @@ namespace VideoGameGrade.Pages
                 newQuestion.gameQuiz.Length == 0 || newQuestion.gameQuiz == null)
             {
                 errorMsg = "All fields must be entered.";
+                
                 return;
+                
             }
+           
             // save to database
             try
             {
                 string connectionString = "Server=videogamegrade.mysql.database.azure.com;Database=videogamegrade_db;Uid=gamegradeadmin;Pwd=capstone2024!;SslMode=Required;";
                 using (MySqlConnection connect = new MySqlConnection( connectionString)) {
                     connect.Open();
-                    String sql = "INSERT INTO gametable " +
+                    String sql = "INSERT INTO triviatable " +
                         "(gameQuiz, gameAnswer) VALUES " +
                         "(@gameQuiz, @gameAnswer);";
 
