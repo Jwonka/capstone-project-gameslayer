@@ -1,13 +1,17 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace VideoGameGrade.Classes
 {
+    [Table("gametable")]
     public class Game : ControllerContext
     {
+      
         [Key]
         public int gameId { get; set; }
+        
 
         [Required]
         [DisplayName("Game Title")]
