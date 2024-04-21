@@ -20,7 +20,6 @@ namespace VideoGameGrade.Pages
         public GameCollectionModel(ILogger<GameCollectionModel> logger)
         {
             _logger = logger;
-
         }
 
         public void OnGet()
@@ -87,102 +86,49 @@ namespace VideoGameGrade.Pages
             {
                 foreach (var game in gamesList)
                 {
-                    string gTitle = game.gameTitle.Trim().ToLower();
-                    string gPub = game.gamePublisher.Trim().ToLower();
-                    string console = game.gameConsole.Trim().ToLower();
-                    string gCat = game.gameCategory.Trim().ToLower();
+                    // Optimize validation by trimming empty spaces, converting to lowercase and replacing hyphens with an empty space
+                    searchGame = searchGame.Trim().ToLower().Replace("-", " ");
+                    string gTitle = game.gameTitle.Trim().ToLower().Replace("-", " ");
+                    string gPub = game.gamePublisher.Trim().ToLower().Replace("-", " ");
+                    string console = game.gameConsole.Trim().ToLower().Replace("-", " ");
+                    string gCat = game.gameCategory.Trim().ToLower().Replace("-", " ");
 
-                    // Strip searchGame of whitespace and convert to lowercase for verification
-                    searchGame = searchGame.Trim().ToLower();
+                    // Optimize search by replacing commas with an empty space
+                    searchGame = searchGame.Replace(",", " ");
+                    gTitle = gTitle.Replace(",", " ");
+                    gCat = gCat.Replace(",", " ");
+                    gPub = gPub.Replace(",", " ");
+                    console = console.Replace(",", " ");
+
+                    // Boolean that allows searching by gameId to not include titles or categories with numbers
+                    Boolean digit = int.TryParse(searchGame, out number);
 
                     // If it is an integer search by gameId
-                    if (int.TryParse(searchGame, out number) && number.Equals(game.gameId))
+                    if (number.Equals(game.gameId))
                     {
                         match.Add(game);
                     }
 
-                    // Check for matches by title  or  publisher
-                    if (searchGame.Equals(gTitle) || searchGame.Equals(gPub))
+                    // Check for matches by title
+                    if (gTitle.Contains(searchGame) && !match.Contains(game) && !digit)
+                    {
+                        match.Add(game);
+                    }
+
+                    // Check for matches by publisher
+                    if (gPub.Contains(searchGame) && !match.Contains(game) && !digit)
                     {
                         match.Add(game);
                     }
 
                     // Check for matching consoles
-                    if (searchGame.Contains("nintendo") && console.Contains("nintendo") && !match.Contains(game))
-                    {
-                        match.Add(game);
-                    }
-                    else if (searchGame.Contains("playstation") && console.Contains("playstation") && !match.Contains(game))
-                    {
-                        match.Add(game);
-                    }
-                    else if (searchGame.Contains("xbox") && console.Contains("xbox") && !match.Contains(game))
-                    {
-                        match.Add(game);
-                    }
-                    else if (searchGame.Contains("pc") && console.Contains("pc") && !match.Contains(game))
-                    {
-                        match.Add(game);
-                    }
-                    else if (searchGame.Contains("steam deck") && console.Contains("steam deck") && !match.Contains(game))
+                    if (console.Contains(searchGame) && !match.Contains(game) && !digit)
                     {
                         match.Add(game);
                     }
 
                     // Check for matching category
-                    if (searchGame.Contains("action") && gCat.Contains("action") && !match.Contains(game))
-                    {
-                        match.Add(game);
-                    }
-                    else if (searchGame.Contains("adventure") && gCat.Contains("adventure") && !match.Contains(game))
-                    {
-                        match.Add(game);
-                    }
-                    else if ((searchGame.Contains("role playing game") && gCat.Contains("role playing game") && !match.Contains(game) || searchGame.Contains("rpg") && gCat.Contains("rpg")) && !match.Contains(game))
-                    {
-                        match.Add(game);
-                    }
-                    else if (searchGame.Contains("platformer") && gCat.Contains("platformer") && !match.Contains(game))
-                    {
-                        match.Add(game);
-                    }
-                    else if (searchGame.Contains("platform") && gCat.Contains("platform") && !match.Contains(game))
-                    {
-                        match.Add(game);
-                    }
-                    else if (searchGame.Contains("2d") && gCat.Contains("2d") && !match.Contains(game))
-                    {
-                        match.Add(game);
-                    }
-                    else if (searchGame.Contains("3d") && gCat.Contains("3d") && !match.Contains(game))
-                    {
-                        match.Add(game);
-                    }
-                    else if (searchGame.Contains("shooter") && gCat.Contains("shooter") && !match.Contains(game))
-                    {
-                        match.Add(game);
-                    }
-                    else if (searchGame.Contains("strategy") && gCat.Contains("strategy") && !match.Contains(game))
-                    {
-                        match.Add(game);
-                    }
-                    else if (searchGame.Contains("sports") && gCat.Contains("sports") && !match.Contains(game))
-                    {
-                        match.Add(game);
-                    }
-                    else if (searchGame.Contains("puzzle") && gCat.Contains("puzzle") && !match.Contains(game))
-                    {
-                        match.Add(game);
-                    }
-                    else if (searchGame.Contains("simulation") && gCat.Contains("simulation") && !match.Contains(game))
-                    {
-                        match.Add(game);
-                    }
-                    else if (searchGame.Contains("horror") && gCat.Contains("horror") && !match.Contains(game))
-                    {
-                        match.Add(game);
-                    }
-                    else if (searchGame.Contains("racing") && gCat.Contains("racing") && !match.Contains(game))
+                    if (gCat.Contains(searchGame) && !match.Contains(game) && !digit)
                     {
                         match.Add(game);
                     }
