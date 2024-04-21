@@ -124,7 +124,7 @@ namespace VideoGameGrade.Pages
                     {
                         match.Add(game);
                     }
-                    else if (searchGame.Contains("steamdeck") && console.Contains("steamdeck") && !match.Contains(game))
+                    else if (searchGame.Contains("steam deck") && console.Contains("steam deck") && !match.Contains(game))
                     {
                         match.Add(game);
                     }
