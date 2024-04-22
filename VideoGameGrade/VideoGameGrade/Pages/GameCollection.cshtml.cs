@@ -100,7 +100,7 @@ namespace VideoGameGrade.Pages
                     gPub = gPub.Replace(",", " ");
                     console = console.Replace(",", " ");
 
-                    // Boolean that allows searching by gameId to not include titles or categories with numbers
+                    // Boolean that allows searching by gameId and not include titles or categories with numbers
                     Boolean digit = int.TryParse(searchGame, out number);
 
                     // If it is an integer search by gameId

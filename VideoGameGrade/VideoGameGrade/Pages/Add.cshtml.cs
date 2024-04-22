@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using MySql.Data.MySqlClient;
 using System.Data.SqlClient;
+using static VideoGameGrade.Pages.GameCollectionModel;
 
 namespace VideoGameGrade.Pages
 {
@@ -30,7 +31,7 @@ namespace VideoGameGrade.Pages
                 //just a stand in for now
                 errorMessage = "Must be a whole number";
             }
-            gamesInfo.gameImage = Request.Form["gameImage"];
+            //gamesInfo.gameImage = Request.Form["gameImage"];
             gamesInfo.gameQuiz = Request.Form["gameQuiz"];
             gamesInfo.gameAnswer = Request.Form["gameAnswer"];
 
@@ -81,7 +82,7 @@ namespace VideoGameGrade.Pages
             gamesInfo.gameConsole = "";
             gamesInfo.gameCategory = "";
             gamesInfo.gameRating = 0;
-            gamesInfo.gameImage = "";
+            //gamesInfo.gameImage = "";
             successMessage = "New Game Added";
 
             Response.Redirect("/GameCollection");
