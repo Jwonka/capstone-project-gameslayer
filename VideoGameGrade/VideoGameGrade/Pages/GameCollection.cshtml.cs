@@ -52,7 +52,7 @@ namespace VideoGameGrade.Pages
                                 gamesInfo.gameRating = reader.IsDBNull(5) ? 0 : reader.GetInt32(5);
 
                                 //TODO Display game image from database
-                                if (!reader.IsDBNull(7))
+                                if (!reader.IsDBNull(6))
                                 {
                                     //gamesInfo.gameImage = (byte[])reader.GetValue(7);
                                     gamesInfo.gameImage = null;
