@@ -7,13 +7,10 @@ using static VideoGameGrade.Pages.GameCollectionModel;
 
 namespace VideoGameGrade.Pages
 {
-   
     public class TriviaModel : PageModel
     {
         public List<TriviaList> triviaGame = new List<TriviaList>();
         
-        
-
         public void OnGet()
         {
             try
@@ -56,7 +53,6 @@ namespace VideoGameGrade.Pages
             public string gameAnswer;
         }
 
-
         public TriviaList newQuestion = new TriviaList();
         public string errorMsg = "";
         public string successMsg = "";
@@ -85,13 +81,11 @@ namespace VideoGameGrade.Pages
                 errorMsg = "All fields must be entered.";
                 
                 return;
-                
             }
            
             // save to database
             try
             {
-               
                 string connectionString = "Server=videogamegrade.mysql.database.azure.com;Database=videogamegrade_db;Uid=gamegradeadmin;Pwd=capstone2024!;SslMode=Required;";
                 using (MySqlConnection connect = new MySqlConnection( connectionString)) {
                     connect.Open();
@@ -122,8 +116,5 @@ namespace VideoGameGrade.Pages
             successMsg = "New question was entered successfully!";
             OnGet();
         }
-
-      
-
     }
 }
