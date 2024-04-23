@@ -8,12 +8,13 @@
 
 @if (Model.errorMessage.Length > 0)
 {
-    <div class="alert alert-warning alert-dismissible fade show" role="alert">
-        <strong>@Model.errorMessage</strong>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    <div class ='text-center'>
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <h1>@Model.errorMessage</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
     </div>
 }
-
 
 <form method="post">
     <div class="row mb-3">
@@ -52,26 +53,6 @@
             <input type="text" class="form-control" name="gameImage" value="@Model.gamesInfo.gameImage">
         </div>
     </div>
-    <div class="row mb-3">
-        <label class="col-sm-3 col-form-label">Quiz</label>
-        <div class="col-sm-6">
-            <input type="text" class="form-control" name="gameQuiz" value="@Model.gamesInfo.gameQuiz">
-        </div>
-    </div>
-    <div class="row mb-3">
-        <label class="col-sm-3 col-form-label">Answer</label>
-        <div class="col-sm-6">
-            <input type="text" class="form-control" name="gameAnswer" value="@Model.gamesInfo.gameAnswer">
-        </div>
-    </div>
-
-    @if (Model.successMessage.Length > 0)
-    {
-        <div class="alert alert-warning alert-dismissible fade show" role="alert">
-            <strong>@Model.successMessage</strong>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Okay"></button>
-        </div>
-    }
 
     <div class="row mb-3">
         <div class="offset-sm-3 col-sm-3 d-grid">
@@ -79,7 +60,7 @@
         </div>
         
         <div class="col-sm-3 d-grid">
-            <a class="btn btn-outline-primary" href="/" role="button">Cancel</a>
+            <a class="btn btn-outline-primary" href="/GameCollection" role="button">Cancel</a>
         </div>
     </div>
     

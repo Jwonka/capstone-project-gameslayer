@@ -50,7 +50,6 @@ namespace VideoGameGrade.Pages
                                 gamesInfo.gameConsole = reader.IsDBNull(3) ? string.Empty : reader.GetString(3);
                                 gamesInfo.gameCategory = reader.IsDBNull(4) ? string.Empty : reader.GetString(4);
                                 gamesInfo.gameRating = reader.IsDBNull(5) ? 0 : reader.GetInt32(5);
-                                gamesInfo.gameQuiz = reader.IsDBNull(6) ? string.Empty : reader.GetString(6);
 
                                 //TODO Display game image from database
                                 if (!reader.IsDBNull(7))
@@ -62,8 +61,6 @@ namespace VideoGameGrade.Pages
                                 {
                                     gamesInfo.gameImage = null;
                                 }
-                                gamesInfo.gameAnswer = reader.IsDBNull(8) ? string.Empty : reader.GetString(8);
-
                                 gamesList.Add(gamesInfo);
                             }
                             reader.Close();
@@ -141,7 +138,7 @@ namespace VideoGameGrade.Pages
                 else
                 {
                     gamesList.Clear();
-                    ViewData["SearchMessage"] = "Our records to not match your request";
+                    ViewData["searchMessage"] = "Our records to not match your request";
                     return;
                 }
             }
@@ -164,9 +161,7 @@ namespace VideoGameGrade.Pages
             public string gameConsole { get; set; }
             public string gameCategory { get; set; }
             public int gameRating { get; set; }
-            public string gameQuiz { get; set; }
             public byte[] gameImage { get; set; }
-            public string gameAnswer { get; set; }
         }
     }
 }

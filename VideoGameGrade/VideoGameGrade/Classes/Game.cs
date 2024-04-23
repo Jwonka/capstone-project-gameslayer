@@ -20,7 +20,7 @@ namespace VideoGameGrade.Classes
         public string gamePublisher{ get; set; }
         public string gameConsole { get; set; }
         public string gameCategory { get; set; }
-        public string gameRating { get; set; }
+        public int gameRating { get; set; }
         public string gameQuiz { get; set; }
         public byte[] gameImage { get; set; }
         public string gameAnswer { get; set; }
