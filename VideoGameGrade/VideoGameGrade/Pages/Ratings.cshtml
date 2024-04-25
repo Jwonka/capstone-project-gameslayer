@@ -14,12 +14,12 @@
     <div class="text-center">
         <br />
         <h3 class="display-6">@Model.rateTitle currently has a rating of @Model.rating.ToString().</h3>
+        <br />
     </div>
 </form>
 @if (Model.rateError.Equals("Games cannot have a negative rating.") || Model.rateError.Equals("Games cannot have a rating higher than 10."))
 {
     <div class="text-center">
-        <br />
         <div class="alert alert-danger fade show" role="alert">
             <h1>@Model.rateError</h1>
         </div>
@@ -30,6 +30,8 @@ else
     <div class="text-center">
         <br />
         <h5 class="display-9">Check out the comments below.  You might find a tip or a trick.</h5>
+        <br />
+        <br />
     </div>
 }
 
