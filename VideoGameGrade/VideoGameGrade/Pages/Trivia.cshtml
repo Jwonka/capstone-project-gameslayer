@@ -1,19 +1,22 @@
 ﻿@page
 @model VideoGameGrade.Pages.TriviaModel
 @{
+    ViewData["Title"] = "Game Trivia!";
 }
-<br />
 
-
-<h3>Click here to add a trivia question</h3>
-<button onclick="toggleVisible()">Create Question</button>
+<div class="text-center">
+    <h1 class="display-4">Game Trivia</h1>
+    <h3>Click here to add a trivia question</h3>
+    <button onclick="toggleVisible()">Create Question</button>
+</div>
 
 
 
 @if (Model.errorMsg.Length > 0){
-    <div class='alert alert-warning alert-dismissible fade show' role='alert'>
-        <strong>@Model.errorMsg</strong>
-        <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+    <div class="text-center">
+        <div class="alert alert-danger fade show" role="alert">
+            <h1>@Model.errorMsg</h1>
+        </div>
     </div>
 }
 
@@ -42,12 +45,9 @@
     
 
     @if(Model.successMsg.Length>0){
-        <div class="row mb-3">
-            <div class="col-sm-9">
-                <div class='alert alert-success alert-dismissible fade show' role='alert'>
-                    <strong>@Model.successMsg</strong>
-                    <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
-                </div>
+        <div class="text-center">
+            <div class="alert alert-success fade show" role="alert">
+                 <h1>@Model.successMsg</h1>
             </div>
         </div>
     }

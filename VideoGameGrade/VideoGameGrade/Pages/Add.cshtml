@@ -1,18 +1,22 @@
 ﻿@page
 @model VideoGameGrade.Pages.AddModel
 @{
+    ViewData["Title"] = "Add your favorite games!";
 }
-
-<br>
-<h2>New Game</h2>
 
 @if (Model.errorMessage.Length > 0)
 {
     <div class ='text-center'>
-        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <div class="alert alert-danger fade show" role="alert">
             <h1>@Model.errorMessage</h1>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
+    </div>
+}
+else
+{
+    <div class="text-center">
+        <h1 class="display-4">New Game</h1>
+        <br />
     </div>
 }
 

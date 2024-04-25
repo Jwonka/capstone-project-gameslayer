@@ -25,7 +25,10 @@ namespace VideoGameGrade.Pages
                 using (MySqlConnection connection = new MySqlConnection(connectionString))
                 {
                     connection.Open();
+
                     String sql = "SELECT gametable.gameID, gametable.gameTitle, triviatable.gameQuiz, triviatable.gameAnswer, triviatable.quizID\r\n FROM triviatable\r\n INNER JOIN gametable ON gametable.gameID = triviatable.gameID";
+
+
                     using (MySqlCommand command = new MySqlCommand(sql, connection))
                     {
                         //command.Parameters.AddWithValue("@gameIdValue", gameIdValue);

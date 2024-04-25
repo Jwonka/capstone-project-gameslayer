@@ -1,0 +1,108 @@
+﻿@page
+@model VideoGameGrade.Pages.RateModel
+@{
+    ViewData["Title"] = "Rate your favorite games!";
+}
+<form method="post">
+    <div class="text-center">
+        <h1 class="display-4">Game Ratings</h1>
+        <br />
+        <h1>Rate @Model.rateTitle?</h1>
+        <button type="submit" class="btn btn-outline-success btn-group-lg" name="addRating" value="add">Add one to the games rating?</button>
+        <button type="submit" class="btn btn-outline-danger btn-group-lg" name="removeRating" value="remove">Take one from the games rating?</button>
+    </div>
+    <div class="text-center">
+        <br />
+        <h3 class="display-6">@Model.rateTitle currently has a rating of @Model.rating.ToString().</h3>
+        <br />
+    </div>
+</form>
+@if (Model.rateError.Equals("Games cannot have a negative rating.") || Model.rateError.Equals("Games cannot have a rating higher than 10."))
+{
+    <div class="text-center">
+        <div class="alert alert-danger fade show" role="alert">
+            <h1>@Model.rateError</h1>
+        </div>
+    </div>
+}
+else
+{
+    <div class="text-center">
+        <br />
+        <h5 class="display-9">Check out the comments below.  You might find a tip or a trick.</h5>
+        <br />
+        <br />
+    </div>
+}
+
+<div>
+    @{
+        int comments = 0;
+    }
+    @foreach(var comment in Model.ratings)
+    {
+        @if (!string.IsNullOrEmpty(comment.comment))
+        {
+            <div>
+                <br/>
+                <label>@comment.comment</label>
+                <div class="text-end">
+                    <button onclick="toggleReply('@comment.rateID')" class="btn btn-outline-info btn-sm">Reply</button>
+                </div>
+                <br />
+                <div id="@comment.rateID" style="display: none;">
+                    <input class="form-control" type="text" name="reply" id="@comment.rateID" value="" />
+                    <div class="text-end">
+                        <br />
+                        <button onclick="toggleReply('@comment.rateID')" class="btn btn-outline-success btn-sm">submit</button>
+                    </div>
+                </div>
+            </div>
+            comments++;
+        }
+    }
+    @if (comments == 0)
+    {
+        <div class="text-center">
+            <div class='alert alert-danger fade show' role='alert'>
+                <h1 class="alert-heading">@Model.rateTitle does not have any comments.</h1>
+            </div>
+        </div>
+    }
+</div>    
+
+<div class="text-center">
+    <br />
+    <h3 class="display-6">Want to add your own comment, tip, or trick?</h3>
+    <div class="text-end">
+        <button onclick="toggleComment('@Model.rateTitle')" class="btn btn-outline-info btn-group-lg">Contribute</button>
+    </div>
+        <br />
+    <div id="@Model.rateTitle" style="display: none;">
+            <input class="form-control" type="text" name="reply" id="@Model.rateTitle" value="" />
+            <div class="text-end">
+                <br />
+                <button onclick="toggleComment('@Model.rateTitle')" class="btn btn-outline-success btn-group-lg">Submit</button>
+            </div>
+    </div>
+</div>
+
+<script>
+    function toggleReply(rateID) {
+        var div = document.getElementById(rateID);
+        if (div.style.display === 'none') {
+            div.style.display = 'block';
+        } else {
+            div.style.display = 'none';
+        }
+    }
+
+    function toggleComment(rateTitle) {
+        var div = document.getElementById(rateTitle);
+        if (div.style.display === 'none') {
+            div.style.display = 'block';
+        } else {
+            div.style.display = 'none';
+        }
+    }
+</script>
