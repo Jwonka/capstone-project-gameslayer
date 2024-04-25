@@ -19,7 +19,7 @@ namespace VideoGameGrade.Pages
                 using (MySqlConnection connection = new MySqlConnection(connectionString))
                 {
                     connection.Open();
-                    String sql = "SELECT gametable.gameID, gametable.gameTitle, triviatable.gameQuiz, triviatable.gameAnswer\r\n FROM triviatable\r\n INNER JOIN gametable ON gametable.gameID = triviatable.gameID;";
+                    String sql = "SELECT gametable.gameId, gametable.gameTitle, triviatable.gameQuiz, triviatable.gameAnswer\r\n FROM triviatable\r\n INNER JOIN gametable ON gametable.gameId = triviatable.gameID;";
                     using (MySqlCommand command = new MySqlCommand(sql, connection))
                     {
                         using(MySqlDataReader reader = command.ExecuteReader())

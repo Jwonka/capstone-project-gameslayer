@@ -1,8 +1,5 @@
-using Google.Protobuf.WellKnownTypes;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using MySql.Data.MySqlClient;
-using System.Data.SqlClient;
 using static VideoGameGrade.Pages.GameCollectionModel;
 
 namespace VideoGameGrade.Pages
@@ -10,9 +7,39 @@ namespace VideoGameGrade.Pages
     public class AddModel : PageModel
     {
         public GamesInfo gamesInfo = new GamesInfo();
-        public string errorMessage = "";
-        public static string successMessage = "";
+        public string errorMessage = string.Empty;
+        public static string successMessage = string.Empty;
+        public string gameName = string.Empty;
+        public string gamePub = string.Empty;
+        public string gameConsole = string.Empty;
+        public string gameCategory = string.Empty;
+        public string title = string.Empty;
         public static bool success = false;
+
+        public static string CapFirstLetter(string lower)
+        {
+            if (!string.IsNullOrEmpty(lower) && !string.IsNullOrWhiteSpace(lower))
+            {
+                var words = lower.Split(' ');
+                var letter = string.Empty;
+                foreach (var word in words)
+                {
+                    try
+                    {
+                        letter += char.ToUpper(word[0]) + word.Substring(1) + ' ';
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("Exception occurred: " + ex.ToString());
+                    }  
+                }
+                return letter.Trim();
+            }
+            else
+            {
+                return lower;
+            }
+        }
         public void OnGet()
         {
         }
@@ -39,8 +66,14 @@ namespace VideoGameGrade.Pages
             }
             //gamesInfo.gameImage = Request.Form["gameImage"];
 
-            if (gamesInfo.gameTitle.Length == 0 || gamesInfo.gamePublisher.Length == 0 || gamesInfo.gameConsole.Length == 0 ||
-                gamesInfo.gameCategory.Length == 0)// || gamesInfo.gameImage.Length == 0)
+            if (!string.IsNullOrWhiteSpace(gamesInfo.gameTitle) && !string.IsNullOrWhiteSpace(gamesInfo.gamePublisher) && !string.IsNullOrWhiteSpace(gamesInfo.gameConsole) && !string.IsNullOrWhiteSpace(gamesInfo.gameCategory))
+            {
+                gameName = CapFirstLetter(gamesInfo.gameTitle.Trim().ToString());
+                gamePub = CapFirstLetter(gamesInfo.gamePublisher.Trim().ToString());
+                gameConsole = CapFirstLetter(gamesInfo.gameConsole.Trim().ToString());
+                gameCategory = CapFirstLetter(gamesInfo.gameCategory.Trim().ToString());
+            }
+            else
             {
                 errorMessage = "Game Title, Publisher, Console, and Category are required.";
                 return;
@@ -53,21 +86,44 @@ namespace VideoGameGrade.Pages
                 using (MySqlConnection connection = new MySqlConnection(connectionString))
                 {
                     connection.Open();
-                    String sql = "INSERT INTO gametable" +
-                        "(gameTitle,gamePublisher,gameConsole,gameCategory,gameRating,gameImage) VALUES " +
-                        "(@gameTitle,@gamePublisher,@gameConsole,@gameCategory,@gameRating,@gameImage);";
+
+                    String sqlTitle = "SELECT gameTitle FROM gametable";
+                    using (MySqlCommand gameCommand = new MySqlCommand(sqlTitle, connection))
+                    {
+                        using (MySqlDataReader reader = gameCommand.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                GamesInfo gName = new GamesInfo();
+                                gName.gameTitle = reader.IsDBNull(0) ? string.Empty : reader.GetString(0);
+
+                                title = gName.gameTitle.Trim().ToLower().ToString();
+
+                                if (title.Equals(gameName.ToLower()))
+                                {
+                                    errorMessage = gameName + " is already in our records.";
+                                    return;
+                                }
+                            }
+                            reader.Close();
+                        }
+                    }
+                        String sql = "INSERT INTO gametable" +
+                            "(gameTitle,gamePublisher,gameConsole,gameCategory,gameRating,gameImage) VALUES " +
+                            "(@gameTitle,@gamePublisher,@gameConsole,@gameCategory,@gameRating,@gameImage);";
 
                     using (MySqlCommand command = new MySqlCommand(sql, connection))
                     {
-                        command.Parameters.AddWithValue("@gameTitle", gamesInfo.gameTitle);
-                        command.Parameters.AddWithValue("@gamePublisher", gamesInfo.gamePublisher);
-                        command.Parameters.AddWithValue("@gameConsole", gamesInfo.gameConsole);
-                        command.Parameters.AddWithValue("@gameCategory", gamesInfo.gameCategory);
-                        command.Parameters.AddWithValue("@gameRating", 0);
+                        command.Parameters.AddWithValue("@gameTitle", gameName);
+                        command.Parameters.AddWithValue("@gamePublisher", gamePub);
+                        command.Parameters.AddWithValue("@gameConsole", gameConsole);
+                        command.Parameters.AddWithValue("@gameCategory", gameCategory);
+                        command.Parameters.AddWithValue("@gameRating", gamesInfo.gameRating);
                         command.Parameters.AddWithValue("@gameImage", "Stand-in");
 
                         command.ExecuteNonQuery();
                     }
+                    connection.Close();
                 }
             }
             catch
@@ -77,14 +133,14 @@ namespace VideoGameGrade.Pages
                 return;
             }
 
-            gamesInfo.gameTitle = "";
-            gamesInfo.gamePublisher = "";
-            gamesInfo.gameConsole = "";
-            gamesInfo.gameCategory = "";
+            gamesInfo.gameTitle = string.Empty;
+            gamesInfo.gamePublisher = string.Empty;
+            gamesInfo.gameConsole = string.Empty;
+            gamesInfo.gameCategory = string.Empty;
             gamesInfo.gameRating = 0;
             //gamesInfo.gameImage = "";
 
-            successMessage = "New Game Added";
+            successMessage = gameName + " was added.";
             success = true;
 
             Response.Redirect("/GameCollection");
