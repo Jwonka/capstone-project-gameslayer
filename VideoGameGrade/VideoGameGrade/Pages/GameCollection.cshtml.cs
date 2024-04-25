@@ -35,7 +35,7 @@ namespace VideoGameGrade.Pages
                 using (MySqlConnection connection = new MySqlConnection(connectionString))
                 {
                     connection.Open();
-                    string sql = "SELECT * FROM gametable";
+                    String sql = "SELECT * FROM gametable";
                     using (MySqlCommand command = new MySqlCommand(sql, connection))
                     {
                         using (MySqlDataReader reader = command.ExecuteReader())
@@ -72,14 +72,14 @@ namespace VideoGameGrade.Pages
             catch (Exception ex)
             {
                 _logger.LogError("Exception occurred: " + ex.ToString());
-                Console.WriteLine("Exception: " + ex.ToString());
+                ViewData["searchMessage"] = "Exception occurred: " + ex.ToString();
             }
 
             int number;
             List<GamesInfo> match = new List<GamesInfo>();
-
+            
             // Check if searchGame has a value
-            if (!string.IsNullOrEmpty(searchGame) && !string.IsNullOrWhiteSpace(searchGame))
+            if (!string.IsNullOrWhiteSpace(searchGame))
             {
                 foreach (var game in gamesList)
                 {
@@ -137,8 +137,9 @@ namespace VideoGameGrade.Pages
                 }
                 else
                 {
+                    searchGame = AddModel.CapFirstLetter(searchGame);
                     gamesList.Clear();
-                    ViewData["searchMessage"] = "Our records to not match your request";
+                    ViewData["searchMessage"] = "Our records do not contain " + searchGame + ".";
                     return;
                 }
             }
