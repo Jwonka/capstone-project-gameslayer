@@ -19,17 +19,37 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-grow-1 justify-content-between">
                     <ul class="navbar-nav flex-grow-1 justify-content-evenly">
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-page="/Index">Home</a>
+                            <a class="nav-link text-white" asp-area="" asp-page="/Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-page="/GameCollection">Game Collection</a>
+                            <a class="nav-link text-white" asp-area="" asp-page="/GameCollection">Game Collection</a>
                         </li>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-area="" asp-page="/Account">Account</a>
+                            </li>
+                        }
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-page="/Profile">Profile</a>
+                            <a class="nav-link text-white" asp-area="" asp-page="/ContactUs">Contact Us</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-page="/ContactUs">Contact Us</a>
-                        </li>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li class="nav-item">
+                                <form asp-page="/Logout" method="post">
+                                    <button type="submit" class="nav-link btn btn-link text-white" style="background-color: transparent; border: none;">Logout</button>
+                                </form>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-area="" asp-page="/Login">Login</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-area="" asp-page="/Register">Register</a>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>

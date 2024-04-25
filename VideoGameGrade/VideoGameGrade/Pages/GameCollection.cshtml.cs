@@ -50,10 +50,10 @@ namespace VideoGameGrade.Pages
                                 gamesInfo.gameConsole = reader.IsDBNull(3) ? string.Empty : reader.GetString(3);
                                 gamesInfo.gameCategory = reader.IsDBNull(4) ? string.Empty : reader.GetString(4);
                                 gamesInfo.gameRating = reader.IsDBNull(5) ? 0 : reader.GetInt32(5);
-                                gamesInfo.gameQuiz = reader.IsDBNull(6) ? string.Empty : reader.GetString(6);
+
 
                                 //TODO Display game image from database
-                                if (!reader.IsDBNull(7))
+                                if (!reader.IsDBNull(6))
                                 {
                                     //gamesInfo.gameImage = (byte[])reader.GetValue(7);
                                     gamesInfo.gameImage = null;
@@ -62,7 +62,7 @@ namespace VideoGameGrade.Pages
                                 {
                                     gamesInfo.gameImage = null;
                                 }
-                                gamesInfo.gameAnswer = reader.IsDBNull(8) ? string.Empty : reader.GetString(8);
+
 
                                 gamesList.Add(gamesInfo);
                             }
