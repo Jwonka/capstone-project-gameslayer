@@ -61,6 +61,7 @@ namespace VideoGameGrade.Pages
                                 {
                                     gamesInfo.gameImage = null;
                                 }
+
                                 gamesList.Add(gamesInfo);
                             }
                             reader.Close();

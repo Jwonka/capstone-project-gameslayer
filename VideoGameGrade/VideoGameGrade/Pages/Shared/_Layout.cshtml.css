@@ -1,11 +1,14 @@
-﻿body, html {
+﻿/* Main body and html settings */
+body, html {
     background-color: #212529; /* Background color */
     color: #f8f9fa; /* Text Color */
     min-height: 100%;
     position: relative;
     font-size: 16px;
+    font-family: Arial, sans-serif;
 }
 
+/* Navigation bar */
 .navbar {
     background-color: #343a40; /* Navbar Color */
     border-bottom: 1px solid #495057;
@@ -24,6 +27,7 @@
         word-break: break-all;
     }
 
+/* Footer settings */
 .footer {
     background-color: #343a40; /* Footer Color */
     color: #f8f9fa; /* Footer text color */
@@ -34,10 +38,14 @@
     line-height: 60px;
 }
 
+/* Button settings */
 .btn-primary, .btn-dark, button.accept-policy {
     color: #fff;
     background-color: #007bff;
     border-color: #007bff;
+    padding: 0.4rem 0.8rem;
+    font-size: 0.875rem; /* font size for buttons */
+    border-radius: 0.2rem; /* Rounded corners for buttons */
 }
 
 .btn-dark, button.accept-policy {
@@ -60,13 +68,22 @@ a, a.navbar-brand, .nav-link {
         color: #67C7F3;
     }
 
-.form-control {
+/* Form control styles for input fields and textareas */
+.form-control, textarea {
     background-color: #495057;
     color: #f8f9fa;
+    border: 1px solid #ced4da;
+    height: 35px;
+    padding: 0.375rem 0.75rem;
+    font-size: 0.875rem;
 }
 
-    .btn:focus, .form-control:focus {
-        box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+textarea {
+    height: auto;
+}
+
+    .btn:focus, .form-control:focus, textarea:focus {
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
     }
 
 .border-top, .border-bottom {
@@ -86,7 +103,33 @@ a, a.navbar-brand, .nav-link {
     border-color: #495057;
 }
 
-
 .text-light {
     color: #f8f9fa !important;
+}
+
+/* Responsive adjustments for smaller devices */
+@media (max-width: 600px) {
+    .form-control, textarea {
+        height: 32px;
+        padding: 0.25rem 0.5rem;
+        font-size: 0.8rem; 
+    }
+
+    .btn-primary, .btn-dark, button.accept-policy {
+        padding: 0.25rem 0.5rem;
+        font-size: 0.8rem;
+    }
+
+    .navbar-nav {
+        flex-direction: column;
+    }
+
+    .form-width-custom {
+        width: 100%;
+        padding: 15px;
+    }
+
+    .footer {
+        position: relative;
+    }
 }
