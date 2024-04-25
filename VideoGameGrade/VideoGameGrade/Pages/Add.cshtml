@@ -1,0 +1,71 @@
+﻿@page
+@model VideoGameGrade.Pages.AddModel
+@{
+    ViewData["Title"] = "Add your favorite games!";
+}
+
+@if (Model.errorMessage.Length > 0)
+{
+    <div class ='text-center'>
+        <div class="alert alert-danger fade show" role="alert">
+            <h1>@Model.errorMessage</h1>
+        </div>
+    </div>
+}
+else
+{
+    <div class="text-center">
+        <h1 class="display-4">New Game</h1>
+        <br />
+    </div>
+}
+
+<form method="post">
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label">Title</label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" name="gameTitle" value="@Model.gamesInfo.gameTitle">
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label">Publisher</label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" name="gamePublisher" value="@Model.gamesInfo.gamePublisher">
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label">Console</label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" name="gameConsole" value="@Model.gamesInfo.gameConsole">
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label">Category</label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" name="gameCategory" value="@Model.gamesInfo.gameCategory">
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label">Rating</label>
+        <div class="col-sm-6">
+            <input type="number" class="form-control" name="gameRating" value="@Model.gamesInfo.gameRating">
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label">Image</label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" name="gameImage" value="@Model.gamesInfo.gameImage">
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="offset-sm-3 col-sm-3 d-grid">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+        
+        <div class="col-sm-3 d-grid">
+            <a class="btn btn-outline-primary" href="/GameCollection" role="button">Cancel</a>
+        </div>
+    </div>
+    
+</form>

@@ -6,11 +6,5 @@
 
 <h1>@ViewData["Title"]</h1>
 
-@if (Model.DatabaseConnected)
-{
-    <p style="color:green;">Database connection successful!</p>
-}
-else
-{
-    <p style="color:red;">Failed to connect to the database.</p>
-}
+<p>@Model.ConnectionStatusMessage</p>
+

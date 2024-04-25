@@ -6,7 +6,7 @@ namespace VideoGameGrade.Pages
 {
     public class TestPageModel : PageModel
     {
-        public bool DatabaseConnected { get; set; }
+        public string ConnectionStatusMessage { get; set; }
 
         public void OnGet()
         {
@@ -15,14 +15,28 @@ namespace VideoGameGrade.Pages
 
             using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
-                try
+                 try
                 {
                     connection.Open();
-                    DatabaseConnected = connection.State == System.Data.ConnectionState.Open;
+                    if (connection.State == System.Data.ConnectionState.Open)
+                    {
+                        ConnectionStatusMessage = "Database connection successful!";
+
+                    }
+                    else
+                    {
+                        ConnectionStatusMessage = "Database connection failed!";
+                    }
                 }
-                catch (Exception)
+                catch (MySqlException ex)
                 {
-                    DatabaseConnected = false;
+                    // Handle specific exceptions (e.g., authentication failure, network error)
+                    ConnectionStatusMessage = $"Database connection failed: {ex.Message}";
+                }
+                catch (Exception ex)
+                {
+                    // Handle generic exceptions
+                    ConnectionStatusMessage = $"An error occurred: {ex.Message}";
                 }
             }
         }

@@ -1,4 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+using ZstdSharp.Unsafe;
 namespace VideoGameGrade.Classes
 {
     public class AppDbContext : DbContext
@@ -29,4 +31,6 @@ namespace VideoGameGrade.Classes
             _context = context;
         }
     }
+   
+ 
 }
