@@ -52,6 +52,17 @@
                 <td>@game.gamePublisher</td>
                 <td>@game.gameConsole</td>
                 <td>@game.gameCategory</td>
+                <td>@game.gameRating</td>
+                <td>
+                    @if (!string.IsNullOrEmpty(game.gameImage) && game.gameImage != "No image")
+                    {
+                        <img src="@Html.Raw(game.gameImage)" alt="Game Image" style="width: 100px; height: auto;" />
+                    }
+                    else
+                    {
+                        <text>No Image</text>
+                    }
+                </td>
                 <td>@game.gameRating</td>          
                 <td><img src="@game.gameImage" alt="Game Image" style="width: auto; height: auto;" /></td>
                 <td>
