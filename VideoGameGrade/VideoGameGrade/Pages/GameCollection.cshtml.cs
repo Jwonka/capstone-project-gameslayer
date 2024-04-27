@@ -52,7 +52,7 @@ namespace VideoGameGrade.Pages
                                 gamesInfo.gameRating = reader.IsDBNull(5) ? 0 : reader.GetInt32(5);
                                 gamesInfo.gameImage = reader.IsDBNull(6) ? null : reader.GetString(6);
 
-                                
+
                                 gamesList.Add(gamesInfo);
                             }
                             reader.Close();
@@ -71,7 +71,7 @@ namespace VideoGameGrade.Pages
             for (int i = 0; i < gamesList.Count(); i++)
             {
                 // Check if searchGame has a value
-                if (!string.IsNullOrEmpty(searchGame)  && !string.IsNullOrWhiteSpace(searchGame))
+                if (!string.IsNullOrEmpty(searchGame) && !string.IsNullOrWhiteSpace(searchGame))
                 {
                     // Strip searchGame of whitespace from beginning and end
                     searchGame = searchGame.Trim();

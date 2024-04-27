@@ -1,38 +1,30 @@
 ﻿@page
 @model VideoGameGrade.Pages.GameCollectionModel
 @{
-    ViewData["Title"] = "Game Collection Records!";
+    ViewData["Title"] = "Game Collection Review!";
 }
 
+<div class="text-center">
+    <h1 class="display-4">Check out our Game Collection</h1>
+    <p>Here we have our favorite classic games.</p>
+</div>
 <div class='text-center'>
-    @if (@AddModel.successMessage.Length > 0 && @AddModel.success)
-    {
-        <div class="alert alert-success fade show" role="alert">
-           <h1 class="alert-heading">@AddModel.successMessage</h1>
-        </div>
-        // Reset boolean flag for game added success message
-        AddModel.success = false;
-    }
-    else @if (ViewData["searchMessage"] != null)
+    @if (ViewData["SearchMessage"] != null)
     {
         <div class='alert alert-danger fade show' role='alert'>
-            <h1 class="alert-heading">@ViewData["searchMessage"]</h1>
-        </div>
-    }
-    else
-    {
-        <div class="text-center">
-            <h1 class="display-4">Check out our Game Collection</h1>
-            <p>Here we have our favorite classic games.</p>
+            <h1 class="alert-heading">@ViewData["SearchMessage"]</h1>
         </div>
     }
 </div>
+
 <h2>
-    <a class="btn btn-outline-primary btn-sm" href="/Add">New Game</a>
+    <a class="btn btn-outline-primary btn-sm" href="/Game/Add">New Game</a>
 </h2>
+
 <table class="table">
-    <thead class ="text-white">
+    <thead class="text-white">
         <tr>
+            <th>ID</th>
             <th>Title</th>
             <th>Publisher</th>
             <th>Console</th>
@@ -43,12 +35,11 @@
         </tr>
     </thead>
     <tbody class="text-white">
-        @foreach(var game in Model.gamesList)
+        @foreach (var game in Model.gamesList)
         {
             <tr>
-
+                <td>@game.gameId</td>
                 <td>@game.gameTitle</td>
-
                 <td>@game.gamePublisher</td>
                 <td>@game.gameConsole</td>
                 <td>@game.gameCategory</td>
@@ -62,13 +53,11 @@
                     {
                         <text>No Image</text>
                     }
-
+                </td>
                 <td>
-                    <a class="btn btn-outline-info btn-sm" href="/Trivia?id=@game.gameId">Quiz</a>
-                    <br />
-                    <a class="btn btn-outline-success btn-sm" href="Ratings?id=@game.gameId">Rate</a>
-                    <br />
-                    <a class="btn btn-outline-danger btn-sm" href="Delete?id=@game.gameId">Delete</a>
+                    <a class="btn btn-outline-info btn-sm" href="/Trivia?id=@game.gameId" name="gameId">Quiz</a>
+                    <a class="btn btn-outline-success btn-sm" href="/Game/Rate?id=@game.gameId">Rate</a>
+                    <a class="btn btn-outline-danger btn-sm" href="/Game/Delete?id=@game.gameId">Delete</a>
                 </td>
             </tr>
         }
