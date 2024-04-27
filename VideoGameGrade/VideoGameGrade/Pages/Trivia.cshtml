@@ -1,39 +1,53 @@
 ﻿@page
 @model VideoGameGrade.Pages.TriviaModel
 @{
+    ViewData["Title"] = "Game Trivia!";
 }
-<br />
-<h2>Game Trivia</h2>
-<h3>Click here to add a trivia question</h3>
-<button onclick="toggleVisible()">Create Question</button>
+
+<div class="text-center">
+    <h1 class="display-4">Game Trivia</h1>
+    <h3>Click here to add a trivia question</h3>
+    <button onclick="toggleVisible()">Create Question</button>
+</div>
+
 
 
 @if (Model.errorMsg.Length > 0){
-    <div class='alert alert-warning alert-dismissible fade show' role='alert'>
-        <strong>@Model.errorMsg</strong>
-        <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+    <div class="text-center">
+        <div class="alert alert-danger fade show" role="alert">
+            <h1>@Model.errorMsg</h1>
+        </div>
     </div>
 }
+
 <div id="question" style="display: none;">
+  
     <form method="post">
         @Html.AntiForgeryToken()
+
+        @if (Request.Query.TryGetValue("id", out var gameID))
+        {
+            var gameIdValue = gameID.ToString();
+            <label id="gameIdValue">Game ID: @gameIdValue</label>
+            <input type="hidden" name="id" value="@gameIdValue" />
+        }
+         <br />
         <label>Question:</label>
         <input type="text" name="gameQuiz"
                id="question" class="form-control" value="@Model.newQuestion.gameQuiz" /><br />
         <label>Your Answer:</label>
         <input type="text" name="gameAnswer"
                id="answer" class="form-control" value="@Model.newQuestion.gameAnswer"/></<br />
-        <input type="submit" />
+        <button type="submit" name="submitBtn" value="create">Create</button>
+        
     </form>
     </div>
+    
 
     @if(Model.successMsg.Length>0){
-        <div class="row mb-3">
-            <div class="col-sm-9">
-                <div class='alert alert-success alert-dismissible fade show' role='alert'>
-                    <strong>@Model.successMsg</strong>
-                    <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
-                </div>
+        <div class="text-center">
+            <div class="alert alert-success fade show" role="alert">
+                 <h1>@Model.successMsg</h1>
             </div>
         </div>
     }
@@ -49,23 +63,39 @@
     }
 </script>
 
-<table class="table">
-<thread class="text-white">
-    <tr>
+
+
+<div style.display="block" >
+    <table class="table">
+<thread>
+            <tr class="text-white">
         <th>ID</th>
         <th>Name</th>
         <th>Question</th>
-    </tr>
+        <th>Answer</th>
+                <th></th>
+            </tr>
 </thread>
 <tbody class="text-white">
+    
     @foreach(var item in Model.triviaGame){
-        
+        <form method="post">
         <tr>
-            <td>@item.gameId</td>
+            <td>@item.gameIdValue</td>
             <td>@item.gameName</td>
             <td>@item.gameQuiz</td>
+            <td>@item.quizId</td>
+                    <input type="hidden" name="quizId" value="@item.quizId">
+            <td><input type="text" name="quizAnswer" id="quizAnswer" class="form-control" /></td>
+            <td><button type="submit" class="form-control" name="submitBtn" value="quizSubmit">Submit</button></td>
+                    <td style="display: none;" id="correct"><span style="color: green;">&#10003;</span></td>
+                    <td style="display: none;" id="wrong"><span style="color: red;">X</span></td>
         </tr>
+       </form>
     }
     
 </tbody>
 </table>
+</div>
+
+
