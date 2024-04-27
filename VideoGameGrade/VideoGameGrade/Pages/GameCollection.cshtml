@@ -18,7 +18,7 @@
 </div>
 
 <h2>
-    <a class="btn btn-outline-primary btn-sm" href="/Game/Add">New Game</a>
+    <a class="btn btn-outline-primary btn-sm" href="/Add">New Game</a>
 </h2>
 
 <table class="table">
@@ -56,8 +56,10 @@
                 </td>
                 <td>
                     <a class="btn btn-outline-info btn-sm" href="/Trivia?id=@game.gameId" name="gameId">Quiz</a>
-                    <a class="btn btn-outline-success btn-sm" href="/Game/Rate?id=@game.gameId">Rate</a>
-                    <a class="btn btn-outline-danger btn-sm" href="/Game/Delete?id=@game.gameId">Delete</a>
+                    <br />
+                    <a class="btn btn-outline-success btn-sm" href="/Ratings?id=@game.gameId">Rate</a>
+                    <br />
+                    <a class="btn btn-outline-danger btn-sm" href="/Delete?id=@game.gameId">Delete</a>
                 </td>
             </tr>
         }
