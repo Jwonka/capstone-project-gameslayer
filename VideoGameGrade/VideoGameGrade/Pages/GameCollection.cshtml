@@ -24,7 +24,6 @@
 <table class="table">
     <thead class="text-white">
         <tr>
-            <th>ID</th>
             <th>Title</th>
             <th>Publisher</th>
             <th>Console</th>
@@ -38,7 +37,6 @@
         @foreach (var game in Model.gamesList)
         {
             <tr>
-                <td>@game.gameId</td>
                 <td>@game.gameTitle</td>
                 <td>@game.gamePublisher</td>
                 <td>@game.gameConsole</td>
