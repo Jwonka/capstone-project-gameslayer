@@ -43,8 +43,17 @@
                 <td>@game.gamePublisher</td>
                 <td>@game.gameConsole</td>
                 <td>@game.gameCategory</td>
-                <td>@game.gameRating</td>          
-                <td><img src="@game.gameImage" alt="Game Image" style="width: 100px; height: auto;" /></td>
+                <td>@game.gameRating</td>
+                <td>
+                    @if (!string.IsNullOrEmpty(game.gameImage) && game.gameImage != "No image")
+                    {
+                        <img src="@Html.Raw(game.gameImage)" alt="Game Image" style="width: 100px; height: auto;" />
+                    }
+                    else
+                    {
+                        <text>No Image</text>
+                    }
+                </td>
                 <td>
                     <a class="btn btn-outline-info btn-sm" href="/Trivia?id=@game.gameId" name="gameId">Quiz</a>
                     <a class="btn btn-outline-success btn-sm" href="/Game/Rate?id=@game.gameId">Rate</a>

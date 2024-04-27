@@ -47,6 +47,7 @@ namespace VideoGameGrade.Pages
                 return Page();
             }
 
+            //query database to fetch username/email
             var user = await _db.QuerySingleOrDefaultAsync<User>(
                 "SELECT * FROM usertable WHERE userName = @UserName", new { UserName = UserEmail });
 
