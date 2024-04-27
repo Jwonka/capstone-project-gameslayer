@@ -7,7 +7,6 @@ using System.ComponentModel;
 using VideoGameGrade.Classes;
 using static VideoGameGrade.Pages.GameCollectionModel;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
-using System;
 
 namespace VideoGameGrade.Pages
 {
@@ -20,6 +19,7 @@ namespace VideoGameGrade.Pages
         public GameCollectionModel(ILogger<GameCollectionModel> logger)
         {
             _logger = logger;
+
         }
 
         public void OnGet()
@@ -35,7 +35,7 @@ namespace VideoGameGrade.Pages
                 using (MySqlConnection connection = new MySqlConnection(connectionString))
                 {
                     connection.Open();
-                    String sql = "SELECT * FROM gametable";
+                    string sql = "SELECT * FROM gametable";
                     using (MySqlCommand command = new MySqlCommand(sql, connection))
                     {
                         using (MySqlDataReader reader = command.ExecuteReader())
@@ -53,20 +53,6 @@ namespace VideoGameGrade.Pages
                                 gamesInfo.gameImage = reader.IsDBNull(6) ? null : reader.GetString(6);
 
 
-                                
-
-                                //TODO Display game image from database
-                                if (!reader.IsDBNull(6))
-                                {
-                                    //gamesInfo.gameImage = (byte[])reader.GetValue(7);
-                                    gamesInfo.gameImage = null;
-                                }
-                                else
-                                {
-                                    gamesInfo.gameImage = null;
-                                }
-
-
                                 gamesList.Add(gamesInfo);
                             }
                             reader.Close();
@@ -78,80 +64,97 @@ namespace VideoGameGrade.Pages
             catch (Exception ex)
             {
                 _logger.LogError("Exception occurred: " + ex.ToString());
-                ViewData["searchMessage"] = "Exception occurred: " + ex.ToString();
+                Console.WriteLine("Exception: " + ex.ToString());
             }
-
             int number;
-            List<GamesInfo> match = new List<GamesInfo>();
-            
-            // Check if searchGame has a value
-            if (!string.IsNullOrWhiteSpace(searchGame))
+
+            for (int i = 0; i < gamesList.Count(); i++)
             {
-                foreach (var game in gamesList)
+                // Check if searchGame has a value
+                if (!string.IsNullOrEmpty(searchGame) && !string.IsNullOrWhiteSpace(searchGame))
                 {
-                    // Optimize validation by trimming empty spaces, converting to lowercase and replacing hyphens with an empty space
-                    searchGame = searchGame.Trim().ToLower().Replace("-", " ");
-                    string gTitle = game.gameTitle.Trim().ToLower().Replace("-", " ");
-                    string gPub = game.gamePublisher.Trim().ToLower().Replace("-", " ");
-                    string console = game.gameConsole.Trim().ToLower().Replace("-", " ");
-                    string gCat = game.gameCategory.Trim().ToLower().Replace("-", " ");
-
-                    // Optimize search by replacing commas with an empty space
-                    searchGame = searchGame.Replace(",", " ");
-                    gTitle = gTitle.Replace(",", " ");
-                    gCat = gCat.Replace(",", " ");
-                    gPub = gPub.Replace(",", " ");
-                    console = console.Replace(",", " ");
-
-                    // Boolean that allows searching by gameId and not include titles or categories with numbers
-                    Boolean digit = int.TryParse(searchGame, out number);
+                    // Strip searchGame of whitespace from beginning and end
+                    searchGame = searchGame.Trim();
 
                     // If it is an integer search by gameId
-                    if (number.Equals(game.gameId))
+                    if (int.TryParse(searchGame, out number) && number.Equals(gamesList[i].gameId))
                     {
-                        match.Add(game);
+                        gamesList = gamesList.Where(Game => Game.gameId.Equals(number)).ToList();
+                        return;
                     }
 
-                    // Check for matches by title
-                    if (gTitle.Contains(searchGame) && !match.Contains(game) && !digit)
+                    // No game found display message
+                    if (!number.Equals(gamesList[i].gameId) && i == gamesList.Count() - 1)
                     {
-                        match.Add(game);
+                        gamesList.Clear();
+                        ViewData["SearchMessage"] = "Our records do not match your request";
+                        return;
                     }
 
-                    // Check for matches by publisher
-                    if (gPub.Contains(searchGame) && !match.Contains(game) && !digit)
+                    // Search for title regardless of capitilization
+                    if (searchGame.ToLower().Equals(gamesList[i].gameTitle.ToLower()))
                     {
-                        match.Add(game);
+                        gamesList = gamesList.Where(Game => Game.gameTitle.ToLower().Contains(searchGame.ToLower())).ToList();
+                        return;
                     }
 
-                    // Check for matching consoles
-                    if (console.Contains(searchGame) && !match.Contains(game) && !digit)
+                    // No game found display message
+                    if (!searchGame.ToLower().Equals(gamesList[i].gameTitle.ToLower()) && i == gamesList.Count() - 1)
                     {
-                        match.Add(game);
+                        gamesList.Clear();
+                        ViewData["SearchMessage"] = "Our records do not match your request";
+                        return;
                     }
 
-                    // Check for matching category
-                    if (gCat.Contains(searchGame) && !match.Contains(game) && !digit)
+                    // Search for publisher regardless of capitilization
+                    if (searchGame.ToLower().Equals(gamesList[i].gamePublisher.ToLower()))
                     {
-                        match.Add(game);
+                        gamesList = gamesList.Where(Game => Game.gamePublisher.ToLower().Contains(searchGame.ToLower())).ToList();
+                        return;
                     }
-                }
-                if (match.Count > 0)
-                {
-                    gamesList = match;
-                    return;
+
+                    // No game found display message
+                    if (!searchGame.ToLower().Equals(gamesList[i].gamePublisher.ToLower()) && i == gamesList.Count() - 1)
+                    {
+                        gamesList.Clear();
+                        ViewData["SearchMessage"] = "Our records do not match your request";
+                        return;
+                    }
+
+                    // Search for Console regardless of capitilization
+                    if (searchGame.ToLower().Equals(gamesList[i].gameConsole.ToLower()))
+                    {
+                        gamesList = gamesList.Where(Game => Game.gameConsole.ToLower().Contains(searchGame.ToLower())).ToList();
+                        return;
+                    }
+
+                    // No game found display message
+                    if (!searchGame.ToLower().Equals(gamesList[i].gameConsole.ToLower()) && i == gamesList.Count() - 1)
+                    {
+                        gamesList.Clear();
+                        ViewData["SearchMessage"] = "Our records do not match your request";
+                        return;
+                    }
+
+                    // Search for Category regardless of capitilization
+                    if (searchGame.ToLower().Equals(gamesList[i].gameCategory.ToLower()))
+                    {
+                        gamesList = gamesList.Where(Game => Game.gameCategory.ToLower().Contains(searchGame.ToLower())).ToList();
+                        return;
+                    }
+
+                    // No game found display message
+                    if (!searchGame.ToLower().Equals(gamesList[i].gameCategory.ToLower()) && i == gamesList.Count() - 1)
+                    {
+                        gamesList.Clear();
+                        ViewData["SearchMessage"] = "Our records do not match your request";
+                        return;
+                    }
                 }
                 else
                 {
-                    searchGame = AddModel.CapFirstLetter(searchGame);
-                    gamesList.Clear();
-                    ViewData["searchMessage"] = "Our records do not contain " + searchGame + ".";
                     return;
                 }
-            }
-            else
-            {
-                return;
             }
         }
 
@@ -171,7 +174,6 @@ namespace VideoGameGrade.Pages
             public string gameQuiz { get; set; }
             public string gameImage { get; set; }
             public string gameAnswer { get; set; }
-
         }
     }
 }
