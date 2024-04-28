@@ -50,8 +50,7 @@ namespace VideoGameGrade.Pages
                                 gamesInfo.gameConsole = reader.IsDBNull(3) ? string.Empty : reader.GetString(3);
                                 gamesInfo.gameCategory = reader.IsDBNull(4) ? string.Empty : reader.GetString(4);
                                 gamesInfo.gameRating = reader.IsDBNull(5) ? 0 : reader.GetInt32(5);
-                                gamesInfo.gameImage = reader.IsDBNull(6) ? null : reader.GetString(6);
-
+                                gamesInfo.gameImage = reader.IsDBNull(6) ? string.Empty : reader.GetString(6);
 
                                 gamesList.Add(gamesInfo);
                             }
