@@ -5,6 +5,7 @@
 }
 
 <div class="text-center">
+    <h1>@(Model.triviaGame.Any() ? Model.triviaGame.First().gameName : "This game has no trivia questions to show")</h1>
     <h1 class="display-4">Game Trivia</h1>
     <h3>Click here to add a trivia question</h3>
     <button onclick="toggleVisible()">Create Question</button>
@@ -19,6 +20,7 @@
         </div>
     </div>
 }
+
 
 <div id="question" style="display: none;">
   
@@ -42,6 +44,9 @@
         
     </form>
     </div>
+<div>
+    Correct Answers: <span id="correctCount">0</span>
+</div>
     
 
     @if(Model.successMsg.Length>0){
@@ -61,6 +66,33 @@
             div.style.display = 'none';
         }
     }
+    function initializeCorrectCount() {
+        //check to see if theres a count and if not then make it 0
+        if (!localStorage.getItem('correctCount')) {
+            localStorage.setItem('correctCount', '0');
+        }
+    }
+    
+    function incrementCount(){
+            var count = parseInt(localStorage.getItem('correctCount')) || 0;
+            count++;
+            localStorage.setItem('correctCount', count.toString());
+            updateCorrectCount();
+    }
+    function updateCorrectCount() {
+        // Update the count on the page
+        var count = localStorage.getItem('correctCount') || 0;
+        document.getElementById('correctCount').textContent = count;
+    }
+    
+    window.onload = function () {
+        //gets called after everything else is loaded
+        initializeCorrectCount();
+        updateCorrectCount();
+    };
+  
+  
+
 </script>
 
 
@@ -69,10 +101,10 @@
     <table class="table">
 <thread>
             <tr class="text-white">
-        <th>ID</th>
-        <th>Name</th>
+        <th>Game Name</th>
         <th>Question</th>
         <th>Answer</th>
+                <th></th>
                 <th></th>
             </tr>
 </thread>
@@ -81,15 +113,34 @@
     @foreach(var item in Model.triviaGame){
         <form method="post">
         <tr>
-            <td>@item.gameIdValue</td>
+                    <!-- Leaving some of these for testing -->
+                    <!-- <td>@item.gameIdValue</td>-->
             <td>@item.gameName</td>
             <td>@item.gameQuiz</td>
-            <td>@item.quizId</td>
+                    <!-- <td>@item.quizId</td> -->
                     <input type="hidden" name="quizId" value="@item.quizId">
             <td><input type="text" name="quizAnswer" id="quizAnswer" class="form-control" /></td>
-            <td><button type="submit" class="form-control" name="submitBtn" value="quizSubmit">Submit</button></td>
-                    <td style="display: none;" id="correct"><span style="color: green;">&#10003;</span></td>
-                    <td style="display: none;" id="wrong"><span style="color: red;">X</span></td>
+            <td><button type="submit" class="form-control" name="submitBtn@(item.quizId)" value="quizSubmit" id="@($"quizSubmit_{item.quizId}")">Submit</button></td>
+                <td id="isTrue">
+                            @if (Model.EnteredIds.Contains(item.quizId))
+                            {
+                                    @if (Model.isCorrect)
+                                    {
+                                    <div style="display: block;" id="correct" name="submitBtn"><span style="color: green;font-size: 28px;">&#10003;</span></div>
+                                   <script>
+                                    incrementCount();
+                                        updateCorrectCnt();
+                                </script>
+                                }
+                                    else
+                                    {
+
+                                        <div style="display: block;" id="wrong" ><span style="color: red; font-size: 28px;">X</span></div>
+                                    }
+                                
+                            }
+
+                </td>
         </tr>
        </form>
     }
