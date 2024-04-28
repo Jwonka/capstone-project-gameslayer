@@ -1,5 +1,8 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore.Migrations;
 using MySql.Data.MySqlClient;
+using Org.BouncyCastle.Pqc.Crypto.Picnic;
+using System.Drawing;
 using static VideoGameGrade.Pages.GameCollectionModel;
 
 namespace VideoGameGrade.Pages
@@ -14,6 +17,7 @@ namespace VideoGameGrade.Pages
         public string gameConsole = string.Empty;
         public string gameCategory = string.Empty;
         public string title = string.Empty;
+        public static string gameImg = string.Empty;
         public static bool success = false;
 
         public static string CapFirstLetter(string lower)
@@ -87,7 +91,7 @@ namespace VideoGameGrade.Pages
                 {
                     connection.Open();
 
-                    String sqlTitle = "SELECT gameTitle FROM gametable";
+                    String sqlTitle = "SELECT gameTitle, gameImage FROM gametable";
                     using (MySqlCommand gameCommand = new MySqlCommand(sqlTitle, connection))
                     {
                         using (MySqlDataReader reader = gameCommand.ExecuteReader())
@@ -96,8 +100,10 @@ namespace VideoGameGrade.Pages
                             {
                                 GamesInfo gName = new GamesInfo();
                                 gName.gameTitle = reader.IsDBNull(0) ? string.Empty : reader.GetString(0);
+                                gName.gameImage = reader.IsDBNull(1) ? string.Empty : reader.GetString(1);
 
                                 title = gName.gameTitle.Trim().ToLower().ToString();
+                                gameImg = gName.gameImage;
 
                                 if (title.Equals(gameName.ToLower()))
                                 {
@@ -119,7 +125,7 @@ namespace VideoGameGrade.Pages
                         command.Parameters.AddWithValue("@gameConsole", gameConsole);
                         command.Parameters.AddWithValue("@gameCategory", gameCategory);
                         command.Parameters.AddWithValue("@gameRating", gamesInfo.gameRating);
-                        command.Parameters.AddWithValue("@gameImage", "No image");
+                        command.Parameters.AddWithValue("@gameImage", gameImg);
 
                         command.ExecuteNonQuery();
                     }
@@ -138,9 +144,10 @@ namespace VideoGameGrade.Pages
             gamesInfo.gameConsole = string.Empty;
             gamesInfo.gameCategory = string.Empty;
             gamesInfo.gameRating = 0;
-            //gamesInfo.gameImage = "";
+            gamesInfo.gameImage = string.Empty;
 
             successMessage = gameName + " was added.";
+
             success = true;
 
             Response.Redirect("/GameCollection");

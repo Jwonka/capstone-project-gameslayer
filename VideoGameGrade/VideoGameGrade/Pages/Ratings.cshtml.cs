@@ -14,6 +14,7 @@ namespace VideoGameGrade.Pages
     {
         public List<RateInfo> ratings = new List<RateInfo>();
         public string rateTitle = string.Empty;
+        public string rateImage = string.Empty;
         public string rateSuccess = string.Empty;
         public string rateError = string.Empty;
         public string comment = string.Empty;
@@ -47,7 +48,7 @@ namespace VideoGameGrade.Pages
                 using (MySqlConnection connect = new MySqlConnection(rateString))
                 {
                     connect.Open();
-                    String gTitleSql = "SELECT gametable.gameId, gametable.gameTitle,ratings.rateID, ratings.gameRating, ratings.comment, ratings.replyID FROM ratings INNER JOIN gametable ON gametable.gameId = ratings.gameId WHERE ratings.gameId = @id;";
+                    String gTitleSql = "SELECT gametable.gameId, gametable.gameTitle, gametable.gameImage, ratings.rateID, ratings.gameRating, ratings.comment, ratings.replyID FROM ratings INNER JOIN gametable ON gametable.gameId = ratings.gameId WHERE ratings.gameId = @id;";
                     using (MySqlCommand command = new MySqlCommand(gTitleSql, connect))
                     {
                         command.Parameters.AddWithValue("@id", iD);
@@ -59,15 +60,17 @@ namespace VideoGameGrade.Pages
                                 RateInfo rateInfo = new RateInfo();
                                 rateInfo.gameId = reader.IsDBNull(0) ? 0 : reader.GetInt32(0);
                                 rateInfo.gameTitle = reader.IsDBNull(1) ? string.Empty : reader.GetString(1);
-                                rateInfo.rateID = reader.IsDBNull(2) ? 0 : reader.GetInt32(2);
-                                rateInfo.gameRating = reader.IsDBNull(3) ? 0 : reader.GetInt32(3);
-                                rateInfo.comment = reader.IsDBNull(4) ? string.Empty : reader.GetString(4);
-                                rateInfo.replyID = reader.IsDBNull(5) ? 0 : reader.GetInt32(5);
+                                rateInfo.gameImage = reader.IsDBNull(2) ? string.Empty : reader.GetString(2);
+                                rateInfo.rateID = reader.IsDBNull(3) ? 0 : reader.GetInt32(3);
+                                rateInfo.gameRating = reader.IsDBNull(4) ? 0 : reader.GetInt32(4);
+                                rateInfo.comment = reader.IsDBNull(5) ? string.Empty : reader.GetString(5);
+                                rateInfo.replyID = reader.IsDBNull(6) ? 0 : reader.GetInt32(6);
 
                                 // Grab game title for display on Ratings page
                                 gameId = rateInfo.gameId;
                                 rateID = rateInfo.rateID;
                                 rateTitle = AddModel.CapFirstLetter(rateInfo.gameTitle.ToString());
+                                rateImage = rateInfo.gameImage;
                                 rating = rateInfo.gameRating;
                                 comment = rateInfo.comment;
                                 replyID = rateInfo.replyID;
@@ -116,41 +119,7 @@ namespace VideoGameGrade.Pages
                 ratingChange = 0;
             }
 
-            try
-            {
-                // Connection string
-                string rateString = "Server=videogamegrade.mysql.database.azure.com;Database=videogamegrade_db;Uid=gamegradeadmin;Pwd=capstone2024!;SslMode=Required;";
-
-                using (MySqlConnection connect = new MySqlConnection(rateString))
-                {
-                    connect.Open();
-                    String gTitleSql = "SELECT ratings.gameRating, gametable.gameTitle, ratings.comment FROM ratings INNER JOIN gametable ON gametable.gameId = ratings.gameId WHERE ratings.gameId = @id;";
-                    using (MySqlCommand command = new MySqlCommand(gTitleSql, connect))
-                    {
-                        command.Parameters.AddWithValue("@id", iD);
-                        using (MySqlDataReader reader = command.ExecuteReader())
-                        {
-                            while (reader.Read())
-                            {
-                                RateInfo info = new RateInfo();
-                                info.gameRating = reader.IsDBNull(0) ? 0 : reader.GetInt32(0);
-                                info.gameTitle = reader.IsDBNull(1) ? string.Empty : reader.GetString(1);
-                                info.comment = reader.IsDBNull(2) ? string.Empty : reader.GetString(2);
-                                rating = info.gameRating;
-                                rateTitle = info.gameTitle;
-                                comment = info.comment;
-                                ratings.Add(info);
-                            }
-                            reader.Close();
-                        }
-                    }
-                    connect.Close();
-                }
-            }
-            catch (Exception ex)
-            {
-                rateError = "Exception: " + ex.Message;
-            }
+            OnGet();
 
             if (rating <= 0 && ratingChange == -1)
             {
@@ -199,6 +168,8 @@ namespace VideoGameGrade.Pages
             [Required]
             [DisplayName("Game Title")]
             public string gameTitle { get; set; }
+
+            public string gameImage { get; set; }
 
 
             public int gameId { get; set; }

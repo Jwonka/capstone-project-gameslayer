@@ -9,6 +9,14 @@
     <div class ='text-center'>
         <div class="alert alert-danger fade show" role="alert">
             <h1>@Model.errorMessage</h1>
+            @if (!string.IsNullOrEmpty(@AddModel.gameImg) && AddModel.gameImg != "No image")
+            {
+                <img src="@Html.Raw(@AddModel.gameImg)" alt="Game Image" style="width: 100px; height: auto;" />
+            }
+            else
+            {
+                <img src="@Html.Raw("https://cs710032001ea63f0a3.blob.core.windows.net/images/kisspng-video-game-game-controller-joystick-online-game-vector-gamepad-5a7166f1d5b6b1.8005384115173813618754.png")" alt="Game Image" style="width: 100px; height: auto;" />
+            }
         </div>
     </div>
 }
@@ -66,6 +74,5 @@ else
         <div class="col-sm-3 d-grid">
             <a class="btn btn-outline-danger" href="/GameCollection" role="button">Cancel</a>
         </div>
-    </div>
-    
+    </div>  
 </form>
