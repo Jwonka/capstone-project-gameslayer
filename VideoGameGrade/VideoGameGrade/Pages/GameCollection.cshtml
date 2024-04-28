@@ -9,6 +9,14 @@
     {
         <div class="alert alert-success fade show" role="alert">
             <h1 class="alert-heading">@AddModel.successMessage</h1>
+            @if (!string.IsNullOrEmpty(@AddModel.gameImg) && AddModel.gameImg != "No image")
+            {
+                <img src="@Html.Raw(@AddModel.gameImg)" alt="Game Image" style="width: 100px; height: auto;" />
+            }
+            else
+            {
+                <img src="@Html.Raw("https://cs710032001ea63f0a3.blob.core.windows.net/images/kisspng-video-game-game-controller-joystick-online-game-vector-gamepad-5a7166f1d5b6b1.8005384115173813618754.png")" alt="Game Image" style="width: 100px; height: auto;" />
+            }
         </div>
         // Reset boolean flag for game added success message
         AddModel.success = false;

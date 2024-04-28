@@ -8,6 +8,16 @@
         <h1 class="display-4">Game Ratings</h1>
         <br />
         <h1>Rate @Model.rateTitle?</h1>
+        @if (!string.IsNullOrEmpty(Model.rateImage) && Model.rateImage != "No image")
+        {
+            <img src="@Html.Raw(@Model.rateImage)" alt="Game Image" style="width: 100px; height: auto;" />
+        }
+        else
+        {
+            <img src="@Html.Raw("https://cs710032001ea63f0a3.blob.core.windows.net/images/kisspng-video-game-game-controller-joystick-online-game-vector-gamepad-5a7166f1d5b6b1.8005384115173813618754.png")" alt="Game Image" style="width: 100px; height: auto;" />
+        }
+        <br />
+        <br />
         <button type="submit" class="btn btn-outline-success btn-group-lg" name="addRating" value="add">Add one to the games rating?</button>
         <button type="submit" class="btn btn-outline-danger btn-group-lg" name="removeRating" value="remove">Take one from the games rating?</button>
     </div>
@@ -53,7 +63,6 @@ else
                 <div id="@comment.rateID" style="display: none;">
                     <input class="form-control" type="text" name="reply" id="@comment.rateID" value="" />
                     <div class="text-end">
-                        <br />
                         <button onclick="toggleReply('@comment.rateID')" class="btn btn-outline-success btn-sm">submit</button>
                     </div>
                 </div>
@@ -81,7 +90,6 @@ else
     <div id="@Model.rateTitle" style="display: none;">
             <input class="form-control" type="text" name="reply" id="@Model.rateTitle" value="" />
             <div class="text-end">
-                <br />
                 <button onclick="toggleComment('@Model.rateTitle')" class="btn btn-outline-success btn-group-lg">Submit</button>
             </div>
     </div>
