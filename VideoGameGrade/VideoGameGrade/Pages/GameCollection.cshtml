@@ -1,18 +1,29 @@
 ﻿@page
 @model VideoGameGrade.Pages.GameCollectionModel
 @{
-    ViewData["Title"] = "Game Collection Review!";
+    ViewData["Title"] = "Game Collection Records!";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Check out our Game Collection</h1>
-    <p>Here we have our favorite classic games.</p>
-</div>
 <div class='text-center'>
-    @if (ViewData["SearchMessage"] != null)
+    @if (@AddModel.successMessage.Length > 0 && @AddModel.success)
+    {
+        <div class="alert alert-success fade show" role="alert">
+            <h1 class="alert-heading">@AddModel.successMessage</h1>
+        </div>
+        // Reset boolean flag for game added success message
+        AddModel.success = false;
+    }
+    else @if (ViewData["searchMessage"] != null)
     {
         <div class='alert alert-danger fade show' role='alert'>
-            <h1 class="alert-heading">@ViewData["SearchMessage"]</h1>
+            <h1 class="alert-heading">@ViewData["searchMessage"]</h1>
+        </div>
+    }
+    else
+    {
+        <div class="text-center">
+            <h1 class="display-4">Check out our Game Collection</h1>
+            <p>Here we have our favorite classic games.</p>
         </div>
     }
 </div>
@@ -49,7 +60,7 @@
                     }
                     else
                     {
-                        <text>No Image</text>
+                        <img src="@Html.Raw("https://cs710032001ea63f0a3.blob.core.windows.net/images/OldSchoolGaming.png")" alt="Game Image" style="width: 100px; height: auto;" />
                     }
                 </td>
                 <td>

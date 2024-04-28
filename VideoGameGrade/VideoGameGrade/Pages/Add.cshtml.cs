@@ -119,7 +119,7 @@ namespace VideoGameGrade.Pages
                         command.Parameters.AddWithValue("@gameConsole", gameConsole);
                         command.Parameters.AddWithValue("@gameCategory", gameCategory);
                         command.Parameters.AddWithValue("@gameRating", gamesInfo.gameRating);
-                        command.Parameters.AddWithValue("@gameImage", "Stand-in");
+                        command.Parameters.AddWithValue("@gameImage", "No image");
 
                         command.ExecuteNonQuery();
                     }
