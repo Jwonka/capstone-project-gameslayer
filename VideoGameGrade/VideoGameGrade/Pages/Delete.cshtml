@@ -1,0 +1,38 @@
+﻿@page
+@using MySql.Data.MySqlClient;
+@{
+    try
+    {
+        String id = Request.Query["id"];
+
+        string connectionString = "Server=videogamegrade.mysql.database.azure.com;Database=videogamegrade_db;Uid=gamegradeadmin;Pwd=capstone2024!;SslMode=Required;";
+
+        using (MySqlConnection connection = new MySqlConnection(connectionString))
+        {
+            connection.Open();
+
+            String sql = "DELETE FROM gametable WHERE gameId=@id";
+            using (MySqlCommand command = new MySqlCommand(sql, connection))
+            {
+                command.Parameters.AddWithValue("@id", id);
+
+                int rowsAffected = command.ExecuteNonQuery();
+
+                if (rowsAffected > 0)
+                {
+                    TempData["DeleteMessage"] = "Game deleted successfully."; // Set success message
+                }
+                else
+                {
+                    TempData["DeleteMessage"] = "Failed to delete game."; // Set failure message
+                }
+            }
+        }
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine("An error occurred: " + ex.Message);
+        TempData["DeleteMessage"] = "An error occurred while deleting the game.";
+    }
+    Response.Redirect("/GameCollection");
+}

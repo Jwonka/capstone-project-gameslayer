@@ -38,6 +38,13 @@
     }
 </div>
 
+@if (TempData["DeleteMessage"] != null)
+    {
+        <div class="alert alert-info" role="alert">
+            @TempData["DeleteMessage"]
+        </div>
+    }
+
 <h2>
     <a class="btn btn-outline-primary btn-sm" href="/Add">New Game</a>
 </h2>
