@@ -12,12 +12,13 @@ namespace VideoGameGrade.Pages
         public GamesInfo gamesInfo = new GamesInfo();
         public string errorMessage = string.Empty;
         public static string successMessage = string.Empty;
-        public string gameName = string.Empty;
+        public static string gameName = string.Empty;
         public string gamePub = string.Empty;
         public string gameConsole = string.Empty;
         public string gameCategory = string.Empty;
         public string title = string.Empty;
         public static string gameImg = string.Empty;
+        public static string insertImg = string.Empty;
         public static bool success = false;
 
         public static string CapFirstLetter(string lower)
@@ -53,6 +54,7 @@ namespace VideoGameGrade.Pages
             gamesInfo.gamePublisher = Request.Form["gamePublisher"];
             gamesInfo.gameConsole = Request.Form["gameConsole"];
             gamesInfo.gameCategory = Request.Form["gameCategory"];
+            gamesInfo.gameImage = Request.Form["gameImage"];
             // Explicitly convert gameRating to int
             if (int.TryParse(Request.Form["gameRating"], out int rating) && rating >= 0 && rating <= 1)
             {
@@ -125,7 +127,7 @@ namespace VideoGameGrade.Pages
                         command.Parameters.AddWithValue("@gameConsole", gameConsole);
                         command.Parameters.AddWithValue("@gameCategory", gameCategory);
                         command.Parameters.AddWithValue("@gameRating", gamesInfo.gameRating);
-                        command.Parameters.AddWithValue("@gameImage", gameImg);
+                        command.Parameters.AddWithValue("@gameImage", gamesInfo.gameImage);
 
                         command.ExecuteNonQuery();
                     }
@@ -147,7 +149,7 @@ namespace VideoGameGrade.Pages
             gamesInfo.gameImage = string.Empty;
 
             successMessage = gameName + " was added.";
-
+            insertImg = gamesInfo.gameImage;
             success = true;
 
             Response.Redirect("/GameCollection");

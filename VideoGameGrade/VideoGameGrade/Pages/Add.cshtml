@@ -7,15 +7,28 @@
 @if (Model.errorMessage.Length > 0)
 {
     <div class ='text-center'>
-        <div class="alert alert-danger fade show" role="alert">
-            <h1>@Model.errorMessage</h1>
-            @if (!string.IsNullOrEmpty(@AddModel.gameImg) && AddModel.gameImg != "No image")
+        <div>
+            @if (Model.errorMessage.Contains(@AddModel.gameName))
             {
-                <img src="@Html.Raw(@AddModel.gameImg)" alt="Game Image" style="width: 100px; height: auto;" />
+                @if (!string.IsNullOrEmpty(@AddModel.gameImg) && AddModel.gameImg != "No image")
+                {
+                    <h1 class="display-4">@Model.errorMessage</h1>
+                    <img src="@Html.Raw(@AddModel.gameImg)" alt="Game Image" style="width: 100px; height: auto;" />
+                    <br />
+                    <br />
+                }
+                else
+                {
+                    <h1 class="display-4">@Model.errorMessage</h1>
+                    <img src="@Html.Raw("https://cs710032001ea63f0a3.blob.core.windows.net/images/kisspng-video-game-game-controller-joystick-online-game-vector-gamepad-5a7166f1d5b6b1.8005384115173813618754.png")" alt="Game Image" style="width: 100px; height: auto;" />
+                    <br />
+                    <br />
+                }
             }
             else
             {
-                <img src="@Html.Raw("https://cs710032001ea63f0a3.blob.core.windows.net/images/kisspng-video-game-game-controller-joystick-online-game-vector-gamepad-5a7166f1d5b6b1.8005384115173813618754.png")" alt="Game Image" style="width: 100px; height: auto;" />
+                <h1 class="alert alert-danger fade show" role="alert">@Model.errorMessage</h1>
+                <br />
             }
         </div>
     </div>
