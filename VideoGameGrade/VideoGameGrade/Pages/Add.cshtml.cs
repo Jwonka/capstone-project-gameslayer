@@ -71,7 +71,7 @@ namespace VideoGameGrade.Pages
                 errorMsg = "New games can only have a maximum rating of 1.";
                 return;
             }
-            //gamesInfo.gameImage = Request.Form["gameImage"];
+            gamesInfo.gameImage = Request.Form["gameImage"];
 
             if (!string.IsNullOrWhiteSpace(gamesInfo.gameTitle) && !string.IsNullOrWhiteSpace(gamesInfo.gamePublisher) && !string.IsNullOrWhiteSpace(gamesInfo.gameConsole) && !string.IsNullOrWhiteSpace(gamesInfo.gameCategory))
             {
