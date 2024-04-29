@@ -9,9 +9,9 @@
     {
         <div>
             <h1 class="display-4">@AddModel.successMessage</h1>
-            @if (!string.IsNullOrEmpty(@AddModel.gameImg) && AddModel.gameImg != "No image")
+            @if (!string.IsNullOrEmpty(@AddModel.insertImg) && AddModel.insertImg != "No image")
             {
-                <img src="@Html.Raw(@AddModel.gameImg)" alt="Game Image" style="width: 100px; height: auto;" />
+                <img src="@Html.Raw(@AddModel.insertImg)" alt="Game Image" style="width: 100px; height: auto;" />
             }
             else
             {
