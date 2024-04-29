@@ -11,6 +11,7 @@ namespace VideoGameGrade.Pages
     {
         public GamesInfo gamesInfo = new GamesInfo();
         public string errorMessage = string.Empty;
+        public string errorMsg = string.Empty;
         public static string successMessage = string.Empty;
         public static string gameName = string.Empty;
         public string gamePub = string.Empty;
@@ -62,12 +63,12 @@ namespace VideoGameGrade.Pages
             }
             else if(rating < 0)
             {
-                errorMessage = "Ratings can not be negative.";
+                errorMsg = "Ratings can not be negative.";
                 return;
             }
             else
             {
-                errorMessage = "New games can only have a maximum rating of 1.";
+                errorMsg = "New games can only have a maximum rating of 1.";
                 return;
             }
             //gamesInfo.gameImage = Request.Form["gameImage"];
@@ -81,7 +82,7 @@ namespace VideoGameGrade.Pages
             }
             else
             {
-                errorMessage = "Game Title, Publisher, Console, and Category are required.";
+                errorMsg = "Game Title, Publisher, Console, and Category are required.";
                 return;
             }
 
