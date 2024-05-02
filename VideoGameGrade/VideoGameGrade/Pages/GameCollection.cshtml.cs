@@ -47,7 +47,7 @@ namespace VideoGameGrade.Pages
                                 gamesInfo.gameId = reader.IsDBNull(0) ? 0 : reader.GetInt32(0);
                                 gamesInfo.gameTitle = reader.IsDBNull(1) ? string.Empty : reader.GetString(1);
                                 gamesInfo.gamePublisher = reader.IsDBNull(2) ? string.Empty : reader.GetString(2);
-                                gamesInfo.gameConsole = reader.IsDBNull(3) ? string.Empty : reader.GetString(3);
+                                gamesInfo.gamePlatform = reader.IsDBNull(3) ? string.Empty : reader.GetString(3);
                                 gamesInfo.gameCategory = reader.IsDBNull(4) ? string.Empty : reader.GetString(4);
                                 gamesInfo.gameRating = reader.IsDBNull(5) ? 0 : reader.GetInt32(5);
                                 gamesInfo.gameImage = reader.IsDBNull(6) ? string.Empty : reader.GetString(6);
@@ -77,7 +77,7 @@ namespace VideoGameGrade.Pages
                     searchGame = searchGame.Trim().ToLower().Replace("-", " ");
                     string gTitle = game.gameTitle.Trim().ToLower().Replace("-", " ");
                     string gPub = game.gamePublisher.Trim().ToLower().Replace("-", " ");
-                    string console = game.gameConsole.Trim().ToLower().Replace("-", " ");
+                    string platform = game.gamePlatform.Trim().ToLower().Replace("-", " ");
                     string gCat = game.gameCategory.Trim().ToLower().Replace("-", " ");
 
                     // Optimize search by replacing commas with an empty space
@@ -85,7 +85,7 @@ namespace VideoGameGrade.Pages
                     gTitle = gTitle.Replace(",", " ");
                     gCat = gCat.Replace(",", " ");
                     gPub = gPub.Replace(",", " ");
-                    console = console.Replace(",", " ");
+                    platform = platform.Replace(",", "");
 
                     // Boolean that allows searching by gameId and not include titles or categories with numbers
                     Boolean digit = int.TryParse(searchGame, out number);
@@ -109,7 +109,7 @@ namespace VideoGameGrade.Pages
                     }
 
                     // Check for matching consoles
-                    if (console.Contains(searchGame) && !match.Contains(game) && !digit)
+                    if (platform.Contains(searchGame) && !match.Contains(game) && !digit)
                     {
                         match.Add(game);
                     }
@@ -149,7 +149,7 @@ namespace VideoGameGrade.Pages
             public string gameTitle { get; set; }
 
             public string gamePublisher { get; set; }
-            public string gameConsole { get; set; }
+            public string gamePlatform { get; set; }
             public string gameCategory { get; set; }
             public int gameRating { get; set; }
             public string gameImage { get; set; }
