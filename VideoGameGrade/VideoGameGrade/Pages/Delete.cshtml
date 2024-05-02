@@ -1,7 +1,9 @@
 ﻿@page
 @using MySql.Data.MySqlClient;
+
 @if (User.Identity.IsAuthenticated)
 {
+
     try
     {
         String id = Request.Query["id"];

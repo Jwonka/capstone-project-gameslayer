@@ -1,9 +1,17 @@
-﻿@page
+@page
 @model VideoGameGrade.Pages.AddModel
 @{
     ViewData["Title"] = "Add your favorite games!";
 }
-@if (User.Identity.IsAuthenticated)
+
+@if (!User.Identity.IsAuthenticated)
+{ 
+    TempData["ErrorMessage"] = "You must be logged in to add video games.";
+    Response.Redirect("/Error");
+}
+
+@if (Model.errorMessage.Length > 0)
+
 {
     @if (Model.errorMessage.Length > 0)
     {
@@ -107,9 +115,4 @@
             </div>
         </div>
     </form>
-}
-else
-{
-    Response.Redirect("/GameCollection");
-    TempData["DeleteMessage"] = "You must be logged in to add a game.";
 }
