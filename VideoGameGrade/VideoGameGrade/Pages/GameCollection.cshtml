@@ -44,10 +44,16 @@
             @TempData["DeleteMessage"]
         </div>
     }
-
-<h2>
-    <a class="btn btn-outline-primary btn-sm" href="/Add">New Game</a>
-</h2>
+@if (User.Identity.IsAuthenticated)
+    {
+        <h2>
+            <a class="btn btn-outline-primary btn-sm" href="/Add">New Game</a>
+        </h2>
+    }
+    else
+    {
+        <h2>Login to add games <br><a class="btn btn-outline-primary btn-sm" href="/Login">Login in here</a></h2>
+    }
 
 <table class="table">
     <thead class="text-white">
@@ -83,9 +89,16 @@
                 <td>
                     <a class="btn btn-outline-info btn-sm" href="/Trivia?id=@game.gameId" name="gameId">Quiz</a>
                     <br />
-                    <a class="btn btn-outline-success btn-sm" href="/Ratings?id=@game.gameId">Rate</a>
-                    <br />
-                    <a class="btn btn-outline-danger btn-sm" href="/Delete?id=@game.gameId">Delete</a>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <a class="btn btn-outline-success btn-sm" href="/Ratings?id=@game.gameId">Rate</a>
+                        <br />
+                        <a class="btn btn-outline-danger btn-sm" href="/Delete?id=@game.gameId">Delete</a>
+                    }
+                    else
+                    {
+                        <p><small>Login to Rate or Delete this game</small> <br><a class="btn btn-outline-primary btn-sm" href="/Login">Login in here</a></p>
+                    }
                 </td>
             </tr>
         }

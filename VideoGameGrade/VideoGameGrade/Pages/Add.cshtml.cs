@@ -137,7 +137,7 @@ namespace VideoGameGrade.Pages
             }
             catch
             (Exception ex)
-            {
+            {   
                 errorMessage = ex.Message;
                 return;
             }

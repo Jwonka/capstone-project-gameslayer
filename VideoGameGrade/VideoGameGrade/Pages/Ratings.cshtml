@@ -3,6 +3,11 @@
 @{
     ViewData["Title"] = "Rate your favorite games!";
 }
+@if (!User.Identity.IsAuthenticated)
+{
+    TempData["ErrorMessage"] = "You must be logged in to Rate video games.";
+    Response.Redirect("/Error");
+}
 <form method="post">
     <div class="text-center">
         <h1 class="display-4">Game Ratings</h1>

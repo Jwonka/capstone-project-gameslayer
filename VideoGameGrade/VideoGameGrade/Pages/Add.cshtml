@@ -3,6 +3,11 @@
 @{
     ViewData["Title"] = "Add your favorite games!";
 }
+@if (!User.Identity.IsAuthenticated)
+{ 
+    TempData["ErrorMessage"] = "You must be logged in to add video games.";
+    Response.Redirect("/Error");
+}
 
 @if (Model.errorMessage.Length > 0)
 {
