@@ -9,7 +9,7 @@
     {
         <div>
             <h1 class="display-4">@AddModel.successMessage</h1>
-            @if (!string.IsNullOrEmpty(@AddModel.insertImg) && AddModel.insertImg != "No image")
+            @if (!string.IsNullOrEmpty(@AddModel.insertImg) && AddModel.insertImg != "")
             {
                 <img src="@Html.Raw(@AddModel.insertImg)" alt="Game Image" style="width: 100px; height: auto;" />
             }
@@ -27,6 +27,12 @@
             <h1 class="alert-heading">@ViewData["searchMessage"]</h1>
         </div>
     }
+    else if (TempData["DeleteMessage"] != null)
+    {
+        <div class="alert alert-info fade show" role="alert">
+            <h1 class="alert-heading">@TempData["DeleteMessage"]</h1>
+        </div>
+    }
     else
     {
         <div class="text-center">
@@ -37,6 +43,7 @@
         </div>
     }
 </div>
+
 
 @if (TempData["DeleteMessage"] != null)
     {
@@ -55,12 +62,13 @@
         <h2>Login to add games <br><a class="btn btn-outline-primary btn-sm" href="/Login">Login in here</a></h2>
     }
 
+
 <table class="table">
     <thead class="text-white">
         <tr>
             <th>Title</th>
             <th>Publisher</th>
-            <th>Console</th>
+            <th>Platform</th>
             <th>Category</th>
             <th>Rating</th>
             <th>Image</th>
@@ -73,7 +81,7 @@
             <tr>
                 <td>@game.gameTitle</td>
                 <td>@game.gamePublisher</td>
-                <td>@game.gameConsole</td>
+                <td>@game.gamePlatform</td>
                 <td>@game.gameCategory</td>
                 <td>@game.gameRating</td>
                 <td>

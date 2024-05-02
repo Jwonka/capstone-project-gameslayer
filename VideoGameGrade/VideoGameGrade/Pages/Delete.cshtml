@@ -1,7 +1,9 @@
 ﻿@page
 @using MySql.Data.MySqlClient;
 
-@{
+@if (User.Identity.IsAuthenticated)
+{
+
     try
     {
         String id = Request.Query["id"];
@@ -36,4 +38,9 @@
         TempData["DeleteMessage"] = "An error occurred while deleting the game.";
     }
     Response.Redirect("/GameCollection");
+}
+ else
+{
+    Response.Redirect("/GameCollection");
+    TempData["DeleteMessage"] = "You must be logged in to delete the game.";
 }
