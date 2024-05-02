@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.IO;
 using VideoGameGrade.Services;
 using static VideoGameGrade.Pages.GameCollectionModel;
+using VideoGameGrade.Classes;
 
 namespace VideoGameGrade.Pages
 {
@@ -15,13 +16,17 @@ namespace VideoGameGrade.Pages
         // Properties to hold game information and error messages
         public GamesInfo gamesInfo = new GamesInfo();
         public string errorMessage = string.Empty;
+        public string errorMsg = string.Empty;
         public static string successMessage = string.Empty;
         public string gameName = string.Empty;
         public string gamePub = string.Empty;
-        public string gameConsole = string.Empty;
+        public string gamePlatform = string.Empty;
         public string gameCategory = string.Empty;
+        public string title = string.Empty;
+        public static string gameImg = string.Empty;
         public static bool success = false;
         public static string insertImg { get; set; }
+
 
         private readonly IAzureBlobStorageService _azureBlobStorageService;
 
@@ -71,36 +76,25 @@ namespace VideoGameGrade.Pages
             // Retrieve game information from form data
             gamesInfo.gameTitle = Request.Form["gameTitle"];
             gamesInfo.gamePublisher = Request.Form["gamePublisher"];
-            gamesInfo.gameConsole = Request.Form["gameConsole"];
+            gamesInfo.gamePlatform = Request.Form["gamePlatform"];
             gamesInfo.gameCategory = Request.Form["gameCategory"];
 
-            // Validate game rating and required fields
-            if (!int.TryParse(Request.Form["gameRating"], out int rating) || rating < 0 || rating > 1)
-            {
-                errorMessage = "Invalid game rating. Ensure it's between 0 and 1.";
-                return Page(); // Stop execution and return the same page with an error message
-            }
-            gamesInfo.gameRating = rating;
+            // Set default gameRating
+            gamesInfo.gameRating = 5;
 
             if (string.IsNullOrWhiteSpace(gamesInfo.gameTitle) || string.IsNullOrWhiteSpace(gamesInfo.gamePublisher) ||
-                string.IsNullOrWhiteSpace(gamesInfo.gameConsole) || string.IsNullOrWhiteSpace(gamesInfo.gameCategory))
+                string.IsNullOrWhiteSpace(gamesInfo.gamePlatform) || string.IsNullOrWhiteSpace(gamesInfo.gameCategory))
             {
-                errorMessage = "All fields are required.";
+                errorMessage = "Title, publisher, platform, and category are required.";
                 return Page(); // Stop execution and return the same page with an error message
             }
 
             // Capitalize game information
             gameName = CapFirstLetter(gamesInfo.gameTitle.Trim());
             gamePub = CapFirstLetter(gamesInfo.gamePublisher.Trim());
-            gameConsole = CapFirstLetter(gamesInfo.gameConsole.Trim());
-            gameCategory = CapFirstLetter(gamesInfo.gameCategory.Trim());
 
             // Upload game image
             string imageUrl = await UploadGameImage();
-            if (imageUrl == null)
-            {
-                return Page(); // Return with error message if upload fails
-            }
 
             // Save game information to the database
             if (!SaveGameToDatabase(imageUrl))
@@ -109,6 +103,7 @@ namespace VideoGameGrade.Pages
             }
 
             // Upon successful addition
+            insertImg = imageUrl;
             successMessage = $"{gameName} was added.";
             success = true;
 
@@ -134,8 +129,7 @@ namespace VideoGameGrade.Pages
             }
             else
             {
-                errorMessage = "An image file is required.";
-                return null;
+                return "https://cs710032001ea63f0a3.blob.core.windows.net/images/kisspng-video-game-game-controller-joystick-online-game-vector-gamepad-5a7166f1d5b6b1.8005384115173813618754.png";
             }
         }
 
@@ -148,17 +142,45 @@ namespace VideoGameGrade.Pages
                 using (MySqlConnection connection = new MySqlConnection(connectionString))
                 {
                     connection.Open();
-                    string sql = "INSERT INTO gametable (gameTitle, gamePublisher, gameConsole, gameCategory, gameRating, gameImage) VALUES (@gameTitle, @gamePublisher, @gameConsole, @gameCategory, @gameRating, @gameImage)";
+
+                    String sqlTitle = "SELECT gameTitle, gameImage FROM gametable";
+
+                    using (MySqlCommand gameCommand = new MySqlCommand(sqlTitle, connection))
+                    {
+                        using (MySqlDataReader reader = gameCommand.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                GamesInfo gName = new GamesInfo();
+                                gName.gameTitle = reader.IsDBNull(0) ? string.Empty : reader.GetString(0);
+                                gName.gameImage = reader.IsDBNull(1) ? string.Empty : reader.GetString(1);
+
+                                title = gName.gameTitle.Trim().ToLower().ToString();
+                                gameImg = gName.gameImage;
+
+                                if (title.Equals(gameName.ToLower()))
+                                {
+                                    errorMsg = gameName + " is already in our records.";
+                                    return false;
+                                }
+                            }
+                            reader.Close();
+                        }
+                    }
+
+                    string sql = "INSERT INTO gametable (gameTitle, gamePublisher, gamePlatform, gameCategory, gameRating, gameImage) VALUES (@gameTitle, @gamePublisher, @gamePlatform, @gameCategory, @gameRating, @gameImage)";
+                    
                     using (MySqlCommand command = new MySqlCommand(sql, connection))
                     {
                         command.Parameters.AddWithValue("@gameTitle", gameName);
                         command.Parameters.AddWithValue("@gamePublisher", gamePub);
-                        command.Parameters.AddWithValue("@gameConsole", gameConsole);
-                        command.Parameters.AddWithValue("@gameCategory", gameCategory);
+                        command.Parameters.AddWithValue("@gamePlatform", gamesInfo.gamePlatform);
+                        command.Parameters.AddWithValue("@gameCategory", gamesInfo.gameCategory);
                         command.Parameters.AddWithValue("@gameRating", gamesInfo.gameRating);
                         command.Parameters.AddWithValue("@gameImage", imageUrl);
                         command.ExecuteNonQuery();
                     }
+                    connection.Close();
                 }
                 return true;
             }
