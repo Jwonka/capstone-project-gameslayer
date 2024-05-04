@@ -3,8 +3,40 @@ html {
 }
 body {
     background-image: url("https://cs710032001ea63f0a3.blob.core.windows.net/images/kisspng-video-game-game-controller-joystick-online-game-vector-gamepad-5a7166f1d5b6b1.8005384115173813618754.png");
+    background-size: cover;
+    background-repeat: no-repeat;
 }
-
+.game-table-background {
+    background-image: url("https://cs710032001ea63f0a3.blob.core.windows.net/images/OnTheWay.png"); 
+    background-size: contain;
+    background-repeat: no-repeat;
+    color: #FFFFFF;
+}
+.div-contact-background {
+    filter: blur(0.6px);
+    text-align: center;
+    background-image: url("https://cs710032001ea63f0a3.blob.core.windows.net/images/OldSchoolGaming.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    color: #FFFFFF;
+}
+.contact-header {
+    background-color: rgba(0, 0, 0, 0.7);
+    text-align: center;
+    color: #FFFFFF;
+}
+.rate-text-color {
+    color: #00FF00;
+    text-align: center;
+}
+.header-rate-text-color {
+    color: #FF0000;
+    text-align: center;
+}
+.rate-background {
+    background-image: url("https://cs710032001ea63f0a3.blob.core.windows.net/images/HangingOut.png");
+    background-repeat: no-repeat;
+}
 @media (min-width: 768px) {
   html {
     font-size: 16px;

@@ -88,7 +88,7 @@
     <a class="btn btn-outline-primary btn-sm" href="/Add">New Game</a>
 </h2>
 
-<table class="table">
+<table class="table game-table-background">
     <thead class="text-white">
         <tr>
             <th>Title</th>
@@ -96,20 +96,16 @@
             <th>Platform</th>
             <th>Category</th>
             <th>Rating</th>
-            <th>Image</th>
+            <th></th>
             <th></th>
         </tr>
     </thead>
-    <tbody class="text-white">
+    <tbody class="game-table-background">
         @foreach (var game in Model.gamesList)
         {
             <tr>
-                <td>@game.gameTitle</td>
-                <td>@game.gamePublisher</td>
-                <td>@game.gamePlatform</td>
-                <td>@game.gameCategory</td>
-                <td>@game.gameRating</td>
                 <td>
+                    @game.gameTitle<br />
                     @if (!string.IsNullOrEmpty(game.gameImage) && game.gameImage != "No image")
                     {
                         <img src="@Html.Raw(game.gameImage)" alt="Game Image" style="width: 100px; height: auto;" />
@@ -119,6 +115,11 @@
                         <img src="@Html.Raw("https://cs710032001ea63f0a3.blob.core.windows.net/images/kisspng-video-game-game-controller-joystick-online-game-vector-gamepad-5a7166f1d5b6b1.8005384115173813618754.png")" alt="Game Image" style="width: 100px; height: auto;" />
                     }
                 </td>
+                <td>@game.gamePublisher</td>
+                <td>@game.gamePlatform</td>
+                <td>@game.gameCategory</td>
+                <td>@game.gameRating</td>
+                <td></td>
                 <td>
                     <a class="btn btn-outline-info btn-sm mt-2" href="/Trivia?id=@game.gameId" name="gameId">Trivia</a>
                     <br />
