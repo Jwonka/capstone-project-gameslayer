@@ -186,10 +186,12 @@ namespace VideoGameGrade.Pages
                 }
                 return true;
             }
+
             catch (Exception ex)
             {
                 errorMessage = "Database error: " + ex.Message;
                 return false;
+
             }
         }
     }
