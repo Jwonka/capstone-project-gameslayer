@@ -6,7 +6,7 @@
 
 <div class='text-center'>
     @if (@AddModel.successMessage.Length > 0 && @AddModel.success)
-    {
+    {   // Display success message with image if a game is added
         <div>
             <h1 class="display-4">@AddModel.successMessage</h1>
             @if (!string.IsNullOrEmpty(@AddModel.insertImg) && AddModel.insertImg != "")
@@ -22,20 +22,60 @@
         AddModel.success = false;
     }
     else @if (ViewData["searchMessage"] != null)
-    {
-        <div class='alert alert-danger fade show' role='alert'>
-            <h1 class="alert-heading">@ViewData["searchMessage"]</h1>
+    {   // Display search message informing the user no result was found if a search was performed
+        <div class="display-6">
+            <h1>@ViewData["searchMessage"]</h1>
         </div>
     }
     else if (TempData["DeleteMessage"] != null)
-    {
-        <div class="alert alert-info fade show" role="alert">
-            <h1 class="alert-heading">@TempData["DeleteMessage"]</h1>
+    {   // Display warning message for user trying to delete a game while not logged in or having no account
+        // Displays buttons to navigate to login or register page if a user attempts to delete a game
+        <div class="display-6">
+            <h1>@TempData["DeleteMessage"]</h1>
+            <br />
+            <a class="btn btn-outline-warning m-1" href="/Login">Login</a>
+            <a class="btn btn-outline-warning m-1" href="/Register">Register</a>
+        </div>
+    }
+    else if (TempData["AddMessage"] != null)
+    {   // Display warning message for user trying to add a game while not logged in or having no account
+        // Displays buttons to navigate to login or register page if a user attempts to add a game
+        <div class="display-6">
+            <h1>@TempData["AddMessage"]</h1>
+            <br/>
+            <a class="btn btn-outline-warning m-1" href="/Login">Login</a>
+            <a class="btn btn-outline-warning m-1" href="/Register">Register</a>
+        </div>
+    }
+    else if (TempData["RateMessage"] != null)
+    {   // Display warning message for user trying to rate a game while not logged in or having no account
+        // Displays buttons to navigate to login or register page if a user attempts to add a game
+        <div class="display-6">
+            <h1>@TempData["RateMessage"]</h1>
+            <br />
+            <a class="btn btn-outline-warning m-1" href="/Login">Login</a>
+            <a class="btn btn-outline-warning m-1" href="/Register">Register</a>
+        </div>
+    }
+    else if (TempData["TriviaMessage"] != null)
+    {   // Display warning message for user trying to access trivia for a game while not logged in or having no account
+        // Displays buttons to navigate to login or register page if a user attempts to add a game
+        <div class="display-6">
+            <h1>@TempData["TriviaMessage"]</h1>
+            <br />
+            <a class="btn btn-outline-warning m-1" href="/Login">Login</a>
+            <a class="btn btn-outline-warning m-1" href="/Register">Register</a>
+        </div>
+    }
+    else if (TempData["DeleteMsg"] != null)
+    {   // Display either a success message for successfully deleting a game or a error message
+        <div class="display-6">
+            <h1>@TempData["DeleteMsg"]</h1>
         </div>
     }
     else
-    {
-        <div class="text-center">
+    {   // If no other messages are present display heading
+        <div>
             <h1 class="display-4">Check out our Game Collection</h1>
             <br />
             <h3>Here we have our favorite classic games.</h3>
@@ -44,24 +84,9 @@
     }
 </div>
 
-
-@if (TempData["DeleteMessage"] != null)
-    {
-        <div class="alert alert-info" role="alert">
-            @TempData["DeleteMessage"]
-        </div>
-    }
-@if (User.Identity.IsAuthenticated)
-    {
-        <h2>
-            <a class="btn btn-outline-primary btn-sm" href="/Add">New Game</a>
-        </h2>
-    }
-    else
-    {
-        <h2>Login to add games <br><a class="btn btn-outline-primary btn-sm" href="/Login">Login in here</a></h2>
-    }
-
+<h2>   
+    <a class="btn btn-outline-primary btn-sm" href="/Add">New Game</a>
+</h2>
 
 <table class="table">
     <thead class="text-white">
@@ -95,18 +120,11 @@
                     }
                 </td>
                 <td>
-                    <a class="btn btn-outline-info btn-sm" href="/Trivia?id=@game.gameId" name="gameId">Quiz</a>
+                    <a class="btn btn-outline-info btn-sm mt-2" href="/Trivia?id=@game.gameId" name="gameId">Trivia</a>
                     <br />
-                    @if (User.Identity.IsAuthenticated)
-                    {
-                        <a class="btn btn-outline-success btn-sm" href="/Ratings?id=@game.gameId">Rate</a>
-                        <br />
-                        <a class="btn btn-outline-danger btn-sm" href="/Delete?id=@game.gameId">Delete</a>
-                    }
-                    else
-                    {
-                        <p><small>Login to Rate or Delete this game</small> <br><a class="btn btn-outline-primary btn-sm" href="/Login">Login in here</a></p>
-                    }
+                    <a class="btn btn-outline-success btn-sm mt-2" href="/Ratings?id=@game.gameId">Rate</a>
+                    <br />
+                    <a class="btn btn-outline-danger btn-sm mt-2" href="/Delete?id=@game.gameId">Delete</a>
                 </td>
             </tr>
         }
