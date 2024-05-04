@@ -100,20 +100,24 @@
             <th></th>
         </tr>
     </thead>
-    <tbody class="game-table-background rate-text-color">
+    <tbody class="game-table-background rate-text-color text-md-start">
         @foreach (var game in Model.gamesList)
         {
             <tr>
                 <td>
-                    @game.gameTitle<br />
-                    @if (!string.IsNullOrEmpty(game.gameImage) && game.gameImage != "No image")
-                    {
-                        <img src="@Html.Raw(game.gameImage)" alt="Game Image" style="width: 100px; height: auto;" />
-                    }
-                    else
-                    {
-                        <img src="@Html.Raw("https://cs710032001ea63f0a3.blob.core.windows.net/images/kisspng-video-game-game-controller-joystick-online-game-vector-gamepad-5a7166f1d5b6b1.8005384115173813618754.png")" alt="Game Image" style="width: 100px; height: auto;" />
-                    }
+                    <div>
+                        @game.gameTitle
+                    </div>
+                    <div>
+                        @if (!string.IsNullOrEmpty(game.gameImage) && game.gameImage != "No image")
+                        {
+                            <img src="@Html.Raw(game.gameImage)" alt="Game Image" style="width: 100px; height: auto; display: block;" />
+                        }
+                        else
+                        {
+                            <img src="@Html.Raw("https://cs710032001ea63f0a3.blob.core.windows.net/images/kisspng-video-game-game-controller-joystick-online-game-vector-gamepad-5a7166f1d5b6b1.8005384115173813618754.png")" alt="Game Image" style="width: 100px; height: auto;" />
+                        }
+                    </div>
                 </td>
                 <td>@game.gamePublisher</td>
                 <td>@game.gamePlatform</td>
