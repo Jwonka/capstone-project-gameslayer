@@ -8,7 +8,7 @@
     @if (@AddModel.successMessage.Length > 0 && @AddModel.success)
     {   // Display success message with image if a game is added
         <div>
-            <h1 class="display-4">@AddModel.successMessage</h1>
+            <h1 class="display-4 rate-text-color">@AddModel.successMessage</h1>
             @if (!string.IsNullOrEmpty(@AddModel.insertImg) && AddModel.insertImg != "")
             {
                 <img src="@Html.Raw(@AddModel.insertImg)" alt="Game Image" style="width: 100px; height: auto;" />
@@ -23,14 +23,14 @@
     }
     else @if (ViewData["searchMessage"] != null)
     {   // Display search message informing the user no result was found if a search was performed
-        <div class="display-6">
+        <div class="display-6 rate-text-color">
             <h1>@ViewData["searchMessage"]</h1>
         </div>
     }
     else if (TempData["DeleteMessage"] != null)
     {   // Display warning message for user trying to delete a game while not logged in or having no account
         // Displays buttons to navigate to login or register page if a user attempts to delete a game
-        <div class="display-6">
+        <div class="display-6 rate-text-color">
             <h1>@TempData["DeleteMessage"]</h1>
             <br />
             <a class="btn btn-outline-warning m-1" href="/Login">Login</a>
@@ -40,7 +40,7 @@
     else if (TempData["AddMessage"] != null)
     {   // Display warning message for user trying to add a game while not logged in or having no account
         // Displays buttons to navigate to login or register page if a user attempts to add a game
-        <div class="display-6">
+        <div class="display-6 rate-text-color">
             <h1>@TempData["AddMessage"]</h1>
             <br/>
             <a class="btn btn-outline-warning m-1" href="/Login">Login</a>
@@ -50,7 +50,7 @@
     else if (TempData["RateMessage"] != null)
     {   // Display warning message for user trying to rate a game while not logged in or having no account
         // Displays buttons to navigate to login or register page if a user attempts to add a game
-        <div class="display-6">
+        <div class="display-6 rate-text-color">
             <h1>@TempData["RateMessage"]</h1>
             <br />
             <a class="btn btn-outline-warning m-1" href="/Login">Login</a>
@@ -60,7 +60,7 @@
     else if (TempData["TriviaMessage"] != null)
     {   // Display warning message for user trying to access trivia for a game while not logged in or having no account
         // Displays buttons to navigate to login or register page if a user attempts to add a game
-        <div class="display-6">
+        <div class="display-6 rate-text-color">
             <h1>@TempData["TriviaMessage"]</h1>
             <br />
             <a class="btn btn-outline-warning m-1" href="/Login">Login</a>
@@ -69,7 +69,7 @@
     }
     else if (TempData["DeleteMsg"] != null)
     {   // Display either a success message for successfully deleting a game or a error message
-        <div class="display-6">
+        <div class="display-6 header-rate-text-color">
             <h1>@TempData["DeleteMsg"]</h1>
         </div>
     }
