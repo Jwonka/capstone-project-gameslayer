@@ -21,11 +21,11 @@
 
                 if (rowsAffected > 0)
                 {
-                    TempData["DeleteMessage"] = "Game deleted successfully."; // Set success message
+                    TempData["DeleteMsg"] = "Game deleted successfully."; // Set success message
                 }
                 else
                 {
-                    TempData["DeleteMessage"] = "Failed to delete game."; // Set failure message
+                    TempData["DeleteMsg"] = "Failed to delete game."; // Set failure message
                 }
             }
         }
@@ -33,12 +33,12 @@
     catch (Exception ex)
     {
         Console.WriteLine("An error occurred: " + ex.Message);
-        TempData["DeleteMessage"] = "An error occurred while deleting the game.";
+        TempData["DeleteMsg"] = "An error occurred while deleting the game.";
     }
     Response.Redirect("/GameCollection");
 }
  else
-{
+{   // Send users back to gameCollection if they are not logged in or do not have an account
     Response.Redirect("/GameCollection");
-    TempData["DeleteMessage"] = "You must be logged in to delete the game.";
+    TempData["DeleteMessage"] = "You must have an account to delete the game.";
 }

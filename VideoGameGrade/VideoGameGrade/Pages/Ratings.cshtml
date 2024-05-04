@@ -3,114 +3,87 @@
 @{
     ViewData["Title"] = "Rate your favorite games!";
 }
-<form method="post">
-    <div class="text-center">
-        <h1 class="display-4">Game Ratings</h1>
-        <br />
-        <h1>Rate @Model.rateTitle?</h1>
-        @if (!string.IsNullOrEmpty(Model.rateImage) && Model.rateImage != "No image")
-        {
-            <img src="@Html.Raw(@Model.rateImage)" alt="Game Image" style="width: 100px; height: auto;" />
-        }
-        else
-        {
-            <img src="@Html.Raw("https://cs710032001ea63f0a3.blob.core.windows.net/images/kisspng-video-game-game-controller-joystick-online-game-vector-gamepad-5a7166f1d5b6b1.8005384115173813618754.png")" alt="Game Image" style="width: 100px; height: auto;" />
-        }
-        <br />
-        <br />
-        <button type="submit" class="btn btn-outline-success btn-group-lg" name="addRating" value="add">Add one to the games rating?</button>
-        <button type="submit" class="btn btn-outline-danger btn-group-lg" name="removeRating" value="remove">Take one from the games rating?</button>
-    </div>
-    <div class="text-center">
-        <br />
-        <h3 class="display-6">@Model.rateTitle currently has a rating of @Model.rating.ToString().</h3>
-        <br />
-    </div>
-</form>
-@if (Model.rateError.Equals("Games cannot have a negative rating.") || Model.rateError.Equals("Games cannot have a rating higher than 10."))
-{
-    <div class="text-center">
-        <div class="alert alert-danger fade show" role="alert">
-            <h1>@Model.rateError</h1>
+@if (User.Identity.IsAuthenticated)
+{ 
+    <form method="post" enctype="multipart/form-data">
+        @Html.AntiForgeryToken()
+        <div class="text-center">
+            <h1 class="display-4">Game Ratings</h1>
+            <br />
+            <h1>Rate @Model.rateTitle?</h1>
+            <img src="@Html.Raw(Model.rateImage)" alt="Game Image" style="width: 100px; height: auto;" />
+            <br />
+            <br />
+            <button type="submit" class="btn btn-outline-success btn-group-lg m-2" name="addRating" id="plus" value="add">Add one to the games rating?</button>
+            <button type="submit" class="btn btn-outline-danger btn-group-lg m-2" name="removeRating" id="minus" value="remove">Take one from the games rating?</button>
+            <br />
+            <br />
         </div>
-    </div>
-}
-else
-{
-    <div class="text-center">
-        <br />
-        <h5 class="display-9">Check out the comments below.  You might find a tip or a trick.</h5>
-        <br />
-        <br />
-    </div>
-}
 
-<div>
-    @{
-        int comments = 0;
-    }
-    @foreach(var comment in Model.ratings)
-    {
-        @if (!string.IsNullOrEmpty(comment.comment))
-        {
-            <div>
-                <br/>
-                <label>@comment.comment</label>
-                <div class="text-end">
-                    <button onclick="toggleReply('@comment.rateID')" class="btn btn-outline-info btn-sm">Reply</button>
+        @if (!string.IsNullOrEmpty(Model.message))
+        {   // Success message or error messages
+            <div class="text-center">
+                <div class="display-6">
+                    <h1>@Model.message</h1>
                 </div>
                 <br />
-                <div id="@comment.rateID" style="display: none;">
-                    <input class="form-control" type="text" name="reply" id="@comment.rateID" value="" />
-                    <div class="text-end">
-                        <button onclick="toggleReply('@comment.rateID')" class="btn btn-outline-success btn-sm">submit</button>
-                    </div>
+            </div>
+        }
+        else
+        {   // Heading to display current rating of a game
+            <div class="text-center">
+                <h3 class="display-6">@Model.rateTitle currently has a rating of @Model.rating.ToString().</h3>
+            </div>
+            <br />
+        }
+
+        @if (string.IsNullOrEmpty(Model.gameComment))
+        {   // Error message for games without comments
+            <div class="text-center">
+                <div class="display-6">
+                    <h3 class="display-6">@Model.rateTitle does not have any comments.</h3>
+                    <br />
                 </div>
             </div>
-            comments++;
         }
-    }
-    @if (comments == 0)
-    {
+        else
+        {   // Normal heading 
+            <div class="text-center">
+                <h3 class="display-6">Add another tip or trick for @Model.rateTitle?</h3>
+                <br />
+            </div>
+        }
+
         <div class="text-center">
-            <div class='alert alert-danger fade show' role='alert'>
-                <h1 class="alert-heading">@Model.rateTitle does not have any comments.</h1>
+            <div row mb-3>
+                <div class="offset-sm-1 col-lg-10 d-grid p-1">
+                    <input type="Text" class="form-control" name="comment" id="comment" placeholder="Enter your tips or tricks here." autofocus />
+                </div>
+                <button class="btn btn-outline-success btn-group-lg m-3 b-4" name="submit" value="submit" id="submit">Submit</button>
             </div>
         </div>
-    }
-</div>    
 
-<div class="text-center">
-    <br />
-    <h3 class="display-6">Want to add your own comment, tip, or trick?</h3>
-    <div class="text-end">
-        <button onclick="toggleComment('@Model.rateTitle')" class="btn btn-outline-info btn-group-lg">Contribute</button>
-    </div>
-        <br />
-    <div id="@Model.rateTitle" style="display: none;">
-            <input class="form-control" type="text" name="reply" id="@Model.rateTitle" value="" />
-            <div class="text-end">
-                <button onclick="toggleComment('@Model.rateTitle')" class="btn btn-outline-success btn-group-lg">Submit</button>
-            </div>
-    </div>
-</div>
-
-<script>
-    function toggleReply(rateID) {
-        var div = document.getElementById(rateID);
-        if (div.style.display === 'none') {
-            div.style.display = 'block';
-        } else {
-            div.style.display = 'none';
+        @foreach (var comment in Model.ratings.OrderByDescending(c => c.rateID))
+        {   // Display available comments 
+            @if (comment.gameId == @Model.gameId)
+            {
+                @if (!string.IsNullOrEmpty(comment.gameComment) && !comment.gameComment.Equals(""))
+                {
+                    <div class="text-center">
+                        <br />
+                        <label class="text-white">@comment.gameComment</label>
+                        <div class="text-end">
+                            <button type="submit" class="btn btn-outline-danger btn-sm" name="delete" value="@comment.rateID">Delete</button>
+                        </div>
+                        <br />
+                    </div>
+                }
+            }
         }
-    }
-
-    function toggleComment(rateTitle) {
-        var div = document.getElementById(rateTitle);
-        if (div.style.display === 'none') {
-            div.style.display = 'block';
-        } else {
-            div.style.display = 'none';
-        }
-    }
-</script>
+    </form>
+}
+else
+{   // Send user's back to gameCollection if they are not registered or logged in
+    Response.Redirect("/GameCollection");
+    TempData["RateMessage"] = "You must have an account to rate a game.";
+}

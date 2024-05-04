@@ -1,6 +1,9 @@
 html {
   font-size: 14px;
 }
+body {
+    background-image: url("https://cs710032001ea63f0a3.blob.core.windows.net/images/kisspng-video-game-game-controller-joystick-online-game-vector-gamepad-5a7166f1d5b6b1.8005384115173813618754.png");
+}
 
 @media (min-width: 768px) {
   html {

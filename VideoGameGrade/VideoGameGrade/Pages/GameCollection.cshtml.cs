@@ -24,9 +24,6 @@ namespace VideoGameGrade.Pages
 
         public void OnGet()
         {
-            // Get the input from the search bar
-            string searchGame = HttpContext.Request.Query["searchGame"];
-
             try
             {
                 // Connection string
@@ -65,7 +62,11 @@ namespace VideoGameGrade.Pages
                 _logger.LogError("Exception occurred: " + ex.ToString());
                 Console.WriteLine("Exception: " + ex.ToString());
             }
-            int number;
+
+            // Get the input from the search bar
+            string searchGame = HttpContext.Request.Query["searchGame"];
+
+            // Create a new list to add games that match the search query
             List<GamesInfo> match = new List<GamesInfo>();
 
             // Check if searchGame has a value
@@ -74,48 +75,40 @@ namespace VideoGameGrade.Pages
                 foreach (var game in gamesList)
                 {
                     // Optimize validation by trimming empty spaces, converting to lowercase and replacing hyphens with an empty space
-                    searchGame = searchGame.Trim().ToLower().Replace("-", " ");
-                    string gTitle = game.gameTitle.Trim().ToLower().Replace("-", " ");
-                    string gPub = game.gamePublisher.Trim().ToLower().Replace("-", " ");
-                    string platform = game.gamePlatform.Trim().ToLower().Replace("-", " ");
-                    string gCat = game.gameCategory.Trim().ToLower().Replace("-", " ");
+                    searchGame = searchGame.Trim().ToLower().Replace("-", "");
+                    string gTitle = game.gameTitle.Trim().ToLower().Replace("-", "");
+                    string gPub = game.gamePublisher.Trim().ToLower().Replace(",", "");
+                    string platform = game.gamePlatform.Trim().ToLower().Replace(",", "");
+                    string gCat = game.gameCategory.Trim().ToLower().Replace(",", "");
 
-                    // Optimize search by replacing commas with an empty space
-                    searchGame = searchGame.Replace(",", " ");
-                    gTitle = gTitle.Replace(",", " ");
-                    gCat = gCat.Replace(",", " ");
-                    gPub = gPub.Replace(",", " ");
-                    platform = platform.Replace(",", "");
-
-                    // Boolean that allows searching by gameId and not include titles or categories with numbers
-                    Boolean digit = int.TryParse(searchGame, out number);
-
-                    // If it is an integer search by gameId
-                    if (number.Equals(game.gameId))
-                    {
-                        match.Add(game);
-                    }
+                    // Optimize search by removing characters
+                    searchGame = searchGame.Replace(",", "");
+                    searchGame = searchGame.Replace("'", "");
+                    searchGame = searchGame.Replace(":", "");
+                    gTitle = gTitle.Replace(",", "");
+                    gTitle = gTitle.Replace(":", "");
+                    gTitle = gTitle.Replace("'", "");
 
                     // Check for matches by title
-                    if (gTitle.Contains(searchGame) && !match.Contains(game) && !digit)
+                    if (gTitle.Contains(searchGame) && !match.Contains(game))
                     {
                         match.Add(game);
                     }
 
                     // Check for matches by publisher
-                    if (gPub.Contains(searchGame) && !match.Contains(game) && !digit)
+                    if (gPub.Contains(searchGame) && !match.Contains(game))
                     {
                         match.Add(game);
                     }
 
                     // Check for matching consoles
-                    if (platform.Contains(searchGame) && !match.Contains(game) && !digit)
+                    if (platform.Contains(searchGame) && !match.Contains(game))
                     {
                         match.Add(game);
                     }
 
                     // Check for matching category
-                    if (gCat.Contains(searchGame) && !match.Contains(game) && !digit)
+                    if (gCat.Contains(searchGame) && !match.Contains(game))
                     {
                         match.Add(game);
                     }

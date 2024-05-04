@@ -143,6 +143,7 @@ namespace VideoGameGrade.Pages
                 {
                     connection.Open();
 
+                    // Read from the database to prevent adding duplicate games
                     String sqlTitle = "SELECT gameTitle, gameImage FROM gametable";
 
                     using (MySqlCommand gameCommand = new MySqlCommand(sqlTitle, connection))
@@ -168,6 +169,7 @@ namespace VideoGameGrade.Pages
                         }
                     }
 
+                    // Insert the new game into the database
                     string sql = "INSERT INTO gametable (gameTitle, gamePublisher, gamePlatform, gameCategory, gameRating, gameImage) VALUES (@gameTitle, @gamePublisher, @gamePlatform, @gameCategory, @gameRating, @gameImage)";
                     
                     using (MySqlCommand command = new MySqlCommand(sql, connection))
