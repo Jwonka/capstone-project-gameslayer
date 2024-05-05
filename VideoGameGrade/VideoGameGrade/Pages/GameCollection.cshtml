@@ -74,8 +74,8 @@
         </div>
     }
     else
-    {   // If no other messages are present display heading
-        <div>
+    {
+        <div class="text-center text-white">
             <h1 class="display-4">Check out our Game Collection</h1>
             <br />
             <h3>Here we have our favorite classic games.</h3>
@@ -88,7 +88,8 @@
     <a class="btn btn-outline-primary btn-sm" href="/Add">New Game</a>
 </h2>
 
-<table class="table game-table-background">
+<div id="gameTableDiv" style="overflow-x:auto;">
+<table class="table">
     <thead class="text-white">
         <tr>
             <th>Title</th>
@@ -131,7 +132,9 @@
                     <br />
                     <a class="btn btn-outline-danger btn-sm mt-2" href="/Delete?id=@game.gameId">Delete</a>
                 </td>
-            </tr>
+            </tr> 
         }
+    </table>
+</div>
     </tbody>
 </table>

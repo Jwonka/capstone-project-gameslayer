@@ -4,29 +4,31 @@
     ViewData["Title"] = "Contact Us";
 }
 
-<div class="div-contact-background">
-     <div class="contact-header">
-        <h1 class="display-4">Contact Us</h1>
-        <br />
-        <p>Have questions, complaints, or comments? Let us know.</p>
-    </div>
-    <form method="post" class="contact-form">
-        <input type="hidden" asp-antiforgery="true" />
-        <div class="form-group">
-            <input type="text" id="name" name="Name" class="form-control" placeholder="Name: " required>
-            <span asp-validation-for="ContactForm.Name" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-                <input type="email" id="email" name="Email" class="form-control" placeholder="Email: " required>
-            <span asp-validation-for="ContactForm.Email" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-                <textarea id="message" name="Message" rows="4" class="form-control" placeholder="Message: " required></textarea>
-            <span asp-validation-for="ContactForm.Message" class="text-danger"></span>
-        </div>
-        <button type="submit" class="btn btn-primary m-2">Submit</button>
-    </form>
+<div class="text-center text-white">
+    <h1 class="display-4">Contact Us</h1>
+    <p>Have questions, complaints, or comments? Let us know.</p>
 </div>
+
+<form method="post" class="contact-form text-white">
+    <input type="hidden" asp-antiforgery="true" />
+    <div class="form-group">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="Name" class="form-control" required>
+        <span asp-validation-for="ContactForm.Name" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="Email" class="form-control" required>
+        <span asp-validation-for="ContactForm.Email" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label for="message">Message:</label>
+        <textarea id="message" name="Message" rows="4" class="form-control" required></textarea>
+        <span asp-validation-for="ContactForm.Message" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }

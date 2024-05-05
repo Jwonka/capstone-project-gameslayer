@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -8,16 +9,16 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/VideoGameGrade.styles.css" asp-append-version="true" />
 </head>
-<body class="bg-dark text-white">
+<body id="body" style="background-color: #26262C">
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow mb-3" style="background-color: #343a40;">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow mb-3" id="nav" style="background-color: #343a40;">
             <div class="container">
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-grow-1 justify-content-between">
-                    <ul class="navbar-nav flex-grow-1 justify-content-evenly">
+                <div class="navbar-collapse d-flex flex-row d-sm-inline-flex flex-grow-1 justify-content-between" id="nav">
+                    <ul class="navbar-nav d-flex flex-row flex-grow-1 justify-content-evenly">
                         <li class="nav-item">
                             <a class="nav-link text-white" asp-area="" asp-page="/Index">Home</a>
                         </li>
@@ -55,8 +56,9 @@
             </div>
         </nav>
     </header>
-    <div class="container bg-dark">
-        <main role="main" class="pb-3">
+
+    <div class="container" style="background-color:transparent">
+        <main role="main" class="pb-3" style="background-color: transparent">
             <div class="row justify-content-center">
                 <div class="col-md-8">
                     <form asp-page="/GameCollection" method="get" class="d-flex align-items-center">
@@ -70,7 +72,23 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-center" style="background-color: #343a40; color: white;">
+   
+   
+    <div style="max-width: 300px; max-height: 300px; overflow: hidden; display: block">
+        <label id="clickMe" class="text-white" style="display: none; text-align: center;">Click Me!</label>
+        <img id="imageToShowForm" src="~/images/smiley2.gif" style="display: block; width: 100%; height: auto; cursor: pointer;" onmouseenter="onMouseOver()" />
+        <img id="hoverImg" src="~/images/uhoh.gif" style="display: none; width: 100%; height: auto;" onmouseleave="onMouseOut()" onclick="showForm()" />
+    </div>
+
+    <form id="hiddenForm" method="post" style="display: none;">
+        <label class="text-center text-white">Choose a color:</label>
+        <button id="toggleColor" style="background-color: lightblue" onclick="toggleBlue()">Blue</button>
+        <button id="toggleColorP" style="background-color: hotpink" onclick="togglePink()">Pink</button>
+        <button id="toggleColorP" style="background-color: greenyellow" onclick="toggleGreen()">Green</button>
+        <button id="toggleColorP" style="background-color: red" onclick="toggleBlack()">Black/Red</button>
+    </form>
+    
+    <footer class="border-top footer text-center" id="footer" style="background-color: #343a40; color: white;">
         <div class="container">
             &copy; 2024 - VideoGameGrade
         </div>
@@ -81,5 +99,198 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
 
     @await RenderSectionAsync("Scripts", required: false)
+
+    <script>
+        function onMouseOver(){
+          var imgToShowForm = document.getElementById("imageToShowForm");
+            var hoverImg = document.getElementById("hoverImg");
+            var clickMe = document.getElementById("clickMe");
+            imgToShowForm.style.display = "none";
+            hoverImg.style.display = "block";
+            clickMe.style.display = "block";
+        }
+        function onMouseOut() {
+            var imgToShowForm = document.getElementById("imageToShowForm");
+            var hoverImg = document.getElementById("hoverImg");
+            var clickMe = document.getElementById("clickMe");
+            imgToShowForm.style.display = "block";
+            hoverImg.style.display = "none";
+            clickMe.style.display = "none";
+        }
+
+        function showForm(){
+            var form = document.getElementById("hiddenForm");
+            if(form.style.display == "none"){
+                form.style.display = "block";
+            } else {
+                form.style.display = "none";
+            }
+        }
+
+        // Retrieve the color from localStorage
+        var currentColor = localStorage.getItem('toggleColor');
+        var currentBody = localStorage.getItem('toggleColorBody');
+        // If the retrieved color is "red", remove the entry from localStorage
+        if (currentColor === "red") {
+            localStorage.removeItem('toggleColor');
+        }
+
+        function toggleBlue() {
+            // Grab elements
+            var nav = document.getElementById("nav");
+            var footer = document.getElementById("footer");
+            var body = document.getElementById("body");
+
+            //body color
+            if (currentBody === "#26262C") {
+                body.style.backgroundColor = "#1E91D6";
+                currentBody = "#1E91D6";
+            } else {
+                body.style.backgroundColor = "#26262C";
+                currentBody = "#26262C";
+            }
+            // Change footer background color
+            if (currentColor === "#343a40") {
+                footer.style.backgroundColor = "blue";
+                currentColor = "blue";
+            } else {
+                footer.style.backgroundColor = "#343a40";
+                currentColor = "#343a40";
+            }
+            // Change nav background color
+            if (currentColor === "#343a40") {
+                nav.style.backgroundColor = "blue";
+               
+            } else {
+                nav.style.backgroundColor = "#343a40";
+               
+            }
+          
+
+            // Update localStorage with the current color
+            localStorage.setItem('toggleColor', currentColor);
+            localStorage.setItem('toggleColorBody', currentBody);
+        }
+
+
+        //Pink Color
+        function togglePink() {
+            // Grab elements
+            var nav = document.getElementById("nav");
+            var footer = document.getElementById("footer");
+            var body = document.getElementById("body");
+
+            //body color
+            if (currentBody === "#26262C") {
+                body.style.backgroundColor = "#E28DA8";
+                currentBody = "#E28DA8";
+            } else {
+                body.style.backgroundColor = "#26262C";
+                currentBody = "#26262C";
+            }
+            // Change footer background color
+            if (currentColor === "#343a40") {
+                footer.style.backgroundColor = "#CC3363";
+                currentColor = "#CC3363";
+            } else {
+                footer.style.backgroundColor = "#343a40";
+                currentColor = "#343a40";
+            }
+            // Change nav background color
+            if (currentColor === "#343a40") {
+                nav.style.backgroundColor = "#CC3363";
+
+            } else {
+                nav.style.backgroundColor = "#343a40";
+
+            }
+            // Update localStorage with the current color
+            localStorage.setItem('toggleColor', currentColor);
+            localStorage.setItem('toggleColorBody', currentBody);
+        }
+        //Green Color
+        function toggleGreen() {
+            // Grab elements
+            var nav = document.getElementById("nav");
+            var footer = document.getElementById("footer");
+            var body = document.getElementById("body");
+
+            //body color
+            if (currentBody === "#26262C") {
+                body.style.backgroundColor = "#23580E";
+                currentBody = "#23580E";
+            } else {
+                body.style.backgroundColor = "#26262C";
+                currentBody = "#26262C";
+            }
+            // Change footer background color
+            if (currentColor === "#343a40") {
+                footer.style.backgroundColor = "#153508";
+                currentColor = "#153508";
+            } else {
+                footer.style.backgroundColor = "#343a40";
+                currentColor = "#343a40";
+            }
+            // Change nav background color
+            if (currentColor === "#343a40") {
+                nav.style.backgroundColor = "#153508";
+
+            } else {
+                nav.style.backgroundColor = "#343a40";
+
+            }
+            // Update localStorage with the current color
+            localStorage.setItem('toggleColor', currentColor);
+            localStorage.setItem('toggleColorBody', currentBody);
+        }
+
+        //Black/Red Color
+        function toggleBlack() {
+            // Grab elements
+            var nav = document.getElementById("nav");
+            var footer = document.getElementById("footer");
+            var body = document.getElementById("body");
+
+            //body color
+            if (currentBody === "#26262C") {
+                body.style.backgroundColor = "#141414";
+                currentBody = "#141414";
+            } else {
+                body.style.backgroundColor = "#26262C";
+                currentBody = "#26262C";
+            }
+            // Change footer background color
+            if (currentColor === "#343a40") {
+                footer.style.backgroundColor = "#FB350E";
+                currentColor = "#FB350E";
+            } else {
+                footer.style.backgroundColor = "#343a40";
+                currentColor = "#343a40";
+            }
+            // Change nav background color
+            if (currentColor === "#343a40") {
+                nav.style.backgroundColor = "#FB350E";
+
+            } else {
+                nav.style.backgroundColor = "#343a40";
+
+            }
+            // Update localStorage with the current color
+            localStorage.setItem('toggleColor', currentColor);
+            localStorage.setItem('toggleColorBody', currentBody);
+        }
+
+        // Set the initial background color of the nav, body, and footer elements
+        var nav = document.getElementById("nav");
+        nav.style.backgroundColor = currentColor || "#343a40";
+
+        var footer = document.getElementById("footer");
+        footer.style.backgroundColor = currentColor || "#343a40";
+
+        var body = document.getElementById("body");
+        body.style.backgroundColor = currentBody || "#26262C";
+
+    </script>
+ 
 </body>
 </html>

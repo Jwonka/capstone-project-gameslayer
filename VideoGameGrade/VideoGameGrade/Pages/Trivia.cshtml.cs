@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using MySql.Data.MySqlClient;
+using VideoGameGrade.Classes;
 using String = System.String;
 
 namespace VideoGameGrade.Pages
@@ -17,7 +18,7 @@ namespace VideoGameGrade.Pages
 
             try
             {
-            
+
                 string connectionString = "Server=videogamegrade.mysql.database.azure.com;Database=videogamegrade_db;Uid=gamegradeadmin;Pwd=capstone2024!;SslMode=Required;";
                 using (MySqlConnection connection = new MySqlConnection(connectionString))
                 {
@@ -63,16 +64,6 @@ namespace VideoGameGrade.Pages
                 errorMsg = "Exception: " + ex.Message;
                 BadRequest();
             }
-        }
-        public IActionResult SetCookie()
-        {
-            Response.Cookies.Append("CorrectCount", "value", new CookieOptions
-            {
-                Secure = true, // Mark the cookie as Secure
-                HttpOnly = true // Mark the cookie as HttpOnly
-            });
-
-            return Page();
         }
 
 
@@ -129,8 +120,10 @@ namespace VideoGameGrade.Pages
                             command.Parameters.AddWithValue("@quizId", quizId);
                             //pulls correct Answer from the database
                             string correctAnswer = command.ExecuteScalar()?.ToString();
+                            correctAnswer = correctAnswer.Trim().ToLower().Replace("-", " ");
+                             quizAnswer = quizAnswer.Trim().ToLower().Replace("-", " ");
                             //check answer string
-                            if (correctAnswer != null && quizAnswer.Trim().Equals(correctAnswer.Trim(), StringComparison.OrdinalIgnoreCase))
+                            if (correctAnswer != null && quizAnswer.Contains(correctAnswer))
                             {
                                 isCorrect = true;
                             }

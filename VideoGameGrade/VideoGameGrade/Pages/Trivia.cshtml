@@ -4,14 +4,12 @@
     ViewData["Title"] = "Game Trivia!";
 }
 
-@if (User.Identity.IsAuthenticated)
-{
-    <div class="text-center">
-        <h1>@(Model.triviaGame.Any() ? Model.triviaGame.First().gameName : "This game has no trivia questions to show")</h1>
-        <h1 class="display-4">Game Trivia</h1>
-        <h3>Click here to add a trivia question</h3>
-        <button class="btn btn-outline-light" onclick="toggleVisible()">Create Question</button>
-    </div>
+<div class="text-center text-white">
+    <h1>@(Model.triviaGame.Any() ? Model.triviaGame.First().gameName : "This game has no trivia questions to show")</h1>
+    <h1 class="display-4">Game Trivia</h1>
+    <h3>Click here to add a trivia question</h3>
+    <button onclick="toggleVisible()">Create Question</button>
+</div>
 
 
 
@@ -29,7 +27,9 @@ else
     TempData["TriviaMessage"] = "You must have an account to play trivia.";
 }
 
-<div id="question" style="display: none;"> 
+
+<div id="question" style="display: none; text-white">
+  
     <form method="post">
         @Html.AntiForgeryToken()
 
@@ -48,8 +48,8 @@ else
                 id="answer" class="form-control" value="@Model.newQuestion.gameAnswer"/></<br />
         <button type="submit" class="btn btn-outline-light mt-2" name="submitBtn" value="create">Create</button>
     </form>
-</div>
-<div class ="mt-1">
+    </div>
+<div class="text-white">
     Correct Answers: <span id="correctCount">0</span>
 </div>
     
@@ -98,29 +98,29 @@ else
 </script>
 
 <div style.display="block" >
-<table class="table">
-    <thread>
-        <tr class="text-white">
-
-            <th>Question</th>
-            <th>Answer</th>
-            <th></th>
-            <th></th>
-        </tr>
-    </thread>
-    <tbody class="text-white">
+    <table class="table">
+<thread>
+            <tr class="text-white">
+        
+        <th>Question</th>
+        <th>Answer</th>
+                <th></th>
+                <th></th>
+            </tr>
+</thread>
+<tbody class="text-white">
     
-        @foreach(var item in Model.triviaGame){
-            <form method="post">
-            <tr>
-                <!-- Leaving some of these for testing -->
-                <!-- <td>@item.gameIdValue</td>-->
-                <!-- <td>@item.gameName</td> -->
-                <td>@item.gameQuiz</td>
-                <!-- <td>@item.quizId</td> -->
-                <input type="hidden" name="quizId" value="@item.quizId">
-                <td><input type="text" name="quizAnswer" id="quizAnswer" class="form-control" /></td>
-                <td><button type="submit" class="btn btn-outline-light form-control" name="submitBtn@(item.quizId)" value="quizSubmit" id="@($"quizSubmit_{item.quizId}")">Submit</button></td>
+    @foreach(var item in Model.triviaGame){
+        <form method="post">
+        <tr>
+                    <!-- Leaving some of these for testing -->
+                    <!-- <td>@item.gameIdValue</td>-->
+                    <!-- <td>@item.gameName</td>-->
+            <td>@item.gameQuiz</td>
+                    <!-- <td>@item.quizId</td> -->
+                    <input type="hidden" name="quizId" value="@item.quizId">
+            <td><input type="text" name="quizAnswer" id="quizAnswer" class="form-control" /></td>
+            <td><button type="submit" class="form-control" name="submitBtn@(item.quizId)" value="quizSubmit" id="@($"quizSubmit_{item.quizId}")">Submit</button></td>
                 <td id="isTrue">
                     @if (Model.EnteredIds.Contains(item.quizId))
                     {
