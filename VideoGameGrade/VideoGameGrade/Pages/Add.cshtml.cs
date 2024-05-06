@@ -156,15 +156,29 @@ namespace VideoGameGrade.Pages
                 {
                     connection.Open();
 
-                    // Check for duplicate game titles
-                    String sqlTitle = "SELECT gameTitle FROM gametable WHERE gameTitle = @gameTitle AND userId = @userId";
-
-                    var existingTitle = connection.QuerySingleOrDefault<string>(sqlTitle, new { gameTitle = gameName, userId });
-
-                    if (!string.IsNullOrEmpty(existingTitle))
+                    // Check for duplicate game titles ** AND IMAGES FOR DISPLAY ON ADD PAGE DO NOT DELETE **
+                    String sqlTitle = "SELECT gameTitle, gameImage FROM gametable";
+                    using (MySqlCommand gameCommand = new MySqlCommand(sqlTitle, connection))
                     {
-                        errorMsg = gameName + " is already in our records.";
-                        return false;
+                        using (MySqlDataReader reader = gameCommand.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                GamesInfo gName = new GamesInfo();
+                                gName.gameTitle = reader.IsDBNull(0) ? string.Empty : reader.GetString(0);
+                                gName.gameImage = reader.IsDBNull(1) ? string.Empty : reader.GetString(1);
+
+                                title = gName.gameTitle.Trim().ToLower().ToString();
+                                gameImg = gName.gameImage;
+
+                                if (title.Equals(gameName.ToLower()))
+                                {
+                                    errorMsg = gameName + " is already in our records.";
+                                    return false;
+                                }
+                            }
+                            reader.Close();
+                        }
                     }
 
                     // Insert the new game into the database

@@ -6,7 +6,7 @@
 
 @if (User.Identity.IsAuthenticated)
 { 
-    <div class="rate-background">
+    <div class="centered-shaded-background">
         <form method="post" enctype="multipart/form-data">
             @Html.AntiForgeryToken()
             <div class="text-center">
@@ -16,8 +16,8 @@
                 <img src="@Html.Raw(Model.rateImage)" alt="Game Image" style="width: 100px; height: auto;" />
                 <br />
                 <br />
-                <button type="submit" class="btn btn-outline-success btn-group-lg m-2" name="addRating" id="plus" value="add">Add one to the games rating?</button>
-                <button type="submit" class="btn btn-outline-danger btn-group-lg m-2" name="removeRating" id="minus" value="remove">Take one from the games rating?</button>
+                <button type="submit" class="btn btn-outline-success btn-group-lg m-2 text-white" name="addRating" id="plus" value="add">Add one to the games rating?</button>
+                <button type="submit" class="btn btn-outline-danger btn-group-lg m-2 text-white" name="removeRating" id="minus" value="remove">Take one from the games rating?</button>
                 <br />
                 <br />
             </div>
@@ -61,7 +61,7 @@
                     <div class="offset-sm-1 col-lg-10 d-grid p-1">
                         <input type="Text" class="form-control text-black" name="comment" id="comment" placeholder="Enter your tips or tricks here." autofocus />
                     </div>
-                    <button class="btn btn-outline-success btn-group-lg m-3 b-4" name="submit" value="submit" id="submit">Submit</button>
+                    <button class="btn btn-outline-success btn-group-lg m-3 b-4 text-white" name="submit" value="submit" id="submit">Submit</button>
                 </div>
             </div>
 

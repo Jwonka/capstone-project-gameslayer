@@ -1,20 +1,21 @@
 ﻿@page
 @model VideoGameGrade.Pages.LoginModel
 
-<form method="post" class="form-custom text-white">
-    <div asp-validation-summary="All" class="text-danger"></div>
-    <div class="form-group">
-        <label asp-for="Input.Username">Username</label>
-        <input asp-for="Input.Username" class="form-control" />
-        <span asp-validation-for="Input.Username" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Input.Password">Password</label>
-        <input asp-for="Input.Password" type="password" class="form-control" />
-        <span asp-validation-for="Input.Password" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <button type="submit" class="btn btn-primary">Login</button>
-    </div>
-</form>
-
+<div class="centered-shaded-background">
+    <form method="post" class="form-custom text-white">
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <div class="form-group">
+            <br />
+            <input asp-for="Input.Username" placeholder="Username:" class="form-control" />
+            <span asp-validation-for="Input.Username" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <br />
+            <input asp-for="Input.Password" type="password" placeholder="Password:" class="form-control" />
+            <span asp-validation-for="Input.Password" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary m-2">Login</button>
+        </div>
+    </form>
+</div>
