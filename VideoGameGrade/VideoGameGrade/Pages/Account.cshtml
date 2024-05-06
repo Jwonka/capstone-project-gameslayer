@@ -1,21 +1,22 @@
 ﻿@page
 @model VideoGameGrade.Pages.AccountModel
+<link rel="stylesheet" href="~/css/site.css">
 <div class="div-contact-background">
     <div class="contact-header">
-        <h2>Account Settings</h2>
+        <h2 class="header-rate-text-color">Account Settings</h2>
         <h4>Change Password</h4>
     </div>
 
     <form method="post" asp-page-handler="ChangePassword" class="form-custom">
         <div asp-validation-summary="All" class="text-danger"></div>
         <div class="form-group">
-            <br/>
+            <br />
             <input asp-for="ChangePasswordModel.OldPassword" class="form-control" placeholder="Current Password: " type="password" />
             <span asp-validation-for="ChangePasswordModel.OldPassword" class="text-danger"></span>
         </div>
         <div class="form-group">
             <br />
-            <input asp-for="ChangePasswordModel.NewPassword" class="form-control" placeholder="New Password: "  type="password" />
+            <input asp-for="ChangePasswordModel.NewPassword" class="form-control" placeholder="New Password: " type="password" />
             <span asp-validation-for="ChangePasswordModel.NewPassword" class="text-danger"></span>
         </div>
         <div class="form-group">
@@ -28,10 +29,112 @@
 
     <div class="contact-header">
         <h4>Personal Information</h4>
-
         <p>Email: @Model.UserEmail</p>
     </div>
+
+    <div class="contact-header">
+        <h4>Your Contributions</h4>
+        @if (!string.IsNullOrEmpty(TempData["DeleteMsg"]?.ToString()))
+        {
+            <div class="alert alert-info">
+                @TempData["DeleteMsg"]
+            </div>
+        }
+    </div>
+
+    @if (Model.UserGames != null && Model.UserGames.Count > 0)
+    {
+        <table class="table table-bordered table-striped game-table-background">
+            <thead class="text-white text-center">
+                <tr>
+                    <th>Title</th>
+                    <th>Publisher</th>
+                    <th>Platform</th>
+                    <th>Category</th>
+                    <th>Rating</th>
+                    <th>Image</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody class="rate-text-color text-center align-middle">
+                @foreach (var game in Model.UserGames)
+                {
+                    <tr>
+                        <td>@game.GameTitle</td>
+                        <td>@game.GamePublisher</td>
+                        <td>@game.GamePlatform</td>
+                        <td>@game.GameCategory</td>
+                        <td>@game.GameRating</td>
+                        <td>
+                            @if (!string.IsNullOrEmpty(game.GameImage) && game.GameImage != "No image")
+                            {
+                                <img src="@Html.Raw(game.GameImage)" alt="Game Image" style="width: 100px; height: auto;" />
+                            }
+                            else
+                            {
+                                <img src="@Html.Raw("https://cs710032001ea63f0a3.blob.core.windows.net/images/kisspng-video-game-game-controller-joystick-online-game-vector-gamepad-5a7166f1d5b6b1.8005384115173813618754.png")" alt="Game Image" style="width: 100px; height: auto;" />
+                            }
+                        </td>
+                        <td>
+                            <form method="post" asp-page-handler="DeleteGame">
+                                <input type="hidden" name="GameId" value="@game.GameId" />
+                                <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div class="contact-header">
+            <h4>Your Trivia History</h4>
+            <p>Correctly Answered: @Model.CorrectTriviaCount</p>
+            <p>Incorrectly Answered: @Model.IncorrectTriviaCount</p>
+        </div>
+    }
+    else
+    {
+        <p>You haven't added any games yet.</p>
+    }
+
+    <div class="contact-header">
+        <h4>Your Trivia Questions</h4>
+    </div>
+
+    @if (Model.UserTrivia != null && Model.UserTrivia.Count > 0)
+    {
+        <table class="table table-bordered table-striped game-table-background">
+            <thead class="text-white text-center">
+                <tr>
+                    <th>Game Title</th>
+                    <th>Question</th>
+                    <th>Answer</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody class="rate-text-color text-center align-middle">
+                @foreach (var trivia in Model.UserTrivia)
+                {
+                    <tr>
+                        <td>@trivia.GameTitle</td>
+                        <td>@trivia.GameQuiz</td>
+                        <td>@trivia.GameAnswer</td>
+                        <td>
+                            <form method="post" asp-page-handler="DeleteTrivia">
+                                <input type="hidden" name="QuizId" value="@trivia.QuizId" />
+                                <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>You haven't added any trivia questions yet.</p>
+    }
 </div>
+
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }

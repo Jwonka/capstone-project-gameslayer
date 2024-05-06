@@ -8,6 +8,8 @@ using System.IO;
 using VideoGameGrade.Services;
 using static VideoGameGrade.Pages.GameCollectionModel;
 using VideoGameGrade.Classes;
+using Dapper;
+using System.Data;
 
 namespace VideoGameGrade.Pages
 {
@@ -27,13 +29,14 @@ namespace VideoGameGrade.Pages
         public static bool success = false;
         public static string insertImg { get; set; }
 
-
         private readonly IAzureBlobStorageService _azureBlobStorageService;
+        private readonly IDbConnection _db;
 
-        // Constructor to initialize the Azure Blob Storage service
-        public AddModel(IAzureBlobStorageService azureBlobStorageService)
+        // Constructor to initialize the Azure Blob Storage service and the database connection
+        public AddModel(IAzureBlobStorageService azureBlobStorageService, IDbConnection db)
         {
             _azureBlobStorageService = azureBlobStorageService;
+            _db = db;
         }
 
         // Property to bind the uploaded game image
@@ -96,8 +99,18 @@ namespace VideoGameGrade.Pages
             // Upload game image
             string imageUrl = await UploadGameImage();
 
+            // Get userId of the current user
+            var userEmail = HttpContext.User.FindFirst(System.Security.Claims.ClaimTypes.Name)?.Value;
+            var userId = _db.QuerySingleOrDefault<int>("SELECT userId FROM usertable WHERE userName = @UserName", new { UserName = userEmail });
+
+            if (userId == 0)
+            {
+                errorMessage = "User not found.";
+                return Page();
+            }
+
             // Save game information to the database
-            if (!SaveGameToDatabase(imageUrl))
+            if (!SaveGameToDatabase(imageUrl, userId))
             {
                 return Page(); // Return with database error message if saving fails
             }
@@ -134,7 +147,7 @@ namespace VideoGameGrade.Pages
         }
 
         // Method to save game information to the database
-        private bool SaveGameToDatabase(string imageUrl)
+        private bool SaveGameToDatabase(string imageUrl, int userId)
         {
             string connectionString = "Server=videogamegrade.mysql.database.azure.com;Database=videogamegrade_db;Uid=gamegradeadmin;Pwd=capstone2024!;SslMode=Required;";
             try
@@ -143,35 +156,20 @@ namespace VideoGameGrade.Pages
                 {
                     connection.Open();
 
-                    // Read from the database to prevent adding duplicate games
-                    String sqlTitle = "SELECT gameTitle, gameImage FROM gametable";
+                    // Check for duplicate game titles
+                    String sqlTitle = "SELECT gameTitle FROM gametable WHERE gameTitle = @gameTitle AND userId = @userId";
 
-                    using (MySqlCommand gameCommand = new MySqlCommand(sqlTitle, connection))
+                    var existingTitle = connection.QuerySingleOrDefault<string>(sqlTitle, new { gameTitle = gameName, userId });
+
+                    if (!string.IsNullOrEmpty(existingTitle))
                     {
-                        using (MySqlDataReader reader = gameCommand.ExecuteReader())
-                        {
-                            while (reader.Read())
-                            {
-                                GamesInfo gName = new GamesInfo();
-                                gName.gameTitle = reader.IsDBNull(0) ? string.Empty : reader.GetString(0);
-                                gName.gameImage = reader.IsDBNull(1) ? string.Empty : reader.GetString(1);
-
-                                title = gName.gameTitle.Trim().ToLower().ToString();
-                                gameImg = gName.gameImage;
-
-                                if (title.Equals(gameName.ToLower()))
-                                {
-                                    errorMsg = gameName + " is already in our records.";
-                                    return false;
-                                }
-                            }
-                            reader.Close();
-                        }
+                        errorMsg = gameName + " is already in our records.";
+                        return false;
                     }
 
                     // Insert the new game into the database
-                    string sql = "INSERT INTO gametable (gameTitle, gamePublisher, gamePlatform, gameCategory, gameRating, gameImage) VALUES (@gameTitle, @gamePublisher, @gamePlatform, @gameCategory, @gameRating, @gameImage)";
-                    
+                    string sql = "INSERT INTO gametable (gameTitle, gamePublisher, gamePlatform, gameCategory, gameRating, gameImage, userId) VALUES (@gameTitle, @gamePublisher, @gamePlatform, @gameCategory, @gameRating, @gameImage, @userId)";
+
                     using (MySqlCommand command = new MySqlCommand(sql, connection))
                     {
                         command.Parameters.AddWithValue("@gameTitle", gameName);
@@ -180,6 +178,7 @@ namespace VideoGameGrade.Pages
                         command.Parameters.AddWithValue("@gameCategory", gamesInfo.gameCategory);
                         command.Parameters.AddWithValue("@gameRating", gamesInfo.gameRating);
                         command.Parameters.AddWithValue("@gameImage", imageUrl);
+                        command.Parameters.AddWithValue("@userId", userId);
                         command.ExecuteNonQuery();
                     }
                     connection.Close();
@@ -191,7 +190,6 @@ namespace VideoGameGrade.Pages
             {
                 errorMessage = "Database error: " + ex.Message;
                 return false;
-
             }
         }
     }

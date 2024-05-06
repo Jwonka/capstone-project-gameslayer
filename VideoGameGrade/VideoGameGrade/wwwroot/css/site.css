@@ -1,17 +1,20 @@
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
+
 body {
     background-image: url("https://cs710032001ea63f0a3.blob.core.windows.net/images/kisspng-video-game-game-controller-joystick-online-game-vector-gamepad-5a7166f1d5b6b1.8005384115173813618754.png");
     background-size: cover;
     background-repeat: no-repeat;
 }
+
 .game-table-background {
-    background-image: url("https://cs710032001ea63f0a3.blob.core.windows.net/images/OnTheWay.png"); 
+    background-image: url("https://cs710032001ea63f0a3.blob.core.windows.net/images/OnTheWay.png");
     background-size: contain;
     background-repeat: no-repeat;
     color: #FFFFFF;
 }
+
 .div-contact-background {
     filter: blur(0.6px);
     text-align: center;
@@ -20,55 +23,48 @@ body {
     background-repeat: no-repeat;
     color: #FFFFFF;
 }
+
 .contact-header {
     background-color: rgba(0, 0, 0, 0.7);
     text-align: center;
     color: #FFFFFF;
 }
+
 .rate-text-color {
     color: #00FF00;
     text-align: center;
 }
+
 .header-rate-text-color {
     color: #00FF00;
     text-align: center;
 }
+
 .rate-background {
     background-image: url("https://cs710032001ea63f0a3.blob.core.windows.net/images/HangingOut.png");
     background-repeat: no-repeat;
 }
-@media (min-width: 768px) {
-  html {
-    font-size: 14px;
-  }
-}
-@media all (max-width: 700px) {
-    html {
-        background-color: yellow;
-        
-    }
-    body {
-        padding-bottom: 10%;
-    }
 
-    .gameTableDiv {
-        display: block;
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
 }
   
 
     
 }
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
 }
 
 .contact-form {
@@ -76,10 +72,9 @@ body {
     margin: 0 auto;
 }
 
-
-.contact-form .form-group {
-    margin-bottom: 20px;
-}
+    .contact-form .form-group {
+        margin-bottom: 20px;
+    }
 
 .form-custom {
     max-width: 400px;

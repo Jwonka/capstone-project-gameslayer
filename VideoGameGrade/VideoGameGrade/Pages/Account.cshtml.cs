@@ -1,11 +1,13 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.Data;
 using Dapper;
+using System.Data;
+using System.Linq;
 using BCrypt.Net;
 
 namespace VideoGameGrade.Pages
@@ -22,17 +24,36 @@ namespace VideoGameGrade.Pages
         [BindProperty]
         public ChangePasswordModel ChangePasswordModel { get; set; } = new ChangePasswordModel();
 
+        //store user-related data
         public string UserEmail { get; set; }
+        public List<GameInfo> UserGames { get; set; }
+        public List<TriviaInfo> UserTrivia { get; set; }
+        public int CorrectTriviaCount { get; set; }
+        public int IncorrectTriviaCount { get; set; }
 
+        //GET requests
         public void OnGet()
         {
+            LoadUserData(); // Load user data when the page is requested
+        }
+
+        //load user-specific data
+        private void LoadUserData()
+        {
+            // Retrieve user email
             UserEmail = HttpContext.User.FindFirst(ClaimTypes.Name)?.Value;
             if (string.IsNullOrEmpty(UserEmail))
             {
-                UserEmail = "Email not available"; // email is not found
+                UserEmail = "Email not available";
             }
+
+            // Load account games, trivia, and trivia stats
+            LoadUserGames();
+            LoadUserTrivia();
+            LoadUserTriviaStats();
         }
 
+        //request to change password
         public async Task<IActionResult> OnPostChangePasswordAsync()
         {
             if (!ModelState.IsValid)
@@ -40,49 +61,139 @@ namespace VideoGameGrade.Pages
                 return Page();
             }
 
-            UserEmail = HttpContext.User.FindFirst(ClaimTypes.Name)?.Value; // Retrieve the email
+            // Retrieve user email
+            UserEmail = HttpContext.User.FindFirst(ClaimTypes.Name)?.Value;
             if (string.IsNullOrEmpty(UserEmail))
             {
                 ModelState.AddModelError(string.Empty, "User not found.");
                 return Page();
             }
 
-            //query database to fetch username/email
+            // Retrieve user data from the database
             var user = await _db.QuerySingleOrDefaultAsync<User>(
                 "SELECT * FROM usertable WHERE userName = @UserName", new { UserName = UserEmail });
 
+            // Verify the old password
             if (user == null || !BCrypt.Net.BCrypt.Verify(ChangePasswordModel.OldPassword, user.Password))
             {
                 ModelState.AddModelError(string.Empty, "Current password is incorrect.");
-                return Page();  // Fail if the current password is wrong or the user is not found
+                return Page(); // Fail if the current password is wrong or the user is not found
             }
 
-            // Hash the new password
+            // Hash and update the new password in the database
             var hashedPassword = BCrypt.Net.BCrypt.HashPassword(ChangePasswordModel.NewPassword);
-            // Update the password in the database
             var updateQuery = "UPDATE usertable SET password = @Password WHERE userName = @UserName";
             var result = await _db.ExecuteAsync(updateQuery, new { Password = hashedPassword, UserName = UserEmail });
 
             if (result > 0)
             {
-                // Log out the user to enforce re-authentication with the new password
-                await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-                TempData["Message"] = "Password successfully changed. Please login with your new password.";
+                TempData["DeleteMsg"] = "Password successfully changed. Please login with your new password.";
                 return RedirectToPage("/Login");
             }
 
             ModelState.AddModelError(string.Empty, "Failed to update password.");
-            return Page();  // Display an error message if the update fails
+            return Page();
         }
 
+        // Handles request to delete a game
+        public async Task<IActionResult> OnPostDeleteGameAsync(int GameId)
+        {
+            var result = await _db.ExecuteAsync("DELETE FROM gametable WHERE gameId = @GameId", new { GameId });
+
+            TempData["DeleteMsg"] = result > 0 ? "Game deleted successfully." : "Failed to delete the game.";
+            LoadUserData(); // Reload user data after deleting the game
+            return Page();
+        }
+
+        // Handles request to delete a trivia question
+        public async Task<IActionResult> OnPostDeleteTriviaAsync(int QuizId)
+        {
+            var result = await _db.ExecuteAsync("DELETE FROM triviatable WHERE quizID = @QuizId", new { QuizId });
+
+            TempData["DeleteMsg"] = result > 0 ? "Trivia question deleted successfully." : "Failed to delete the trivia question.";
+            LoadUserData();
+            return Page();
+        }
+
+        //load user's games from the database
+        private void LoadUserGames()
+        {
+            var userId = _db.QuerySingleOrDefault<int>("SELECT userId FROM usertable WHERE userName = @UserName", new { UserName = UserEmail });
+
+            UserGames = _db.Query<GameInfo>(
+                "SELECT * FROM gametable WHERE userId = @UserId",
+                new { UserId = userId }
+            ).ToList();
+        }
+
+        //load user's trivia questions from the database
+        private void LoadUserTrivia()
+        {
+            var userId = _db.QuerySingleOrDefault<int>("SELECT userId FROM usertable WHERE userName = @UserName", new { UserName = UserEmail });
+
+            UserTrivia = _db.Query<TriviaInfo>(
+                @"
+                    SELECT triviatable.quizID, triviatable.gameQuiz, triviatable.gameAnswer, gametable.gameTitle
+                    FROM triviatable
+                    INNER JOIN gametable ON triviatable.gameID = gametable.gameId
+                    WHERE triviatable.userId = @UserId
+                ",
+                new { UserId = userId }
+            ).ToList();
+        }
+
+        //load user's trivia statistics from the database
+        private void LoadUserTriviaStats()
+        {
+            var userEmail = HttpContext.User.FindFirst(ClaimTypes.Name)?.Value;
+            if (string.IsNullOrEmpty(userEmail))
+            {
+                return;
+            }
+
+            var userId = _db.QuerySingleOrDefault<int>("SELECT userId FROM usertable WHERE userName = @UserName", new { UserName = userEmail });
+
+            if (userId == 0)
+            {
+                return;
+            }
+
+            var stats = _db.QuerySingleOrDefault<(int, int)>("SELECT SUM(answered_count) AS total_answered, SUM(correct_count) AS total_correct FROM user_trivia_stats WHERE userId = @UserId", new { UserId = userId });
+
+            CorrectTriviaCount = stats.Item2;
+            IncorrectTriviaCount = stats.Item1 - stats.Item2;
+        }
+
+        //represent user data
         private class User
         {
             public int UserId { get; set; }
             public string Password { get; set; }
-            public string Email { get; set; }
+        }
+
+        //represent game information
+        public class GameInfo
+        {
+            public int GameId { get; set; }
+            public string GameTitle { get; set; }
+            public string GamePublisher { get; set; }
+            public string GamePlatform { get; set; }
+            public string GameCategory { get; set; }
+            public int GameRating { get; set; }
+            public string GameImage { get; set; }
+        }
+
+        //represent trivia information
+        public class TriviaInfo
+        {
+            public int QuizId { get; set; }
+            public string GameQuiz { get; set; }
+            public string GameAnswer { get; set; }
+            public string GameTitle { get; set; }
         }
     }
 
+    //representing model for changing password
     public class ChangePasswordModel
     {
         [Required]
