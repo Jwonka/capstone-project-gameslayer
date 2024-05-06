@@ -6,10 +6,10 @@
 
 @if (User.Identity.IsAuthenticated)
 {   // Error message for empty input
-    <div class="div-contact-background">
+    <div class="shaded-background">
         @if (Model.errorMessage.Length > 0)
         {
-            <div class='contact-header'>
+            <div class='rate-text-color m-2'>
                 <div class="display-4">
                     <h1>@Model.errorMessage</h1>
                 </div>
@@ -19,7 +19,7 @@
         } // Error message to prevent duplicate games from being entered
         else if (Model.errorMsg.Length > 0)
         {
-            <div class="contact-header">
+            <div class="rate-text-color m-2">
                 @if (!string.IsNullOrEmpty(@AddModel.gameImg) && AddModel.gameImg != "No image")
                 {
                     <h1>@Model.errorMsg</h1>
@@ -30,7 +30,7 @@
         }
         else
         {   // Title for the page
-            <div class="contact-header">
+            <div class="text-white text-center m-2">
                 <h1 class="display-4">New Game</h1>
                 <br />
             </div>
@@ -101,11 +101,11 @@
                 </div>
             </div>
             <div class="row mb-3">
-                <div class="offset-sm-4 col-sm-2 d-grid p-1">
-                    <button type="submit" class="btn btn-primary m-2">Submit</button>
+                <div class="offset-sm-4 col-sm-2 d-grid p-2">
+                    <button type="submit" class="btn btn-success m-1 text-white">Submit</button>
                 </div>
-                <div class="col-sm-2 d-grid p-1">
-                    <a class="btn btn-danger m-2" href="/GameCollection" role="button">Cancel</a>
+                <div class="col-sm-2 d-grid p-2">
+                    <a class="btn btn-danger m-1 text-white" href="/GameCollection" role="button">Cancel</a>
                 </div>
             </div>
         </form>

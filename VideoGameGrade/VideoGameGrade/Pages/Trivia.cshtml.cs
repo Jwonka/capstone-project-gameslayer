@@ -80,7 +80,7 @@ namespace VideoGameGrade.Pages
 
                 if (string.IsNullOrWhiteSpace(quizAnswer))
                 {
-                    errorMsg = "Please enter an answer";
+                    errorMsg = "Please enter an answer.";
                     return;
                 }
 

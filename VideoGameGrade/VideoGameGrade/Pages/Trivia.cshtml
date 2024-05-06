@@ -7,49 +7,42 @@
 
 @if (User.Identity.IsAuthenticated)
 {
-    <div class="text-center">
-        <h1>@(Model.triviaGame.Any() ? Model.triviaGame.First().gameName : "This game has no trivia questions to show")</h1>
+    <div class="centered-shaded-background">
+        <h1 class="rate-text-color">@(Model.triviaGame.Any() ? Model.triviaGame.First().gameName : "This game has no trivia questions to show")</h1>
         <h1 class="display-4">Game Trivia</h1>
         <h3>Click here to add a trivia question</h3>
-        <button class="btn btn-outline-light" onclick="toggleVisible()">Create Question</button>
+        <button class="btn btn-outline-light  m-2" onclick="toggleVisible()">Create Question</button>
     </div>
-    @if (Model.errorMsg.Length > 0)
-    {
-        <div class="text-center">
-            <div class="alert alert-danger fade show" role="alert">
-                <h1>@Model.errorMsg</h1>
-            </div>
-        </div>
-    }
 }
 else
-{
-    // Redirect users to the login page if they are not authenticated
-    <script>window.location.href = "Login";</script>
+{   // Send user's back to gameCollection if they are not registered or logged in
+    Response.Redirect("/GameCollection");
+    TempData["TriviaMessage"] = "You must have an account to play trivia.";
 }
 
 <!-- create a new trivia question form-->
-<div id="question" style="display: none; text-white"> 
+<div id="question" style="display: none;" class="centered-shaded-background">
     <form method="post">
         @Html.AntiForgeryToken()
 
         @if (Request.Query.TryGetValue("id", out var gameID))
         {
             var gameIdValue = gameID.ToString();
-            <label id="gameIdValue">Game ID: @gameIdValue</label>
             <input type="hidden" name="id" value="@gameIdValue" />
         }
         <br />
         <label>Question:</label>
-        <input type="text" name="gameQuiz" id="question" class="form-control" value="@Model.newQuestion.gameQuiz" /><br />
+        <input type="text" name="gameQuiz" id="question" class="contact-form form-group form-control" value="@Model.newQuestion.gameQuiz" /><br />
         <label>Your Answer:</label>
-        <input type="text" name="gameAnswer" id="answer" class="form-control" value="@Model.newQuestion.gameAnswer" /></br />
-        <button type="submit" class="btn btn-outline-light mt-2" name="submitBtn" value="create">Create</button>
+        <input type="text" name="gameAnswer" id="answer" class="contact-form form-group form-control" value="@Model.newQuestion.gameAnswer" /></br />
+        <div class="centered-background">
+            <button type="submit" class="btn btn-outline-light m-2" name="submitBtn" value="create">Create</button>
+        </div>
     </form>
 </div>
 
 <!-- Display user's trivia statistics if authenticated -->
-<div class="text-white">
+<div class="centered-shaded-background pt-2">
     @if (Model.HttpContext.User.Identity.IsAuthenticated)
     {
         var userEmail = Model.HttpContext.User.FindFirst(System.Security.Claims.ClaimTypes.Name)?.Value;
@@ -57,19 +50,19 @@ else
         var stats = Model.GetUserTriviaStats(userId);
 
         <p>Questions Answered: @stats.answeredCount</p>
-        <p>Correct Answers: @stats.correctCount</p>
+        <p class="pb-2">Correct Answers: @stats.correctCount</p>
+    }
+
+    @if (Model.errorMsg.Length > 0)
+    {
+         <h1 class="rate-text-color m-2">@Model.errorMsg</h1>
+    }
+
+    @if (Model.successMsg.Length > 0)
+    {
+         <h1 class="rate-text-color m-2">@Model.successMsg</h1>
     }
 </div>
-
-@if (Model.successMsg.Length > 0)
-{
-    <div class="text-center">
-        <div class="alert alert-success fade show" role="alert">
-            <h1>@Model.successMsg</h1>
-        </div>
-    </div>
-}
-
 <script>
     function toggleVisible() {
         var div = document.getElementById('question');
@@ -82,7 +75,7 @@ else
 </script>
 
 <!-- Display trivia questions -->
-<div style="display: block;">
+<div style="display: block;" class="shaded-background">
     <table class="table">
         <thead>
             <tr class="text-white">

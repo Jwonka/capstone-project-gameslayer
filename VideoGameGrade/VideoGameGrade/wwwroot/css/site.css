@@ -8,24 +8,14 @@ body {
     background-repeat: no-repeat;
 }
 
-.game-table-background {
-    background-image: url("https://cs710032001ea63f0a3.blob.core.windows.net/images/OnTheWay.png");
-    background-size: contain;
-    background-repeat: no-repeat;
+.shaded-background {
+    background-color: rgba(0, 0, 0, 0.85);
     color: #FFFFFF;
 }
 
-.div-contact-background {
-    filter: blur(0.6px);
-    text-align: center;
-    background-image: url("https://cs710032001ea63f0a3.blob.core.windows.net/images/OldSchoolGaming.png");
-    background-size: cover;
-    background-repeat: no-repeat;
-    color: #FFFFFF;
-}
 
-.contact-header {
-    background-color: rgba(0, 0, 0, 0.7);
+.centered-shaded-background {
+    background-color: rgba(0, 0, 0, 0.85);
     text-align: center;
     color: #FFFFFF;
 }
@@ -35,14 +25,9 @@ body {
     text-align: center;
 }
 
-.header-rate-text-color {
-    color: #00FF00;
+.centered-background {
     text-align: center;
-}
-
-.rate-background {
-    background-image: url("https://cs710032001ea63f0a3.blob.core.windows.net/images/HangingOut.png");
-    background-repeat: no-repeat;
+    color: #FFFFFF;
 }
 
 @media (min-width: 768px) {
