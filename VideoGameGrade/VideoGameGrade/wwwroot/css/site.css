@@ -36,9 +36,6 @@ body {
     }
 }
   
-
-    
-}
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
     box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
@@ -57,9 +54,9 @@ body {
     margin: 0 auto;
 }
 
-    .contact-form .form-group {
-        margin-bottom: 20px;
-    }
+.contact-form .form-group {
+    margin-bottom: 20px;
+}
 
 .form-custom {
     max-width: 400px;
