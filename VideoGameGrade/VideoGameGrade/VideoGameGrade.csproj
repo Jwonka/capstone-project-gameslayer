@@ -24,4 +24,9 @@
     <PackageReference Include="xunit.analyzers" Version="1.12.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Pages\NewFolder\" />
+    <Folder Include="Pages\Shared\NewFolder\" />
+  </ItemGroup>
+
 </Project>

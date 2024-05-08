@@ -67,10 +67,18 @@
         </div>
     }
 
-
-    <div class="text-start">
-        <a class="btn btn-primary btn-sm m-2 text-white" href="/Add">New Game</a>
-    </div>
+    @if (User.Identity.IsAuthenticated)
+    {
+        <div class="text-start">
+            <a class="btn btn-primary btn-sm m-2 text-white" href="/Add">New Game</a>
+        </div>
+    } 
+    else
+    {
+        <div class="text-start">
+            <p>If you want to add games please <a class="btn btn-primary btn-sm m-2 text-white" href="/Login">Login</a> or <a class="btn btn-primary btn-sm m-2 text-white" href="/Register">Register</a></p>
+        </div>
+    }
 
     <div id="gameTableDiv" style="overflow-x:auto;">
         <table class="table">
@@ -110,10 +118,20 @@
                         <td>@game.gameRating</td>
                         <td></td>
                         <td>
-                            <a class="btn btn-info btn-md m-md-1 text-black" href="/Trivia?id=@game.gameId" name="gameId">Trivia</a>
-                            <br />
-                            <br />
-                            <a class="btn btn-success btn-md m-md-1 text-black" href="/Ratings?id=@game.gameId">Rating</a>
+
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <a class="btn btn-info btn-md m-md-1 text-black" href="/Trivia?id=@game.gameId" name="gameId">Trivia</a>
+                                <br />
+                                <br>
+                                <a class="btn btn-success btn-md m-md-1 text-black" href="/Ratings?id=@game.gameId">Rating</a>
+                            }
+                            else
+                            {
+                                <p>Please login to rate games, or play trivia games</p>
+                                <a class="btn btn-outline-warning m-1" href="/Login">Login</a>
+                            }
+
                         </td>
                     </tr> 
                 }

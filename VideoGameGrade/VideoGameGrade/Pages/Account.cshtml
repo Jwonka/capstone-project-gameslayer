@@ -1,6 +1,11 @@
 ﻿@page
 @model VideoGameGrade.Pages.AccountModel
 <link rel="stylesheet" href="~/css/site.css">
+@if (!User.Identity.IsAuthenticated)
+{
+    TempData["ErrorMessage"] = "You must be logged in to view your account.";
+    Response.Redirect("/Error");
+}
 <div class="shaded-background">
     <div class="text-center text-white">
         <h2>Account Settings</h2>
