@@ -5,6 +5,8 @@ using VideoGameGrade.Classes;
 using Dapper;
 using System.Data;
 using System.Security.Claims;
+using static VideoGameGrade.Pages.GameCollectionModel;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace VideoGameGrade.Pages
 {
@@ -15,8 +17,11 @@ namespace VideoGameGrade.Pages
         public bool isCorrect { get; set; }
         public string errorMsg = "";
         public string successMsg = "";
+        public static string triviaImage = "";
+        public static string triviaGameName = "";
         public TriviaList newQuestion = new TriviaList();
         public int gameIdValue;
+        public int iD;
 
         public IDbConnection _db;
 
@@ -29,10 +34,41 @@ namespace VideoGameGrade.Pages
         {
             try
             {
+                // Get gameId from Http header
+                if (int.TryParse(Request.Query["id"], out int num))
+                {
+                    iD = num;
+                }
+                else
+                {
+                    errorMsg = "No ID provided.";
+                }
+
                 string connectionString = "Server=videogamegrade.mysql.database.azure.com;Database=videogamegrade_db;Uid=gamegradeadmin;Pwd=capstone2024!;SslMode=Required;";
                 using (MySqlConnection connection = new MySqlConnection(connectionString))
                 {
                     connection.Open();
+
+                    // Get gameTitle and gameImage
+                    String sqlTitle = "SELECT gameTitle, gameImage FROM gametable WHERE gameId = @id";
+                    using (MySqlCommand gameCommand = new MySqlCommand(sqlTitle, connection))
+                    {
+                        gameCommand.Parameters.AddWithValue("@id", iD);
+                        using (MySqlDataReader reader = gameCommand.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                TriviaList gList = new TriviaList();
+                                gList.gameName = reader.IsDBNull(0) ? string.Empty : reader.GetString(0);
+                                gList.gameImage = reader.IsDBNull(1) ? string.Empty : reader.GetString(1);
+
+                                triviaGameName = gList.gameName.ToString();
+                                triviaImage = gList.gameImage;
+
+                            }
+                            
+                        }
+                    }
 
                     string sql = "SELECT gametable.gameID, gametable.gameTitle, triviatable.gameQuiz, triviatable.gameAnswer, triviatable.quizID " +
                                  "FROM triviatable " +
@@ -51,13 +87,14 @@ namespace VideoGameGrade.Pages
                                 tList.gameName = reader.GetString(1);
                                 tList.gameQuiz = reader.GetString(2);
                                 tList.gameAnswer = reader.GetString(3);
-                                tList.quizId = reader.GetInt32(4);
+                                tList.quizId = reader.GetInt32(4);  
 
                                 if (tList.gameIdValue.ToString() == gameId)
                                 {
                                     triviaGame.Add(tList);
                                 }
                             }
+                            reader.Close();
                         }
                     }
                 }
@@ -78,7 +115,7 @@ namespace VideoGameGrade.Pages
             {
                 EnteredIds.Add(quizId);
 
-                if (string.IsNullOrWhiteSpace(quizAnswer))
+                if (string.IsNullOrWhiteSpace(quizAnswer) || string.IsNullOrEmpty(quizAnswer))
                 {
                     errorMsg = "Please enter an answer.";
                     return;
@@ -165,9 +202,16 @@ namespace VideoGameGrade.Pages
                 newQuestion.gameQuiz = Request.Form["gameQuiz"];
                 newQuestion.gameAnswer = Request.Form["gameAnswer"];
 
-                if (string.IsNullOrEmpty(newQuestion.gameAnswer) || string.IsNullOrEmpty(newQuestion.gameQuiz))
+                if (string.IsNullOrEmpty(newQuestion.gameQuiz) || string.IsNullOrWhiteSpace(newQuestion.gameQuiz))
                 {
-                    errorMsg = "All fields must be entered.";
+                    errorMsg = "You must enter an question.";
+                    OnGet();
+                    return;
+                }
+
+                if (string.IsNullOrEmpty(newQuestion.gameAnswer) || string.IsNullOrWhiteSpace(newQuestion.gameAnswer))
+                {
+                    errorMsg = "You must enter an answer.";
                     OnGet();
                     return;
                 }
@@ -225,6 +269,7 @@ namespace VideoGameGrade.Pages
         {
             public int gameIdValue;
             public string gameName;
+            public string gameImage;
             public string gameQuiz;
             public string gameAnswer;
             public int quizId;

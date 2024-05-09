@@ -8,7 +8,9 @@
 @if (User.Identity.IsAuthenticated)
 {
     <div class="centered-shaded-background">
-        <h1 class="rate-text-color">@(Model.triviaGame.Any() ? Model.triviaGame.First().gameName : "This game has no trivia questions to show")</h1>
+        <h1 class="rate-text-color">@TriviaModel.triviaGameName</h1>
+        <img src="@Html.Raw(@TriviaModel.triviaImage)" alt="Game Image" style="width: 100px; height: auto;" />
+        <br />
         <h1 class="display-4">Game Trivia</h1>
         <h3>Click here to add a trivia question</h3>
         <button class="btn btn-outline-light  m-2" onclick="toggleVisible()">Create Question</button>
@@ -31,9 +33,9 @@ else
             <input type="hidden" name="id" value="@gameIdValue" />
         }
         <br />
-        <label>Question:</label>
+        <label class="m-2">Question:</label>
         <input type="text" name="gameQuiz" id="question" class="contact-form form-group form-control" value="@Model.newQuestion.gameQuiz" /><br />
-        <label>Your Answer:</label>
+        <label class="m-2">Your Answer:</label>
         <input type="text" name="gameAnswer" id="answer" class="contact-form form-group form-control" value="@Model.newQuestion.gameAnswer" /></br />
         <div class="centered-background">
             <button type="submit" class="btn btn-outline-light m-2" name="submitBtn" value="create">Create</button>
