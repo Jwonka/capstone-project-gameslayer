@@ -13,6 +13,11 @@ body {
     color: #FFFFFF;
 }
 
+.index-centered-shaded-background {
+    background-color: rgba(0, 0, 0, 0.65);
+    text-align: center;
+    color: #FFFFFF;
+}
 
 .centered-shaded-background {
     background-color: rgba(0, 0, 0, 0.85);
