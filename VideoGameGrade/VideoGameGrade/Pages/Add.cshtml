@@ -39,21 +39,17 @@
         <form method="post" enctype="multipart/form-data">
             <br />
             <div class="offset-sm-4 col-lg-5 d-grid">
-                <div class="row mb-2">
-                    <div class="offset-sm-5 col-sm-9 d-grid mt-0 m-2 p-1">
-                        <input type="Text" class="form-control" id="title" name="gameTitle" placeholder="Game Title*" required>
-                    </div>   
+                <div class="offset-sm-4 col-md-10 d-grid mt-2 ms-1 p-1">
+                    <input type="Text" class="form-control" id="title" name="gameTitle" placeholder="Game Title*">
                 </div>
-                <div class="row mb-0">
-                    <div class="offset-sm-5 col-sm-9 d-grid mt-0 m-2 p-1">
-                        <input type="Text" class="form-control" id="publisher" name="gamePublisher" placeholder="Publisher*">
-                    </div>
+                <div class="offset-sm-4 col-md-10 d-grid mt-2 ms-1 p-1">
+                    <input type="Text" class="form-control" id="publisher" name="gamePublisher" placeholder="Publisher*">
                 </div>
-                <div class="btn-group-md dropdown dropend m-1 ms-lg-5">
+                <div class="btn-group-lg dropdown dropend m-2 ms-2">
                     <button class="btn btn-info dropdown-toggle" type="button" id="platformMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Platform*
                     </button>
-                    <ul class="dropdown-menu m-1 p-0">
+                    <ul class="dropdown-menu m-2 p-0">
                         <li><label class="dropdown-item"><input type="checkbox" name="gamePlatform" value=" Nintendo"> Nintendo</label></li>
                         <li><label class="dropdown-item"><input type="checkbox" name="gamePlatform" value=" Sega"> Sega</label></li>
                         <li><label class="dropdown-item"><input type="checkbox" name="gamePlatform" value=" Xbox"> Xbox</label></li>
@@ -64,42 +60,42 @@
                         <li><label class="dropdown-item"><input type="checkbox" name="gamePlatform" value=" Virtual Reality"> VR</label></li>
                         <li><label class="dropdown-item"><input type="checkbox" name="gamePlatform" value=" Other"> Other</label></li>
                     </ul>
-                    <div class="btn-group dropdown dropstart m-1 ms-lg-5 ms-xxl-5">
-                        <button class="btn btn-info dropdown-toggle" type="button" id="categoryMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Category*   
-                        </button>
-                        <ul class="dropdown-menu m-1 p-0">
-                            <li><label class="dropdown-item"><input type="checkbox" name="gameCategory" value=" Action"> Action</label></li>
-                            <li><label class="dropdown-item"><input type="checkbox" name="gameCategory" value=" Adventure"> Adventure</label></li>
-                            <li><label class="dropdown-item"><input type="checkbox" name="gameCategory" value=" Fighting"> Fighting</label></li>
-                            <li><label class="dropdown-item"><input type="checkbox" name="gameCategory" value=" Horror"> Horror</label></li> 
-                            <li><label class="dropdown-item"><input type="checkbox" name="gameCategory" value=" Puzzle"> Puzzle</label></li>
-                            <li><label class="dropdown-item"><input type="checkbox" name="gameCategory" value=" Multiplayer"> Multiplayer</label></li>
-                            <li><label class="dropdown-item"><input type="checkbox" name="gameCategory" value=" 2D"> 2D</label></li>
-                            <li><label class="dropdown-item"><input type="checkbox" name="gameCategory" value=" Racing"> Racing</label></li>
-                            <li><label class="dropdown-item"><input type="checkbox" name="gameCategory" value=" RPG"> RPG</label></li>
-                            <li><label class="dropdown-item"><input type="checkbox" name="gameCategory" value=" Shooter"> Shooter</label></li>
-                            <li><label class="dropdown-item"><input type="checkbox" name="gameCategory" value=" Simulation"> Simulation</label></li>
-                            <li><label class="dropdown-item"><input type="checkbox" name="gameCategory" value=" Sports"> Sports</label></li>
-                            <li><label class="dropdown-item"><input type="checkbox" name="gameCategory" value=" Stealth"> Stealth</label></li>
-                            <li><label class="dropdown-item"><input type="checkbox" name="gameCategory" value=" Strategy"> Strategy</label></li>
-                            <li><label class="dropdown-item"><input type="checkbox" name="gameCategory" value=" Survival"> Survival</label></li>
-                            <li><label class="dropdown-item"><input type="checkbox" name="gameCategory" value=" Other"> Other</label></li>
-                        </ul>
-                    </div>
+                </div>
+                <div class="btn-group-lg dropdown dropend m-2 ms-2">
+                    <button class="btn btn-info dropdown-toggle" type="button" id="categoryMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Category*   
+                    </button>
+                    <ul class="dropdown-menu m-2 p-0">
+                        <li><label class="dropdown-item"><input type="checkbox" name="gameCategory" value=" Action"> Action</label></li>
+                        <li><label class="dropdown-item"><input type="checkbox" name="gameCategory" value=" Adventure"> Adventure</label></li>
+                        <li><label class="dropdown-item"><input type="checkbox" name="gameCategory" value=" Fighting"> Fighting</label></li>
+                        <li><label class="dropdown-item"><input type="checkbox" name="gameCategory" value=" Horror"> Horror</label></li> 
+                        <li><label class="dropdown-item"><input type="checkbox" name="gameCategory" value=" Puzzle"> Puzzle</label></li>
+                        <li><label class="dropdown-item"><input type="checkbox" name="gameCategory" value=" Multiplayer"> Multiplayer</label></li>
+                        <li><label class="dropdown-item"><input type="checkbox" name="gameCategory" value=" 2D"> 2D</label></li>
+                        <li><label class="dropdown-item"><input type="checkbox" name="gameCategory" value=" Racing"> Racing</label></li>
+                        <li><label class="dropdown-item"><input type="checkbox" name="gameCategory" value=" RPG"> RPG</label></li>
+                        <li><label class="dropdown-item"><input type="checkbox" name="gameCategory" value=" Shooter"> Shooter</label></li>
+                        <li><label class="dropdown-item"><input type="checkbox" name="gameCategory" value=" Simulation"> Simulation</label></li>
+                        <li><label class="dropdown-item"><input type="checkbox" name="gameCategory" value=" Sports"> Sports</label></li>
+                        <li><label class="dropdown-item"><input type="checkbox" name="gameCategory" value=" Stealth"> Stealth</label></li>
+                        <li><label class="dropdown-item"><input type="checkbox" name="gameCategory" value=" Strategy"> Strategy</label></li>
+                        <li><label class="dropdown-item"><input type="checkbox" name="gameCategory" value=" Survival"> Survival</label></li>
+                        <li><label class="dropdown-item"><input type="checkbox" name="gameCategory" value=" Other"> Other</label></li>
+                    </ul>
                 </div>       
             </div>
-            <div class="row mb-3">
+            <div class="row mb-3 ms-2 me-2">
                 <div class="offset-sm-4 col-sm-4 d-grid p-1">
                     <input asp-for="gameImage" type="file" class="form-control" />
                 </div>
             </div>
-            <div class="row mb-3">
+            <div class="row mb-3 ms-3 me-2">
                 <div class="offset-sm-4 col-sm-2 d-grid p-0">
-                    <button type="submit" class="btn btn-success m-1 text-white">Submit</button>
+                    <button type="submit" class="btn btn-success mb-2 me-2 text-white">Submit</button>
                 </div>
                 <div class="col-sm-2 d-grid p-0">
-                    <a class="btn btn-danger m-1 text-white" href="/GameCollection" role="button">Cancel</a>
+                    <a class="btn btn-danger mb-2 ms-0 me-2 text-white" href="/GameCollection" role="button">Cancel</a>
                 </div>
             </div>
         </form>
