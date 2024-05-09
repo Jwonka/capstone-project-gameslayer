@@ -75,13 +75,13 @@
     } 
     else
     {
-        <div class="text-start">
-            <p>If you want to add games please <a class="btn btn-primary btn-sm m-2 text-white" href="/Login">Login</a> or <a class="btn btn-primary btn-sm m-2 text-white" href="/Register">Register</a></p>
+        <div class="text-center m-2">
+            <p>If you want to add games, play trivia, or rate games please <a class="btn btn-outline-warning btn-sm m-2" href="/Login">Login</a> or <a class="btn btn-outline-warning btn-sm m-2" href="/Register">Register</a></p>
         </div>
     }
 
     <div id="gameTableDiv" style="overflow-x:auto;">
-        <table class="table">
+        <table class="table centered-background">
             <thead class="text-white text-md-start">
                 <tr>
                     <th>Title</th>
@@ -115,7 +115,7 @@
                         <td>@game.gamePublisher</td>
                         <td>@game.gamePlatform</td>
                         <td>@game.gameCategory</td>
-                        <td>@game.gameRating</td>
+                        <td><p class="ms-3">@game.gameRating</p></td>
                         <td></td>
                         <td>
 
@@ -128,8 +128,8 @@
                             }
                             else
                             {
-                                <p>Please login to rate games, or play trivia games</p>
-                                <a class="btn btn-outline-warning m-1" href="/Login">Login</a>
+                                //<p>For access</p>
+                                //<a class="btn btn-outline-warning btn-sm" href="/Login">Login</a>
                             }
 
                         </td>

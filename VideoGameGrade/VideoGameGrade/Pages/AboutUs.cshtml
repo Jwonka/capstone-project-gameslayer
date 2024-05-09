@@ -1,29 +1,29 @@
 ﻿@page
 @model VideoGameGrade.Pages.AccountModel
 
-<div class="text-center" style="color: white;  background-color: rgba(0, 0, 0, 0.5);">
+<div class="shaded-background p-4">
 
     @if (User.Identity.IsAuthenticated)
     {
-        <h1 class="display-4">Welcome @Model.UserEmail <br> to the About us page</h1>
+        <h1 class="display-2 p-lg-3 text-center">Welcome @Model.UserEmail <br> to the About us page</h1>
     }
     else
     {
-        <h1 class="display-4">Welcome to the About us page</h1>
+        <h1 class="display-2 m-4  p-lg-3 text-center">Welcome to the About us page</h1>
     }
- 
-    <p>At Video Game Graders, we're a group of passionate students from the Chippewa Valley Technical College (CVTC) who are dedicated to exploring the world of gaming and sharing our insights with fellow enthusiasts. Our platform serves as a hub for grading games, offering comprehensive reviews, analysis, and recommendations to help you navigate the vast landscape of gaming experiences.</p>
-
-    <h2>Our Mission</h2>
-    <p>Our mission is simple: to provide gamers with honest, unbiased assessments of the games they love. Whether you're a seasoned veteran or a casual player, we believe that every game deserves a fair evaluation. By combining our diverse perspectives and expertise, we aim to deliver reviews that are informative, insightful, and above all, trustworthy.</p>
-
-    <h2>Who We Are</h2>
-    <p>Video Game Graders is run by a team of CVTC students who share a deep passion for gaming. From classic titles to the latest releases, we cover a wide range of genres and platforms, ensuring that there's something for everyone. Our team members bring unique backgrounds and interests to the table, allowing us to offer diverse perspectives on the games we review.</p>
-
-    <h2>What We Do</h2>
-    <p>At Video Game Graders, we take our role as game critics seriously. Before publishing a review, we spend countless hours playing and analyzing each game, paying close attention to every aspect of the experience. From gameplay mechanics and graphics to storytelling and replay value, we leave no stone unturned in our quest to provide you with the most comprehensive reviews possible.</p>
-
-    <h2>Get Involved</h2>
-    <p>We believe that gaming is more than just a hobby—it's a community. That's why we encourage you to get involved with Video Game Graders. Whether you want to share your own reviews, join in on discussions, or simply connect with like-minded gamers, there's a place for you here. Together, we can create a vibrant community dedicated to celebrating the art of gaming.</p>
+    <br />
+    <p class="h5">Here at Video Game Grade, we are a group of passionate people who are dedicated to exploring the world of gaming and sharing our insights with fellow enthusiasts. Our platform serves as a hub for grading games, offering comprehensive reviews, analysis, and recommendations to help you navigate the vast landscape of gaming experiences.</p>
+    <br />
+    <h2 class="display-3 mb-4  p-lg-3 text-center">Our Mission</h2>
+    <p class="h5">Our mission is simple: to provide gamers with honest, unbiased assessments of the games they love. Whether you're a seasoned veteran or a casual player, we believe that every game deserves a fair evaluation. By combining our diverse perspectives and expertise, we aim to deliver reviews that are informative, insightful, and above all, trustworthy.</p>
+    <br />
+    <h2 class="display-3 mb-4  p-lg-3 text-center">Who We Are</h2>
+    <p class="h5">Video Game Grade is run by a team of students from the Chippewa Valley Technical College (CVTC) who share a deep passion for gaming. From classic titles to the latest releases, we cover a wide range of genres and platforms, ensuring that there's something for everyone. Our team members bring unique backgrounds and interests to the table, allowing us to offer diverse perspectives on the games we review.</p>
+    <br />
+    <h2 class="display-3 mb-4  p-lg-3 text-center">What We Do</h2>
+    <p class="h5">At Video Game Grade, we take our role as game critics seriously. Before publishing a review, we spend countless hours playing and analyzing each game, paying close attention to every aspect of the experience. From gameplay mechanics and graphics to storytelling and replay value, we leave no stone unturned in our quest to provide you with the most comprehensive reviews possible.</p>
+    <br />
+    <h2 class="display-3 mb-4  p-lg-3 text-center">Get Involved</h2>
+    <p class="h5">We believe that gaming is more than just a hobby—it's a community. That's why we encourage you to get involved with Video Game Grade. Whether you want to share your own reviews, join in on discussions, or simply connect with like-minded gamers, there's a place for you here. Together, we can create a vibrant community dedicated to celebrating the art of gaming.</p>
 
 </div>
