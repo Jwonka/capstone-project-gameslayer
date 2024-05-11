@@ -40,6 +40,7 @@ body {
         font-size: 16px;
     }
 }
+
   
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
     box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
@@ -67,4 +68,15 @@ body {
     max-width: 400px;
     margin: 0 auto;
     margin-bottom: 20px;
+}
+@media screen and (max-width: 500px) {
+    .hide-category {
+        display: none;
+    }
+}
+.correctAnswer{
+    color:green;
+}
+.wrongAnswer{
+    color:red;
 }
