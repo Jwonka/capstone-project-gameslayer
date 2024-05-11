@@ -92,7 +92,13 @@ else
             {
                 <form method="post">
                 <tr>
-                    <td>@item.gameQuiz</td>
+                    <!--Rewrote the "if" statement to have it check for correct answers-->
+                    <td class="@{
+                    if(Model.EnteredIds.Contains(item.quizId) && Model.isCorrect){
+                            <text>correctAnswer</text>
+                        }else if(Model.EnteredIds.Contains(item.quizId) && !Model.isCorrect){
+                            <text>wrongAnswer</text>}}">@item.gameQuiz</td>
+
                     <input type="hidden" name="quizId" value="@item.quizId">
                     <td><input type="text" name="quizAnswer" id="quizAnswer" class="form-control" /></td>
                     <td><button type="submit" class="form-control" name="submitBtn@(item.quizId)" value="quizSubmit" id="@($"quizSubmit_{item.quizId}")">Submit</button></td>

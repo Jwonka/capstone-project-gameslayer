@@ -1,5 +1,4 @@
-﻿
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -75,8 +74,8 @@
         </main>
     </div>
 
-   
-   
+
+
     <div style="max-width: 300px; max-height: 300px; overflow: hidden; display: block">
         <label id="clickMe" class="text-white" style="display: none; text-align: center;">Click Me!</label>
         <img id="imageToShowForm" src="~/images/smiley2.gif" style="display: block; width: 100%; height: auto; cursor: pointer;" onmouseenter="onMouseOver()" />
@@ -85,12 +84,13 @@
 
     <form id="hiddenForm" method="post" style="display: none;">
         <label class="text-center text-white">Choose a color:</label>
-        <button id="toggleColor" style="background-color: lightblue" onclick="toggleBlue()">Blue</button>
-        <button id="toggleColorP" style="background-color: hotpink" onclick="togglePink()">Pink</button>
-        <button id="toggleColorP" style="background-color: greenyellow" onclick="toggleGreen()">Green</button>
-        <button id="toggleColorP" style="background-color: red" onclick="toggleBlack()">Black/Red</button>
+        <button type="button" value="blue" style="background-color: deepskyblue" onclick="changeColor(this)">Blue</button>
+        <button type="button" value="pink" style="background-color: hotpink" onclick="changeColor(this)">Pink</button>
+        <button type="button" value="green" style="background-color: greenyellow" onclick="changeColor(this)">Green</button>
+        <button type="button" value="red" style="background-color: red" onclick="changeColor(this)">Black/Red</button>
+        <button type="button" value="gray" style="background-color: gray" onclick="changeColor(this)">Gray</button>
     </form>
-    
+
     <footer class="border-top footer text-center" id="footer" style="background-color: #343a40; color: white;">
         <div class="container">
             &copy; 2024 - VideoGameGrade
@@ -104,8 +104,8 @@
     @await RenderSectionAsync("Scripts", required: false)
 
     <script>
-        function onMouseOver(){
-          var imgToShowForm = document.getElementById("imageToShowForm");
+        function onMouseOver() {
+            var imgToShowForm = document.getElementById("imageToShowForm");
             var hoverImg = document.getElementById("hoverImg");
             var clickMe = document.getElementById("clickMe");
             imgToShowForm.style.display = "none";
@@ -121,9 +121,9 @@
             clickMe.style.display = "none";
         }
 
-        function showForm(){
+        function showForm() {
             var form = document.getElementById("hiddenForm");
-            if(form.style.display == "none"){
+            if (form.style.display == "none") {
                 form.style.display = "block";
             } else {
                 form.style.display = "none";
@@ -133,155 +133,51 @@
         // Retrieve the color from localStorage
         var currentColor = localStorage.getItem('toggleColor');
         var currentBody = localStorage.getItem('toggleColorBody');
-        // If the retrieved color is "red", remove the entry from localStorage
-        if (currentColor === "red") {
-            localStorage.removeItem('toggleColor');
-        }
 
-        function toggleBlue() {
-            // Grab elements
+        function changeColor(button) {
             var nav = document.getElementById("nav");
             var footer = document.getElementById("footer");
             var body = document.getElementById("body");
+            var color = button.value;
 
-            //body color
-            if (currentBody === "#26262C") {
+            if (color == "blue") {
                 body.style.backgroundColor = "#1E91D6";
-                currentBody = "#1E91D6";
-            } else {
-                body.style.backgroundColor = "#26262C";
-                currentBody = "#26262C";
-            }
-            // Change footer background color
-            if (currentColor === "#343a40") {
                 footer.style.backgroundColor = "blue";
-                currentColor = "blue";
-            } else {
-                footer.style.backgroundColor = "#343a40";
-                currentColor = "#343a40";
-            }
-            // Change nav background color
-            if (currentColor === "#343a40") {
                 nav.style.backgroundColor = "blue";
-               
-            } else {
-                nav.style.backgroundColor = "#343a40";
-               
-            }
-          
-
-            // Update localStorage with the current color
-            localStorage.setItem('toggleColor', currentColor);
-            localStorage.setItem('toggleColorBody', currentBody);
-        }
-
-
-        //Pink Color
-        function togglePink() {
-            // Grab elements
-            var nav = document.getElementById("nav");
-            var footer = document.getElementById("footer");
-            var body = document.getElementById("body");
-
-            //body color
-            if (currentBody === "#26262C") {
+                currentBody = "#1E91D6";
+                currentColor = "blue";
+            } else if (color == "pink") {
                 body.style.backgroundColor = "#E28DA8";
-                currentBody = "#E28DA8";
-            } else {
-                body.style.backgroundColor = "#26262C";
-                currentBody = "#26262C";
-            }
-            // Change footer background color
-            if (currentColor === "#343a40") {
                 footer.style.backgroundColor = "#CC3363";
-                currentColor = "#CC3363";
-            } else {
-                footer.style.backgroundColor = "#343a40";
-                currentColor = "#343a40";
-            }
-            // Change nav background color
-            if (currentColor === "#343a40") {
                 nav.style.backgroundColor = "#CC3363";
-
-            } else {
-                nav.style.backgroundColor = "#343a40";
-
-            }
-            // Update localStorage with the current color
-            localStorage.setItem('toggleColor', currentColor);
-            localStorage.setItem('toggleColorBody', currentBody);
-        }
-        //Green Color
-        function toggleGreen() {
-            // Grab elements
-            var nav = document.getElementById("nav");
-            var footer = document.getElementById("footer");
-            var body = document.getElementById("body");
-
-            //body color
-            if (currentBody === "#26262C") {
+                currentBody = "#E28DA8";
+                currentColor = "#CC3363";
+            } else if (color == "green") {
                 body.style.backgroundColor = "#23580E";
-                currentBody = "#23580E";
-            } else {
-                body.style.backgroundColor = "#26262C";
-                currentBody = "#26262C";
-            }
-            // Change footer background color
-            if (currentColor === "#343a40") {
                 footer.style.backgroundColor = "#153508";
-                currentColor = "#153508";
-            } else {
-                footer.style.backgroundColor = "#343a40";
-                currentColor = "#343a40";
-            }
-            // Change nav background color
-            if (currentColor === "#343a40") {
                 nav.style.backgroundColor = "#153508";
-
-            } else {
-                nav.style.backgroundColor = "#343a40";
-
-            }
-            // Update localStorage with the current color
-            localStorage.setItem('toggleColor', currentColor);
-            localStorage.setItem('toggleColorBody', currentBody);
-        }
-
-        //Black/Red Color
-        function toggleBlack() {
-            // Grab elements
-            var nav = document.getElementById("nav");
-            var footer = document.getElementById("footer");
-            var body = document.getElementById("body");
-
-            //body color
-            if (currentBody === "#26262C") {
+                currentColor = "#153508";
+                currentBody = "#23580E";
+            } else if (color == "red") {
                 body.style.backgroundColor = "#141414";
+                footer.style.backgroundColor = "#FB350E";
+                nav.style.backgroundColor = "#FB350E";
+                currentColor = "#FB350E";
                 currentBody = "#141414";
-            } else {
+            } else if (color == "gray") {
                 body.style.backgroundColor = "#26262C";
+                footer.style.backgroundColor = "#343a40";
+                nav.style.backgroundColor = "#343a40";
+                currentColor = "#343a40";
                 currentBody = "#26262C";
             }
-            // Change footer background color
-            if (currentColor === "#343a40") {
-                footer.style.backgroundColor = "#FB350E";
-                currentColor = "#FB350E";
-            } else {
-                footer.style.backgroundColor = "#343a40";
-                currentColor = "#343a40";
-            }
-            // Change nav background color
-            if (currentColor === "#343a40") {
-                nav.style.backgroundColor = "#FB350E";
 
-            } else {
-                nav.style.backgroundColor = "#343a40";
-
-            }
             // Update localStorage with the current color
             localStorage.setItem('toggleColor', currentColor);
             localStorage.setItem('toggleColorBody', currentBody);
+
         }
+
 
         // Set the initial background color of the nav, body, and footer elements
         var nav = document.getElementById("nav");
@@ -294,6 +190,6 @@
         body.style.backgroundColor = currentBody || "#26262C";
 
     </script>
- 
+
 </body>
 </html>
