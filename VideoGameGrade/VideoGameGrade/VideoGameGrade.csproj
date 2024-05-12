@@ -7,6 +7,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Pages\NewFolder\**" />
+    <Compile Remove="Pages\Shared\NewFolder\**" />
+    <Content Remove="Pages\NewFolder\**" />
+    <Content Remove="Pages\Shared\NewFolder\**" />
+    <EmbeddedResource Remove="Pages\NewFolder\**" />
+    <EmbeddedResource Remove="Pages\Shared\NewFolder\**" />
+    <None Remove="Pages\NewFolder\**" />
+    <None Remove="Pages\Shared\NewFolder\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Azure.Storage.Blobs" Version="12.19.1" />
     <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
   </ItemGroup>
@@ -22,11 +33,6 @@
     <PackageReference Include="SendGrid" Version="9.29.3" />
     <PackageReference Include="xunit" Version="2.7.1" />
     <PackageReference Include="xunit.analyzers" Version="1.12.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Pages\NewFolder\" />
-    <Folder Include="Pages\Shared\NewFolder\" />
   </ItemGroup>
 
 </Project>
