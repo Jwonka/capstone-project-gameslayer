@@ -6,6 +6,7 @@ using System.ComponentModel;
 using Dapper;
 using System.Data;
 using System.Security.Claims;
+using System.Text.RegularExpressions;
 
 namespace VideoGameGrade.Pages
 {
@@ -100,7 +101,8 @@ namespace VideoGameGrade.Pages
             {
                 await DetermineRating(rating, iD, addRating, removeRating);
             }
-            return Page();
+
+            return RedirectToPage(new { id = iD });
         }
 
         // Deletes the comment associated with the delete button
@@ -109,7 +111,7 @@ namespace VideoGameGrade.Pages
             try
             {
                 // Connection string
-                string connectionString = "Server=videogamegrade.mysql.database.azure.com;Database=videogamegrade_db;Uid=gamegradeadmin;Pwd=capstone2024!;SslMode=Required;";
+                string connectionString = "Server=videogamegrade.mysql.database.azure.com;Database=videogamegrade_db;Uid=gamegradeadmin;Pwd=capstone2024!;SslMode=Required;charset=utf8mb4;";
 
                 using (MySqlConnection connection = new MySqlConnection(connectionString))
                 {
@@ -150,7 +152,7 @@ namespace VideoGameGrade.Pages
             try
             {
                 // Connection string
-                string rateString = "Server=videogamegrade.mysql.database.azure.com;Database=videogamegrade_db;Uid=gamegradeadmin;Pwd=capstone2024!;SslMode=Required;";
+                string rateString = "Server=videogamegrade.mysql.database.azure.com;Database=videogamegrade_db;Uid=gamegradeadmin;Pwd=capstone2024!;SslMode=Required;charset=utf8mb4;";
 
                 using (MySqlConnection connect = new MySqlConnection(rateString))
                 {
@@ -262,7 +264,7 @@ namespace VideoGameGrade.Pages
                 try
                 {
                     // Connection string
-                    string rateString = "Server=videogamegrade.mysql.database.azure.com;Database=videogamegrade_db;Uid=gamegradeadmin;Pwd=capstone2024!;SslMode=Required;";
+                    string rateString = "Server=videogamegrade.mysql.database.azure.com;Database=videogamegrade_db;Uid=gamegradeadmin;Pwd=capstone2024!;SslMode=Required;charset=utf8mb4;";
 
                     using (MySqlConnection connect = new MySqlConnection(rateString))
                     {
@@ -296,12 +298,19 @@ namespace VideoGameGrade.Pages
         // Add a comment to the specific game
         private bool AddComment(string comment, int gameId, int rating, string rateTitle)
         {
+            // Validate the comment to contain only letters and numbers
+            if (!Regex.IsMatch(comment, @"^[a-zA-Z0-9\s]*$"))
+            {
+                message = "Comments can only contain letters and numbers.";
+                return false;
+            }
+
             // Get comment and trim it for insertion into the database
             gameComment = comment.Trim();
             try
             {
                 // Connection string
-                string rateString = "Server=videogamegrade.mysql.database.azure.com;Database=videogamegrade_db;Uid=gamegradeadmin;Pwd=capstone2024!;SslMode=Required;";
+                string rateString = "Server=videogamegrade.mysql.database.azure.com;Database=videogamegrade_db;Uid=gamegradeadmin;Pwd=capstone2024!;SslMode=Required;charset=utf8mb4;";
 
                 using (MySqlConnection connect = new MySqlConnection(rateString))
                 {
