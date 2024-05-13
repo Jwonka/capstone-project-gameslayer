@@ -11,7 +11,7 @@
         {
             <div class='rate-text-color m-2'>
                 <div class="display-4">
-                    <h1>@Model.errorMessage</h1>
+                    <h1 class="pt-3">@Model.errorMessage</h1>
                 </div>
                 <br />
                 <br />
@@ -22,7 +22,7 @@
             <div class="rate-text-color m-2">
                 @if (!string.IsNullOrEmpty(@AddModel.gameImg) && AddModel.gameImg != "No image")
                 {
-                    <h1>@Model.errorMsg</h1>
+                    <h1 class="pt-3">@Model.errorMsg</h1>
                     <img src="@Html.Raw(@AddModel.gameImg)" alt="Game Image" style="width: 100px; height: auto;" />
                     <br />
                 }
@@ -31,7 +31,7 @@
         else
         {   // Title for the page
             <div class="text-white text-center m-2">
-                <h1 class="display-4">New Game</h1>
+                <h1 class="display-4 pt-3">New Game</h1>
                 <br />
             </div>
         }
@@ -46,7 +46,7 @@
                     <input type="Text" class="form-control" id="publisher" name="gamePublisher" placeholder="Publisher*">
                 </div>
                 <div class="btn-group-lg dropdown dropend m-2 ms-2">
-                    <button class="btn btn-info dropdown-toggle" type="button" id="platformMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <button class="btn btn-outline-light  dropdown-toggle" type="button" id="platformMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Platform*
                     </button>
                     <ul class="dropdown-menu m-2 p-0">
@@ -62,7 +62,7 @@
                     </ul>
                 </div>
                 <div class="btn-group-lg dropdown dropend m-2 ms-2">
-                    <button class="btn btn-info dropdown-toggle" type="button" id="categoryMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <button class="btn btn-outline-light dropdown-toggle" type="button" id="categoryMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Category*   
                     </button>
                     <ul class="dropdown-menu m-2 p-0">
@@ -92,10 +92,10 @@
             </div>
             <div class="row mb-3 ms-3 me-2">
                 <div class="offset-sm-4 col-sm-2 d-grid p-0">
-                    <button type="submit" class="btn btn-success mb-2 me-2 text-white">Submit</button>
+                    <button type="submit" class="btn btn-primary text-white ms-0 mb-2 me-2 ">Submit</button>
                 </div>
                 <div class="col-sm-2 d-grid p-0">
-                    <a class="btn btn-danger mb-2 ms-0 me-2 text-white" href="/GameCollection" role="button">Cancel</a>
+                    <a class="btn btn-secondary mb-2 ms-0 me-2 text-white" href="/GameCollection" role="button">Cancel</a>
                 </div>
             </div>
         </form>

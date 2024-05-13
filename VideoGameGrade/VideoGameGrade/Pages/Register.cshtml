@@ -1,7 +1,7 @@
 ﻿@page
 @model VideoGameGrade.Pages.RegisterModel
 <div class="centered-shaded-background">
-    <h1 class="display-4">Register</h1>
+    <h1 class="display-4 pt-3">Register</h1>
     <form method="post" asp-antiforgery="true" class="form-custom text-white">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="form-group">
@@ -19,6 +19,6 @@
             <input asp-for="Input.ConfirmPassword" placeholder="Confirm Password:" class="form-control" type="password" />
             <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
         </div>
-        <button type="submit" class="btn btn-primary m-2">Register</button>
+        <button type="submit" class="btn btn-outline-warning m-2">Register</button>
     </form>
 </div>
