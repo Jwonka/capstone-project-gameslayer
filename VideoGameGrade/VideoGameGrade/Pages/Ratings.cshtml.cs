@@ -46,6 +46,8 @@ namespace VideoGameGrade.Pages
                 return Page();
             }
 
+            ratings.Clear();
+
             // Get the name of the button pressed to determine rating increase or decrease
             string addRating = Request.Form["addRating"];
             string removeRating = Request.Form["removeRating"];
