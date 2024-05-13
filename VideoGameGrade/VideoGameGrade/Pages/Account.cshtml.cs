@@ -24,36 +24,32 @@ namespace VideoGameGrade.Pages
         [BindProperty]
         public ChangePasswordModel ChangePasswordModel { get; set; } = new ChangePasswordModel();
 
-        //store user-related data
         public string UserEmail { get; set; }
         public List<GameInfo> UserGames { get; set; }
         public List<TriviaInfo> UserTrivia { get; set; }
+        public List<CommentInfo> UserComments { get; set; }
         public int CorrectTriviaCount { get; set; }
         public int IncorrectTriviaCount { get; set; }
 
-        //GET requests
         public void OnGet()
         {
             LoadUserData(); // Load user data when the page is requested
         }
 
-        //load user-specific data
         private void LoadUserData()
         {
-            // Retrieve user email
             UserEmail = HttpContext.User.FindFirst(ClaimTypes.Name)?.Value;
             if (string.IsNullOrEmpty(UserEmail))
             {
                 UserEmail = "Email not available";
             }
 
-            // Load account games, trivia, and trivia stats
             LoadUserGames();
             LoadUserTrivia();
             LoadUserTriviaStats();
+            LoadUserComments();
         }
 
-        //request to change password
         public async Task<IActionResult> OnPostChangePasswordAsync()
         {
             if (!ModelState.IsValid)
@@ -61,7 +57,6 @@ namespace VideoGameGrade.Pages
                 return Page();
             }
 
-            // Retrieve user email
             UserEmail = HttpContext.User.FindFirst(ClaimTypes.Name)?.Value;
             if (string.IsNullOrEmpty(UserEmail))
             {
@@ -69,18 +64,15 @@ namespace VideoGameGrade.Pages
                 return Page();
             }
 
-            // Retrieve user data from the database
             var user = await _db.QuerySingleOrDefaultAsync<User>(
                 "SELECT * FROM usertable WHERE userName = @UserName", new { UserName = UserEmail });
 
-            // Verify the old password
             if (user == null || !BCrypt.Net.BCrypt.Verify(ChangePasswordModel.OldPassword, user.Password))
             {
                 ModelState.AddModelError(string.Empty, "Current password is incorrect.");
-                return Page(); // Fail if the current password is wrong or the user is not found
+                return Page();
             }
 
-            // Hash and update the new password in the database
             var hashedPassword = BCrypt.Net.BCrypt.HashPassword(ChangePasswordModel.NewPassword);
             var updateQuery = "UPDATE usertable SET password = @Password WHERE userName = @UserName";
             var result = await _db.ExecuteAsync(updateQuery, new { Password = hashedPassword, UserName = UserEmail });
@@ -95,17 +87,15 @@ namespace VideoGameGrade.Pages
             return Page();
         }
 
-        // Handles request to delete a game
         public async Task<IActionResult> OnPostDeleteGameAsync(int GameId)
         {
             var result = await _db.ExecuteAsync("DELETE FROM gametable WHERE gameId = @GameId", new { GameId });
 
             TempData["DeleteMsg"] = result > 0 ? "Game deleted successfully." : "Failed to delete the game.";
-            LoadUserData(); // Reload user data after deleting the game
+            LoadUserData();
             return Page();
         }
 
-        // Handles request to delete a trivia question
         public async Task<IActionResult> OnPostDeleteTriviaAsync(int QuizId)
         {
             var result = await _db.ExecuteAsync("DELETE FROM triviatable WHERE quizID = @QuizId", new { QuizId });
@@ -115,34 +105,44 @@ namespace VideoGameGrade.Pages
             return Page();
         }
 
-        //load user's games from the database
+        public async Task<IActionResult> OnPostDeleteCommentAsync(int CommentId)
+        {
+            var result = await _db.ExecuteAsync("DELETE FROM ratings WHERE rateID = @CommentId", new { CommentId });
+
+            TempData["DeleteMsg"] = result > 0 ? "Comment deleted successfully." : "Failed to delete the comment.";
+            LoadUserData();
+            return Page();
+        }
+
         private void LoadUserGames()
         {
             var userId = _db.QuerySingleOrDefault<int>("SELECT userId FROM usertable WHERE userName = @UserName", new { UserName = UserEmail });
 
             UserGames = _db.Query<GameInfo>(
-                "SELECT * FROM gametable WHERE userId = @UserId",
+                @"
+                    SELECT g.gameId, g.gameTitle, g.gamePublisher, g.gamePlatform, g.gameCategory, g.gameRating, g.gameImage
+                    FROM gametable g
+                    WHERE g.userId = @UserId
+                ",
                 new { UserId = userId }
             ).ToList();
         }
 
-        //load user's trivia questions from the database
         private void LoadUserTrivia()
         {
             var userId = _db.QuerySingleOrDefault<int>("SELECT userId FROM usertable WHERE userName = @UserName", new { UserName = UserEmail });
 
             UserTrivia = _db.Query<TriviaInfo>(
                 @"
-                    SELECT triviatable.quizID, triviatable.gameQuiz, triviatable.gameAnswer, gametable.gameTitle
-                    FROM triviatable
-                    INNER JOIN gametable ON triviatable.gameID = gametable.gameId
-                    WHERE triviatable.userId = @UserId
+                    SELECT t.quizID, t.gameQuiz, t.gameAnswer, g.gameTitle
+                    FROM triviatable t
+                    INNER JOIN gametable g ON t.gameID = g.gameId
+                    WHERE t.userId = @UserId
                 ",
                 new { UserId = userId }
             ).ToList();
         }
 
-        //load user's trivia statistics from the database
         private void LoadUserTriviaStats()
         {
             var userEmail = HttpContext.User.FindFirst(ClaimTypes.Name)?.Value;
@@ -164,14 +164,27 @@ namespace VideoGameGrade.Pages
             IncorrectTriviaCount = stats.Item1 - stats.Item2;
         }
 
-        //represent user data
+        private void LoadUserComments()
+        {
+            var userId = _db.QuerySingleOrDefault<int>("SELECT userId FROM usertable WHERE userName = @UserName", new { UserName = UserEmail });
+
+            UserComments = _db.Query<CommentInfo>(
+                @"
+                    SELECT r.rateID, r.gameId, r.gameRating, r.gameComment, g.gameTitle, g.gameImage
+                    FROM ratings r
+                    INNER JOIN gametable g ON r.gameId = g.gameId
+                    WHERE r.userId = @UserId
+                ",
+                new { UserId = userId }
+            ).ToList();
+        }
+
         private class User
         {
             public int UserId { get; set; }
             public string Password { get; set; }
         }
 
-        //represent game information
         public class GameInfo
         {
             public int GameId { get; set; }
@@ -183,13 +196,22 @@ namespace VideoGameGrade.Pages
             public string GameImage { get; set; }
         }
 
-        //represent trivia information
         public class TriviaInfo
         {
             public int QuizId { get; set; }
             public string GameQuiz { get; set; }
             public string GameAnswer { get; set; }
             public string GameTitle { get; set; }
+        }
+
+        public class CommentInfo
+        {
+            public int RateId { get; set; }
+            public int GameId { get; set; }
+            public int GameRating { get; set; }
+            public string GameComment { get; set; }
+            public string GameTitle { get; set; }
+            public string GameImage { get; set; }
         }
     }
 

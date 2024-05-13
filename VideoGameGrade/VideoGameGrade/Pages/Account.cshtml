@@ -47,6 +47,8 @@
         }
     </div>
 
+    <h4 class="m-2">Your Games</h4>
+
     @if (Model.UserGames != null && Model.UserGames.Count > 0)
     {
         <table class="table centered-background">
@@ -93,20 +95,13 @@
                 }
             </tbody>
         </table>
-        <div class="centered-background">
-            <h4>Your Trivia History</h4>
-            <p>Correctly Answered: @Model.CorrectTriviaCount</p>
-            <p>Incorrectly Answered: @Model.IncorrectTriviaCount</p>
-        </div>
     }
     else
     {
         <p class="m-2">You haven't added any games yet.</p>
     }
 
-
-     <h4 class="m-2">Your Trivia Questions</h4>
-
+    <h4 class="m-2">Your Trivia Questions</h4>
 
     @if (Model.UserTrivia != null && Model.UserTrivia.Count > 0)
     {
@@ -140,6 +135,56 @@
     else
     {
         <p class="m-2 pb-1">You haven't added any trivia questions yet.</p>
+    }
+
+    <h4 class="m-2">Your Comments</h4>
+
+    @if (Model.UserComments != null && Model.UserComments.Count > 0)
+    {
+        <table class="table centered-background">
+            <thead>
+                <tr>
+                    <th>Game</th>
+                    <th>Rating</th>
+                    <th>Comment</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody class="rate-text-color">
+                @foreach (var comment in Model.UserComments)
+                {
+                    <tr>
+                        <td>
+                            <div class="pb-1">
+                                @comment.GameTitle
+                            </div>
+                            <div>
+                                @if (!string.IsNullOrEmpty(comment.GameImage) && comment.GameImage != "No image")
+                                {
+                                    <img src="@Html.Raw(comment.GameImage)" alt="Game Image" style="width: 100px; height: auto;" />
+                                }
+                                else
+                                {
+                                    <img src="@Html.Raw("https://cs710032001ea63f0a3.blob.core.windows.net/images/kisspng-video-game-game-controller-joystick-online-game-vector-gamepad-5a7166f1d5b6b1.8005384115173813618754.png")" alt="Game Image" style="width: 100px; height: auto;" />
+                                }
+                            </div>
+                        </td>
+                        <td>@comment.GameRating</td>
+                        <td>@comment.GameComment</td>
+                        <td>
+                            <form method="post" asp-page-handler="DeleteComment">
+                                <input type="hidden" name="CommentId" value="@comment.RateId" />
+                                <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p class="m-2 pb-1">You haven't added any comments yet.</p>
     }
 </div>
 

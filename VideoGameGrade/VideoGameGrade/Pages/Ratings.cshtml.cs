@@ -3,14 +3,9 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using MySql.Data.MySqlClient;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
-using System.Configuration;
-using static VideoGameGrade.Pages.GameCollectionModel;
-using System.ComponentModel.DataAnnotations.Schema;
-using static VideoGameGrade.Pages.RateModel;
-using System.Data;
 using Dapper;
-using System.Data.SqlClient;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
+using System.Data;
+using System.Security.Claims;
 
 namespace VideoGameGrade.Pages
 {
@@ -27,6 +22,13 @@ namespace VideoGameGrade.Pages
         public int iD = 0;
         public int ID = 0;
         public int rating = 0;
+
+        private readonly IDbConnection _db;
+
+        public RateModel(IDbConnection db)
+        {
+            _db = db;
+        }
 
         public async Task<IActionResult> OnPostAsync()
         {
@@ -77,7 +79,6 @@ namespace VideoGameGrade.Pages
                     // Display success message
                     message = rateTitle + "'s comment was deleted successfully.";
                 }
-                
             }
 
             // Verify that both comment and submit are not empty so we can add a comment
@@ -86,7 +87,7 @@ namespace VideoGameGrade.Pages
                 if (!AddComment(comment, iD, rating, rateTitle))
                 {
                     return Page();
-                }   
+                }
             }
             else if (string.IsNullOrWhiteSpace(comment) && !string.IsNullOrEmpty(submit) && submit.Equals("submit"))
             {   // Display error message for empty comment input
@@ -94,30 +95,32 @@ namespace VideoGameGrade.Pages
                 return Page();
             }
 
-            // Check if remove or add rating button was pressed.  If so call method to determine increse
+            // Check if remove or add rating button was pressed. If so call method to determine increase
             if (!string.IsNullOrEmpty(removeRating) || !string.IsNullOrEmpty(addRating))
             {
-                await DetermineRating(rating, iD, addRating, removeRating);            
+                await DetermineRating(rating, iD, addRating, removeRating);
             }
             return Page();
         }
+
         // Deletes the comment associated with the delete button
         private async Task<bool> PickedCommentToDelete(int RateID)
         {
-            try {
-                // connection string
+            try
+            {
+                // Connection string
                 string connectionString = "Server=videogamegrade.mysql.database.azure.com;Database=videogamegrade_db;Uid=gamegradeadmin;Pwd=capstone2024!;SslMode=Required;";
 
                 using (MySqlConnection connection = new MySqlConnection(connectionString))
                 {
                     connection.Open();
 
-                    String sql = "UPDATE ratings SET gameComment = null WHERE rateID=@id";
+                    string sql = "UPDATE ratings SET gameComment = null WHERE rateID=@id";
                     using (MySqlCommand command = new MySqlCommand(sql, connection))
                     {
                         command.Parameters.AddWithValue("@id", RateID);
 
-                            int rowsAffected = command.ExecuteNonQuery();
+                        int rowsAffected = command.ExecuteNonQuery();
 
                         if (rowsAffected > 0)
                         {
@@ -125,7 +128,8 @@ namespace VideoGameGrade.Pages
                             message = rateTitle + "'s comment was deleted successfully.";
                         }
                         else
-                        {   // Error message for unsuccessful deletion
+                        {
+                            // Error message for unsuccessful deletion
                             message = "Failed to delete " + rateTitle + "'s comment.";
                         }
                     }
@@ -139,6 +143,7 @@ namespace VideoGameGrade.Pages
             }
             return true;
         }
+
         // All related info for specific game for display on the page
         private bool readRateInfoFromDatabase(int iD)
         {
@@ -150,7 +155,7 @@ namespace VideoGameGrade.Pages
                 using (MySqlConnection connect = new MySqlConnection(rateString))
                 {
                     connect.Open();
-                    String gTitleSql = "SELECT gametable.gameId, gametable.gameTitle, gametable.gameImage, ratings.rateID, ratings.gameRating, ratings.gameComment FROM ratings INNER JOIN gametable ON gametable.gameId = ratings.gameId WHERE ratings.gameId = @id;";
+                    string gTitleSql = "SELECT gametable.gameId, gametable.gameTitle, gametable.gameImage, ratings.rateID, ratings.gameRating, ratings.gameComment FROM ratings INNER JOIN gametable ON gametable.gameId = ratings.gameId WHERE ratings.gameId = @id;";
                     using (MySqlCommand command = new MySqlCommand(gTitleSql, connect))
                     {
                         command.Parameters.AddWithValue("@id", iD);
@@ -166,7 +171,6 @@ namespace VideoGameGrade.Pages
                                 rateInfo.rateID = reader.IsDBNull(3) ? 0 : reader.GetInt32(3);
                                 rateInfo.gameRating = reader.IsDBNull(4) ? 0 : reader.GetInt32(4);
                                 rateInfo.gameComment = reader.IsDBNull(5) ? string.Empty : reader.GetString(5);
-
 
                                 // Grab game rate info for display on Ratings page
                                 gameId = rateInfo.gameId;
@@ -212,6 +216,7 @@ namespace VideoGameGrade.Pages
                 return Page();
             }
         }
+
         // Determine whether to increase the games rating by one or decrease by one
         private async Task<bool> DetermineRating(int rating, int iD, string addRating, string removeRating)
         {
@@ -228,7 +233,7 @@ namespace VideoGameGrade.Pages
                 ratingChange = 1;
             }
 
-            // Determine if ratings can be increase or decreased
+            // Determine if ratings can be increased or decreased
             if (rating <= 0 && ratingChange == -1)
             {
                 message = rateTitle + " cannot have a negative rating.";
@@ -242,55 +247,57 @@ namespace VideoGameGrade.Pages
                 return false;
             }
             else
-            {   // Once the change in rating has been set call method to change it
+            {
+                // Once the change in rating has been set call method to change it
                 await ChangeRating(ratingChange, iD);
                 return true;
             }
         }
+
         // Update rating for the specified RateID
         private async Task<PageResult> ChangeRating(int ratingChange, int iD)
         {
-           if (!ratingChange.Equals(null) && ratingChange != 0)
-           {
-               try
-               {
-                   // Connection string
-                   string rateString = "Server=videogamegrade.mysql.database.azure.com;Database=videogamegrade_db;Uid=gamegradeadmin;Pwd=capstone2024!;SslMode=Required;";
+            if (!ratingChange.Equals(null) && ratingChange != 0)
+            {
+                try
+                {
+                    // Connection string
+                    string rateString = "Server=videogamegrade.mysql.database.azure.com;Database=videogamegrade_db;Uid=gamegradeadmin;Pwd=capstone2024!;SslMode=Required;";
 
-                   using (MySqlConnection connect = new MySqlConnection(rateString))
-                   {
-                       connect.Open();
-                       String rateSql = "UPDATE ratings SET gameRating = gameRating + @ratingChange WHERE ratings.gameId = @id;";
-                       // Adjust the rating based on the selected button
-                       using (MySqlCommand command = new MySqlCommand(rateSql, connect))
-                       {
-                           command.Parameters.AddWithValue("@id", iD);
-                           command.Parameters.AddWithValue("@ratingChange", ratingChange);
-                           command.ExecuteNonQuery();
-                       }
-                       connect.Close();
-                   } 
+                    using (MySqlConnection connect = new MySqlConnection(rateString))
+                    {
+                        connect.Open();
+                        string rateSql = "UPDATE ratings SET gameRating = gameRating + @ratingChange WHERE ratings.gameId = @id;";
+                        // Adjust the rating based on the selected button
+                        using (MySqlCommand command = new MySqlCommand(rateSql, connect))
+                        {
+                            command.Parameters.AddWithValue("@id", iD);
+                            command.Parameters.AddWithValue("@ratingChange", ratingChange);
+                            command.ExecuteNonQuery();
+                        }
+                        connect.Close();
+                    }
                 }
-               catch (Exception ex)
-               {
-                   message = "Exception: " + ex.Message;
-                   return Page();
-               }
-           }
-           else
-           {
+                catch (Exception ex)
+                {
+                    message = "Exception: " + ex.Message;
+                    return Page();
+                }
+            }
+            else
+            {
                 return Page();
-           }
-           // Reread the database so information is current
-           readRateInfoFromDatabase(iD);
-           return Page();
+            }
+            // Reread the database so information is current
+            readRateInfoFromDatabase(iD);
+            return Page();
         }
 
         // Add a comment to the specific game
-        private bool AddComment(string comment, int iD, int rating, string rateTitle)
-        {   // Get comment and trim it for insertion into the database
-            gameComment = comment;
-            gameComment = gameComment.Trim();
+        private bool AddComment(string comment, int gameId, int rating, string rateTitle)
+        {
+            // Get comment and trim it for insertion into the database
+            gameComment = comment.Trim();
             try
             {
                 // Connection string
@@ -300,15 +307,27 @@ namespace VideoGameGrade.Pages
                 {
                     connect.Open();
 
-                    String commentSql = "INSERT INTO ratings (gameId, gameRating, gameComment) VALUES (@id, @rating, @comment);";
-                    // Add the comment to the gameId in the ratings table
-                    using (MySqlCommand command = new MySqlCommand(commentSql, connect))
+                    string userEmail = HttpContext.User.FindFirst(ClaimTypes.Name)?.Value;
+                    int userId = _db.QuerySingleOrDefault<int>("SELECT userId FROM usertable WHERE userName = @UserName", new { UserName = userEmail });
+
+                    if (userId == 0)
                     {
-                        command.Parameters.AddWithValue("@id", iD);
+                        message = "User not found.";
+                        return false;
+                    }
+
+                    // Add a new comment
+                    string insertSql = "INSERT INTO ratings (gameId, gameRating, gameComment, userId) VALUES (@gameId, @rating, @comment, @userId)";
+                    using (MySqlCommand command = new MySqlCommand(insertSql, connect))
+                    {
+                        command.Parameters.AddWithValue("@gameId", gameId);
                         command.Parameters.AddWithValue("@rating", rating);
                         command.Parameters.AddWithValue("@comment", gameComment);
+                        command.Parameters.AddWithValue("@userId", userId);
                         command.ExecuteNonQuery();
                     }
+                    message = "You have added a comment to " + rateTitle + ".";
+
                     connect.Close();
                 }
             }
@@ -317,14 +336,14 @@ namespace VideoGameGrade.Pages
                 message = "Exception: " + ex.Message;
                 return false;
             }
-            message = "You have added a comment to " + rateTitle + ".";
+
             // Clear the list to avoid duplicates
             ratings.Clear();
             // Refresh the ratings list
-            readRateInfoFromDatabase(iD);
+            readRateInfoFromDatabase(gameId);
             return true;
         }
-    
+
         public class RateInfo
         {
             [Key]
