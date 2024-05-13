@@ -10,14 +10,14 @@
         <form method="post" enctype="multipart/form-data">
             @Html.AntiForgeryToken()
             <div class="text-center">
-                <h1 class="display-4">Game Ratings</h1>
+                <h1 class="display-4 pt-3">Game Center</h1>
                 <br />
                 <h1 class="header-rate-text-color">Rate @Model.rateTitle?</h1>
                 <img src="@Html.Raw(Model.rateImage)" alt="Game Image" style="width: 100px; height: auto;" />
                 <br />
                 <br />
-                <button type="submit" class="btn btn-outline-success btn-group-lg m-2 text-white" name="addRating" id="plus" value="add">Add one to the games rating?</button>
-                <button type="submit" class="btn btn-outline-danger btn-group-lg m-2 text-white" name="removeRating" id="minus" value="remove">Take one from the games rating?</button>
+                <button type="submit" class="btn btn-outline-success btn-group-sm m-2" name="addRating" id="plus" value="add">👍</button>
+                <button type="submit" class="btn btn-outline-danger btn-group-sm m-2" name="removeRating" id="minus" value="remove">👎</button>
                 <br />
                 <br />
             </div>
@@ -61,7 +61,7 @@
                     <div class="offset-sm-1 col-lg-10 d-grid p-1">
                         <input type="Text" class="form-control text-black" name="comment" id="comment" placeholder="Enter your tips or tricks here." autofocus />
                     </div>
-                    <button class="btn btn-outline-success btn-group-lg m-3 b-4 text-white" name="submit" value="submit" id="submit">Submit</button>
+                    <button class="btn btn-primary text-white m-3 b-4" name="submit" value="submit" id="submit">Submit</button>
                 </div>
             </div>
 

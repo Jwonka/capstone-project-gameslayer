@@ -8,10 +8,10 @@
 @if (User.Identity.IsAuthenticated)
 {
     <div class="centered-shaded-background">
-        <h1 class="rate-text-color">@TriviaModel.triviaGameName</h1>
+        <h1 class="rate-text-color pt-3">@TriviaModel.triviaGameName</h1>
         <img src="@Html.Raw(@TriviaModel.triviaImage)" alt="Game Image" style="width: 100px; height: auto;" />
         <br />
-        <h1 class="display-4">Game Trivia</h1>
+        <h1 class="display-4 pt-3">Game Trivia</h1>
         <h3>Click here to add a trivia question</h3>
         <button class="btn btn-outline-light  m-2" onclick="toggleVisible()">Create Question</button>
     </div>
@@ -33,12 +33,10 @@ else
             <input type="hidden" name="id" value="@gameIdValue" />
         }
         <br />
-        <label class="m-2">Question:</label>
-        <input type="text" name="gameQuiz" id="question" class="contact-form form-group form-control" value="@Model.newQuestion.gameQuiz" /><br />
-        <label class="m-2">Your Answer:</label>
-        <input type="text" name="gameAnswer" id="answer" class="contact-form form-group form-control" value="@Model.newQuestion.gameAnswer" /></br />
+        <input type="text" name="gameQuiz" id="question" class="contact-form form-group form-control" placeholder="Question:" value="@Model.newQuestion.gameQuiz" /><br />
+        <input type="text" name="gameAnswer" id="answer" class="contact-form form-group form-control" placeholder="Answer:" value="@Model.newQuestion.gameAnswer" /></br />
         <div class="centered-background">
-            <button type="submit" class="btn btn-outline-light m-2" name="submitBtn" value="create">Create</button>
+            <button type="submit" class="btn btn-primary text-white m-2" name="submitBtn" value="create">Submit</button>
         </div>
     </form>
 </div>
@@ -101,7 +99,7 @@ else
 
                     <input type="hidden" name="quizId" value="@item.quizId">
                     <td><input type="text" name="quizAnswer" id="quizAnswer" class="form-control" /></td>
-                    <td><button type="submit" class="form-control" name="submitBtn@(item.quizId)" value="quizSubmit" id="@($"quizSubmit_{item.quizId}")">Submit</button></td>
+                    <td><button type="submit" class="btn btn-primary text-white form-control" name="submitBtn@(item.quizId)" value="quizSubmit" id="@($"quizSubmit_{item.quizId}")">Submit</button></td>
                     <!-- Display checkmark or cross based on if the answer is correct or not -->
                     <td id="isTrue">
                             @if (Model.EnteredIds.Contains(item.quizId))

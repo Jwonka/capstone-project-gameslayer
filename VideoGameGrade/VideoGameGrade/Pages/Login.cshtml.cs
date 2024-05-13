@@ -56,7 +56,7 @@ namespace VideoGameGrade.Pages
                 var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                 var authProperties = new AuthenticationProperties
                 {
-                    RedirectUri = Url.Content("~/") // Redirect to home page after login
+                    RedirectUri = Url.Content("~/Account") // Redirect to account page after login
                 };
 
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), authProperties);
