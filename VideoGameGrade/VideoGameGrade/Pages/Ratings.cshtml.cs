@@ -34,6 +34,7 @@ namespace VideoGameGrade.Pages
 
         public async Task<IActionResult> OnPostAsync()
         {
+            // Boolean to limit rating games one per page visit
             if (TempData["rated"] != null)
             {
                 rated = (bool)TempData["rated"];
@@ -67,27 +68,6 @@ namespace VideoGameGrade.Pages
 
             // Get confirmation the submit button was pressed
             string submit = Request.Form["submit"];
-
-            // Get string value of rateID for the comment to delete
-            if (int.TryParse(Request.Form["delete"], out int pickedCommentToDelete))
-            {
-                ID = pickedCommentToDelete;
-                await PickedCommentToDelete(ID);
-
-                if (string.IsNullOrEmpty(message))
-                {
-                    TempData["message"] = "Failed to delete the comment.";
-                }
-                else
-                {
-                    // Clear the list to avoid duplicates
-                    ratings.Clear();
-                    // Refresh list from database
-                    readRateInfoFromDatabase(iD);
-                    // Display success message
-                    TempData["message"] = rateTitle + "'s comment was deleted successfully.";
-                }
-            }
 
             // Verify that both comment and submit are not empty so we can add a comment
             if (!string.IsNullOrEmpty(comment) && !string.IsNullOrEmpty(submit))
@@ -124,54 +104,13 @@ namespace VideoGameGrade.Pages
             return RedirectToPage(new { id = iD});
         }
 
-        // Deletes the comment associated with the delete button
-        private async Task<bool> PickedCommentToDelete(int RateID)
-        {
-            try
-            {
-                // Connection string
-                string connectionString = "Server=videogamegrade.mysql.database.azure.com;Database=videogamegrade_db;Uid=gamegradeadmin;Pwd=capstone2024!;SslMode=Required;charset=utf8mb4;";
-
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
-                {
-                    connection.Open();
-
-                    string sql = "UPDATE ratings SET gameComment = null WHERE rateID=@id";
-                    using (MySqlCommand command = new MySqlCommand(sql, connection))
-                    {
-                        command.Parameters.AddWithValue("@id", RateID);
-
-                        int rowsAffected = command.ExecuteNonQuery();
-
-                        if (rowsAffected > 0)
-                        {
-                            // Error message for successful deletion
-                            TempData["message"] = rateTitle + "'s comment was deleted successfully.";
-                        }
-                        else
-                        {
-                            // Error message for unsuccessful deletion
-                            TempData["message"] = "Failed to delete " + rateTitle + "'s comment.";
-                        }
-                    }
-                    connection.Close();
-                }
-            }
-            catch (Exception ex)
-            {
-                TempData["message"] = "Exception: " + ex.Message;
-                return false;
-            }
-            return true;
-        }
-
         // All related info for specific game for display on the page
         private bool readRateInfoFromDatabase(int iD)
         {
             try
             {
                 // Connection string
-                string rateString = "Server=videogamegrade.mysql.database.azure.com;Database=videogamegrade_db;Uid=gamegradeadmin;Pwd=capstone2024!;SslMode=Required;charset=utf8mb4;";
+                string rateString = "Server=videogamegrade.mysql.database.azure.com;Database=videogamegrade_db;Uid=gamegradeadmin;Pwd=capstone2024!;SslMode=Required;";
 
                 using (MySqlConnection connect = new MySqlConnection(rateString))
                 {
@@ -283,7 +222,7 @@ namespace VideoGameGrade.Pages
                 try
                 {
                     // Connection string
-                    string rateString = "Server=videogamegrade.mysql.database.azure.com;Database=videogamegrade_db;Uid=gamegradeadmin;Pwd=capstone2024!;SslMode=Required;charset=utf8mb4;";
+                    string rateString = "Server=videogamegrade.mysql.database.azure.com;Database=videogamegrade_db;Uid=gamegradeadmin;Pwd=capstone2024!;SslMode=Required;";
 
                     using (MySqlConnection connect = new MySqlConnection(rateString))
                     {
@@ -318,7 +257,7 @@ namespace VideoGameGrade.Pages
         private bool AddComment(string comment, int gameId, int rating, string rateTitle)
         {
             // Validate the comment to allow letters, numbers, and punctuation
-            if (!Regex.IsMatch(comment, @"^[a-zA-Z0-9\s.,!?]*$"))
+            if (!Regex.IsMatch(comment, @"^[a-zA-Z0-9\s.,!?-]*$"))
             {
                 TempData["message"] = "Comments can only contain letters, numbers, and punctuation.";
                 return false;
