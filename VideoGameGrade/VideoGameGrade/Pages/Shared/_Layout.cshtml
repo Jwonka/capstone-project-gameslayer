@@ -12,10 +12,6 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow mb-3" id="nav" style="background-color: #343a40;">
             <div class="container">
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
                 <div class="navbar-collapse d-flex flex-row d-sm-inline-flex flex-grow-1 justify-content-between" id="nav">
                     <ul class="navbar-nav d-flex flex-row flex-grow-1 justify-content-evenly">
                         <li class="nav-item">
@@ -82,8 +78,17 @@
         <img id="hoverImg" src="~/images/uhoh.gif" style="display: none; width: 100%; height: auto;" onmouseleave="onMouseOut()" onclick="showForm()" />
     </div>
 
-    <form id="hiddenForm" method="post" style="display: none;">
-        <label class="text-center text-white">Choose a color:</label>
+    <form id="shoForm" style="display: block;">
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+    </form>
+
+    <form id="hiddenForm" method="post" class="label1" style="display: none;">
+        <label class="label2 m-2 centered-shaded-background">Choose a color:</label>
         <button type="button" value="blue" style="background-color: deepskyblue" onclick="changeColor(this)">Blue</button>
         <button type="button" value="pink" style="background-color: hotpink" onclick="changeColor(this)">Pink</button>
         <button type="button" value="green" style="background-color: greenyellow" onclick="changeColor(this)">Green</button>
@@ -91,7 +96,7 @@
         <button type="button" value="gray" style="background-color: gray" onclick="changeColor(this)">Gray</button>
     </form>
 
-    <footer class="border-top footer text-center" id="footer" style="background-color: #343a40; color: white;">
+    <footer class="border-top footer position-absolute text-center" id="footer" style="background-color: #343a40; color: white;">
         <div class="container">
             &copy; 2024 - VideoGameGrade
         </div>
@@ -127,6 +132,15 @@
                 form.style.display = "block";
             } else {
                 form.style.display = "none";
+            }
+        }
+
+        function hideForm() {
+            var form = document.getElementById("shoForm");
+            if (form.style.display == "block") {
+                form.style.display = "none";
+            } else {
+                form.style.display = "block";
             }
         }
 

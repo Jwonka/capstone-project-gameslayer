@@ -35,6 +35,7 @@ body {
     color: #FFFFFF;
 }
 
+
 @media (min-width: 768px) {
     html {
         font-size: 16px;
@@ -71,6 +72,13 @@ body {
 }
 @media screen and (max-width: 500px) {
     .hide-category {
+        display: none;
+    }
+    .label1 {
+        text-align: center;
+        min-width: 360px;
+    }
+    .label2 {
         display: none;
     }
 }
