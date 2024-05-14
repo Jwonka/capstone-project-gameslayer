@@ -78,14 +78,6 @@
         <img id="hoverImg" src="~/images/uhoh.gif" style="display: none; width: 100%; height: auto;" onmouseleave="onMouseOut()" onclick="showForm()" />
     </div>
 
-    <form id="shoForm" style="display: block;">
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-    </form>
 
     <form id="hiddenForm" method="post" class="label1" style="display: none;">
         <label class="label2 m-2 centered-shaded-background">Choose a color:</label>
@@ -135,14 +127,6 @@
             }
         }
 
-        function hideForm() {
-            var form = document.getElementById("shoForm");
-            if (form.style.display == "block") {
-                form.style.display = "none";
-            } else {
-                form.style.display = "block";
-            }
-        }
 
         // Retrieve the color from localStorage
         var currentColor = localStorage.getItem('toggleColor');
