@@ -22,11 +22,11 @@
                 <br />
             </div>
 
-            @if (!string.IsNullOrEmpty(Model.message))
+            @if (TempData["message"] != null)
             {   // Success message or error messages
                 <div class="rate-text-color">
                     <div class="display-6">
-                        <h1>@Model.message</h1>
+                        <h1>@TempData["message"]</h1>
                     </div>
                     <br />
                 </div>
@@ -71,7 +71,7 @@
                 {
                     @if (!string.IsNullOrEmpty(comment.gameComment) && !comment.gameComment.Equals(""))
                     {
-                        <div class="rate-text-color">
+                        <div class="rate-text-color pb-3">
                             <br />
                             <label class="rate-text-color"><img class="m-2" src="@Html.Raw(Model.rateImage)" alt="Game Image" style="width: 100px; height: auto;" /><br />@comment.gameComment</label>
                             <br />

@@ -23,6 +23,7 @@ namespace VideoGameGrade.Pages
         public int iD = 0;
         public int ID = 0;
         public int rating = 0;
+        public static Boolean rated;
 
         private readonly IDbConnection _db;
 
@@ -33,6 +34,12 @@ namespace VideoGameGrade.Pages
 
         public async Task<IActionResult> OnPostAsync()
         {
+            if (TempData["rated"] != null)
+            {
+                rated = (bool)TempData["rated"];
+            }
+            
+
             // Get gameId from Http header
             if (int.TryParse(Request.Query["id"], out int num))
             {
@@ -69,7 +76,7 @@ namespace VideoGameGrade.Pages
 
                 if (string.IsNullOrEmpty(message))
                 {
-                    message = "Failed to delete the comment.";
+                    TempData["message"] = "Failed to delete the comment.";
                 }
                 else
                 {
@@ -78,7 +85,7 @@ namespace VideoGameGrade.Pages
                     // Refresh list from database
                     readRateInfoFromDatabase(iD);
                     // Display success message
-                    message = rateTitle + "'s comment was deleted successfully.";
+                    TempData["message"] = rateTitle + "'s comment was deleted successfully.";
                 }
             }
 
@@ -92,17 +99,29 @@ namespace VideoGameGrade.Pages
             }
             else if (string.IsNullOrWhiteSpace(comment) && !string.IsNullOrEmpty(submit) && submit.Equals("submit"))
             {   // Display error message for empty comment input
-                message = rateTitle + "'s comments cannot be blank.";
+                TempData["message"] = rateTitle + "'s comments cannot be blank.";
                 return Page();
             }
 
             // Check if remove or add rating button was pressed. If so call method to determine increase
             if (!string.IsNullOrEmpty(removeRating) || !string.IsNullOrEmpty(addRating))
             {
-                await DetermineRating(rating, iD, addRating, removeRating);
+                if (rated)
+                {
+                    await DetermineRating(rating, iD, addRating, removeRating);
+                    TempData["rated"] = false;
+                    rated = false;
+                    return RedirectToPage(new { id = iD, rated });
+                }
+                else
+                {
+                    TempData["message"] = "You can only rate once per game.";
+                    return RedirectToPage(new { id = iD, rated });
+                }
+                
             }
 
-            return RedirectToPage(new { id = iD });
+            return RedirectToPage(new { id = iD});
         }
 
         // Deletes the comment associated with the delete button
@@ -127,12 +146,12 @@ namespace VideoGameGrade.Pages
                         if (rowsAffected > 0)
                         {
                             // Error message for successful deletion
-                            message = rateTitle + "'s comment was deleted successfully.";
+                            TempData["message"] = rateTitle + "'s comment was deleted successfully.";
                         }
                         else
                         {
                             // Error message for unsuccessful deletion
-                            message = "Failed to delete " + rateTitle + "'s comment.";
+                            TempData["message"] = "Failed to delete " + rateTitle + "'s comment.";
                         }
                     }
                     connection.Close();
@@ -140,7 +159,7 @@ namespace VideoGameGrade.Pages
             }
             catch (Exception ex)
             {
-                message = "Exception: " + ex.Message;
+                TempData["message"] = "Exception: " + ex.Message;
                 return false;
             }
             return true;
@@ -192,7 +211,7 @@ namespace VideoGameGrade.Pages
             }
             catch (Exception ex)
             {
-                message = "Exception: " + ex.Message;
+                TempData["message"] = "Exception: " + ex.Message;
                 return false;
             }
             return true;
@@ -214,7 +233,7 @@ namespace VideoGameGrade.Pages
             }
             else
             {
-                message = "No ID provided.";
+                TempData["message"] = "No ID provided.";
                 return Page();
             }
         }
@@ -238,13 +257,13 @@ namespace VideoGameGrade.Pages
             // Determine if ratings can be increased or decreased
             if (rating <= 0 && ratingChange == -1)
             {
-                message = rateTitle + " cannot have a negative rating.";
+                TempData["message"] = rateTitle + " cannot have a negative rating.";
                 ratingChange = 0;
                 return false;
             }
             else if (rating >= 10 && ratingChange == 1)
             {
-                message = rateTitle + " cannot have a rating higher than 10.";
+                TempData["message"] = rateTitle + " cannot have a rating higher than 10.";
                 ratingChange = 0;
                 return false;
             }
@@ -282,7 +301,7 @@ namespace VideoGameGrade.Pages
                 }
                 catch (Exception ex)
                 {
-                    message = "Exception: " + ex.Message;
+                    TempData["message"] = "Exception: " + ex.Message;
                     return Page();
                 }
             }
@@ -298,10 +317,10 @@ namespace VideoGameGrade.Pages
         // Add a comment to the specific game
         private bool AddComment(string comment, int gameId, int rating, string rateTitle)
         {
-            // Validate the comment to contain only letters and numbers
-            if (!Regex.IsMatch(comment, @"^[a-zA-Z0-9\s]*$"))
+            // Validate the comment to allow letters, numbers, and punctuation
+            if (!Regex.IsMatch(comment, @"^[a-zA-Z0-9\s.,!?]*$"))
             {
-                message = "Comments can only contain letters and numbers.";
+                TempData["message"] = "Comments can only contain letters, numbers, and punctuation.";
                 return false;
             }
 
@@ -321,7 +340,7 @@ namespace VideoGameGrade.Pages
 
                     if (userId == 0)
                     {
-                        message = "User not found.";
+                        TempData["message"] = "User not found.";
                         return false;
                     }
 
@@ -335,14 +354,14 @@ namespace VideoGameGrade.Pages
                         command.Parameters.AddWithValue("@userId", userId);
                         command.ExecuteNonQuery();
                     }
-                    message = "You have added a comment to " + rateTitle + ".";
+                    //TempData["message"] = "You have added a comment to " + rateTitle + ".";
 
                     connect.Close();
                 }
             }
             catch (Exception ex)
             {
-                message = "Exception: " + ex.Message;
+                TempData["message"] = "Exception: " + ex.Message;
                 return false;
             }
 
