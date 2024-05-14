@@ -85,6 +85,8 @@ namespace VideoGameGrade.Pages
                     searchGame = searchGame.Replace(",", "");
                     searchGame = searchGame.Replace("'", "");
                     searchGame = searchGame.Replace(":", "");
+                    searchGame = searchGame.Replace(".", "");
+                    gTitle = gTitle.Replace(".", "");
                     gTitle = gTitle.Replace(",", "");
                     gTitle = gTitle.Replace(":", "");
                     gTitle = gTitle.Replace("'", "");
