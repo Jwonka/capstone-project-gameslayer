@@ -28,36 +28,6 @@
             <br />
         </div>
     }
-    else if (TempData["AddMessage"] != null)
-    {   // Display warning message for user trying to add a game while not logged in or having no account
-        // Displays buttons to navigate to login or register page if a user attempts to add a game
-        <div class="rate-text-color">
-            <h1 class="display-4">@TempData["AddMessage"]</h1>
-            <br />
-            <a class="btn btn-outline-warning m-1" href="/Login">Login</a>
-            <a class="btn btn-outline-warning m-1" href="/Register">Register</a>
-        </div>
-    }
-    else if (TempData["RateMessage"] != null)
-    {   // Display warning message for user trying to rate a game while not logged in or having no account
-        // Displays buttons to navigate to login or register page if a user attempts to add a game
-        <div class="rate-text-color">
-            <h1 class="display-4">@TempData["RateMessage"]</h1>
-            <br />
-            <a class="btn btn-outline-warning m-1" href="/Login">Login</a>
-            <a class="btn btn-outline-warning m-1" href="/Register">Register</a>
-        </div>
-    }
-    else if (TempData["TriviaMessage"] != null)
-    {   // Display warning message for user trying to access trivia for a game while not logged in or having no account
-        // Displays buttons to navigate to login or register page if a user attempts to add a game
-        <div class="rate-text-color">
-            <h1 class="display-4">@TempData["TriviaMessage"]</h1>
-            <br />
-            <a class="btn btn-outline-warning m-1" href="/Login">Login</a>
-            <a class="btn btn-outline-warning m-1" href="/Register">Register</a>
-        </div>
-    }
     else
     {
         <div class="text-center">
@@ -124,6 +94,7 @@
                                 <a class="btn btn-primary btn-sm m-2 text-white" href="/Trivia?id=@game.gameId" name="gameId">Trivia</a>
                                 <br />
                                 <br>
+                                // Temp variable for resetting the ability to rate games
                                 TempData["rated"] = true;
                                 <a class="btn btn-primary btn-sm m-2 text-white" href="/Ratings?id=@game.gameId">Ratings</a>
                             }

@@ -4,105 +4,98 @@
     ViewData["Title"] = "Add your favorite games!";
 }
 
-@if (User.Identity.IsAuthenticated)
-{   // Error message for empty input
-    <div class="shaded-background">
-        @if (Model.errorMessage.Length > 0)
-        {
-            <div class='rate-text-color m-2'>
-                <div class="display-4">
-                    <h1 class="pt-3">@Model.errorMessage</h1>
-                </div>
-                <br />
-                <br />
+<div class="shaded-background">
+    @if (Model.errorMessage.Length > 0)
+    {
+        <div class='rate-text-color m-2'>
+            <div class="display-4">
+                <h1 class="pt-3">@Model.errorMessage</h1>
             </div>
-        } // Error message to prevent duplicate games from being entered
-        else if (Model.errorMsg.Length > 0)
-        {
-            <div class="rate-text-color m-2">
-                @if (!string.IsNullOrEmpty(@AddModel.gameImg) && AddModel.gameImg != "No image")
-                {
-                    <h1 class="pt-3">@Model.errorMsg</h1>
-                    <img src="@Html.Raw(@AddModel.gameImg)" alt="Game Image" style="width: 100px; height: auto;" />
-                    <br />
-                }
-            </div>
-        }
-        else
-        {   // Title for the page
-            <div class="text-white text-center m-2">
-                <h1 class="display-4 pt-3">New Game</h1>
-                <br />
-            </div>
-        }
-
-        <form method="post" enctype="multipart/form-data">
             <br />
-            <div class="offset-sm-4 col-lg-5 d-grid">
-                <div class="offset-sm-4 col-md-10 d-grid mt-2 ms-1 p-1">
-                    <input type="Text" class="form-control" id="title" name="gameTitle" placeholder="Game Title*">
-                </div>
-                <div class="offset-sm-4 col-md-10 d-grid mt-2 ms-1 p-1">
-                    <input type="Text" class="form-control" id="publisher" name="gamePublisher" placeholder="Publisher*">
-                </div>
-                <div class="btn-group-lg dropdown dropend m-2 ms-2">
-                    <button class="btn btn-outline-light  dropdown-toggle" type="button" id="platformMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Platform*
-                    </button>
-                    <ul class="dropdown-menu m-2 p-0">
-                        <li><label class="dropdown-item"><input type="checkbox" name="gamePlatform" value=" Nintendo"> Nintendo</label></li>
-                        <li><label class="dropdown-item"><input type="checkbox" name="gamePlatform" value=" Sega"> Sega</label></li>
-                        <li><label class="dropdown-item"><input type="checkbox" name="gamePlatform" value=" Xbox"> Xbox</label></li>
-                        <li><label class="dropdown-item"><input type="checkbox" name="gamePlatform" value=" PlayStation"> PlayStation</label></li>
-                        <li><label class="dropdown-item"><input type="checkbox" name="gamePlatform" value=" PC"> PC</label></li>
-                        <li><label class="dropdown-item"><input type="checkbox" name="gamePlatform" value=" Mobile"> Mobile</label></li>
-                        <li><label class="dropdown-item"><input type="checkbox" name="gamePlatform" value=" Steamdeck"> Steamdeck</label></li>
-                        <li><label class="dropdown-item"><input type="checkbox" name="gamePlatform" value=" Virtual Reality"> VR</label></li>
-                        <li><label class="dropdown-item"><input type="checkbox" name="gamePlatform" value=" Other"> Other</label></li>
-                    </ul>
-                </div>
-                <div class="btn-group-lg dropdown dropend m-2 ms-2">
-                    <button class="btn btn-outline-light dropdown-toggle" type="button" id="categoryMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Category*   
-                    </button>
-                    <ul class="dropdown-menu m-2 p-0">
-                        <li><label class="dropdown-item"><input type="checkbox" name="gameCategory" value=" Action"> Action</label></li>
-                        <li><label class="dropdown-item"><input type="checkbox" name="gameCategory" value=" Adventure"> Adventure</label></li>
-                        <li><label class="dropdown-item"><input type="checkbox" name="gameCategory" value=" Fighting"> Fighting</label></li>
-                        <li><label class="dropdown-item"><input type="checkbox" name="gameCategory" value=" Horror"> Horror</label></li> 
-                        <li><label class="dropdown-item"><input type="checkbox" name="gameCategory" value=" Puzzle"> Puzzle</label></li>
-                        <li><label class="dropdown-item"><input type="checkbox" name="gameCategory" value=" Multiplayer"> Multiplayer</label></li>
-                        <li><label class="dropdown-item"><input type="checkbox" name="gameCategory" value=" 2D"> 2D</label></li>
-                        <li><label class="dropdown-item"><input type="checkbox" name="gameCategory" value=" Racing"> Racing</label></li>
-                        <li><label class="dropdown-item"><input type="checkbox" name="gameCategory" value=" RPG"> RPG</label></li>
-                        <li><label class="dropdown-item"><input type="checkbox" name="gameCategory" value=" Shooter"> Shooter</label></li>
-                        <li><label class="dropdown-item"><input type="checkbox" name="gameCategory" value=" Simulation"> Simulation</label></li>
-                        <li><label class="dropdown-item"><input type="checkbox" name="gameCategory" value=" Sports"> Sports</label></li>
-                        <li><label class="dropdown-item"><input type="checkbox" name="gameCategory" value=" Stealth"> Stealth</label></li>
-                        <li><label class="dropdown-item"><input type="checkbox" name="gameCategory" value=" Strategy"> Strategy</label></li>
-                        <li><label class="dropdown-item"><input type="checkbox" name="gameCategory" value=" Survival"> Survival</label></li>
-                        <li><label class="dropdown-item"><input type="checkbox" name="gameCategory" value=" Other"> Other</label></li>
-                    </ul>
-                </div>       
+            <br />
+        </div>
+    } // Error message to prevent duplicate games from being entered
+    else if (Model.errorMsg.Length > 0)
+    {
+        <div class="rate-text-color m-2">
+            @if (!string.IsNullOrEmpty(@AddModel.gameImg) && AddModel.gameImg != "No image")
+            {
+                <h1 class="pt-3">@Model.errorMsg</h1>
+                <img src="@Html.Raw(@AddModel.gameImg)" alt="Game Image" style="width: 100px; height: auto;" />
+                <br />
+            }
+        </div>
+    }
+    else
+    {   // Title for the page
+        <div class="text-white text-center m-2">
+            <h1 class="display-4 pt-3">New Game</h1>
+            <br />
+        </div>
+    }
+
+    <form method="post" enctype="multipart/form-data">
+        <br />
+        <div class="offset-sm-4 col-lg-5 d-grid">
+            <div class="offset-sm-4 col-md-10 d-grid mt-2 ms-1 p-1">
+                <input type="Text" class="form-control" id="title" name="gameTitle" placeholder="Game Title*">
             </div>
-            <div class="row mb-3 ms-2 me-2">
-                <div class="offset-sm-4 col-sm-4 d-grid p-1">
-                    <input asp-for="gameImage" type="file" class="form-control" />
-                </div>
+            <div class="offset-sm-4 col-md-10 d-grid mt-2 ms-1 p-1">
+                <input type="Text" class="form-control" id="publisher" name="gamePublisher" placeholder="Publisher*">
             </div>
-            <div class="row mb-3 ms-3 me-2">
-                <div class="offset-sm-4 col-sm-2 d-grid p-0">
-                    <button type="submit" class="btn btn-primary text-white ms-0 mb-2 me-2 ">Submit</button>
-                </div>
-                <div class="col-sm-2 d-grid p-0">
-                    <a class="btn btn-secondary mb-2 ms-0 me-2 text-white" href="/GameCollection" role="button">Cancel</a>
-                </div>
+            <div class="btn-group-lg dropdown dropend m-2 ms-2">
+                <button class="btn btn-outline-light  dropdown-toggle" type="button" id="platformMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Platform*
+                </button>
+                <ul class="dropdown-menu m-2 p-0">
+                    <li><label class="dropdown-item"><input type="checkbox" name="gamePlatform" value=" Nintendo"> Nintendo</label></li>
+                    <li><label class="dropdown-item"><input type="checkbox" name="gamePlatform" value=" Sega"> Sega</label></li>
+                    <li><label class="dropdown-item"><input type="checkbox" name="gamePlatform" value=" Xbox"> Xbox</label></li>
+                    <li><label class="dropdown-item"><input type="checkbox" name="gamePlatform" value=" PlayStation"> PlayStation</label></li>
+                    <li><label class="dropdown-item"><input type="checkbox" name="gamePlatform" value=" PC"> PC</label></li>
+                    <li><label class="dropdown-item"><input type="checkbox" name="gamePlatform" value=" Mobile"> Mobile</label></li>
+                    <li><label class="dropdown-item"><input type="checkbox" name="gamePlatform" value=" Steamdeck"> Steamdeck</label></li>
+                    <li><label class="dropdown-item"><input type="checkbox" name="gamePlatform" value=" Virtual Reality"> VR</label></li>
+                    <li><label class="dropdown-item"><input type="checkbox" name="gamePlatform" value=" Other"> Other</label></li>
+                </ul>
             </div>
-        </form>
-    </div>
-}
-else
-{   // Send user's back to gameCollection if they are not registered or logged in
-    Response.Redirect("/GameCollection");
-    TempData["AddMessage"] = "You must have an account to add a game.";
-}
+            <div class="btn-group-lg dropdown dropend m-2 ms-2">
+                <button class="btn btn-outline-light dropdown-toggle" type="button" id="categoryMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Category*   
+                </button>
+                <ul class="dropdown-menu m-2 p-0">
+                    <li><label class="dropdown-item"><input type="checkbox" name="gameCategory" value=" Action"> Action</label></li>
+                    <li><label class="dropdown-item"><input type="checkbox" name="gameCategory" value=" Adventure"> Adventure</label></li>
+                    <li><label class="dropdown-item"><input type="checkbox" name="gameCategory" value=" Fighting"> Fighting</label></li>
+                    <li><label class="dropdown-item"><input type="checkbox" name="gameCategory" value=" Horror"> Horror</label></li> 
+                    <li><label class="dropdown-item"><input type="checkbox" name="gameCategory" value=" Puzzle"> Puzzle</label></li>
+                    <li><label class="dropdown-item"><input type="checkbox" name="gameCategory" value=" Multiplayer"> Multiplayer</label></li>
+                    <li><label class="dropdown-item"><input type="checkbox" name="gameCategory" value=" 2D"> 2D</label></li>
+                    <li><label class="dropdown-item"><input type="checkbox" name="gameCategory" value=" Racing"> Racing</label></li>
+                    <li><label class="dropdown-item"><input type="checkbox" name="gameCategory" value=" RPG"> RPG</label></li>
+                    <li><label class="dropdown-item"><input type="checkbox" name="gameCategory" value=" Shooter"> Shooter</label></li>
+                    <li><label class="dropdown-item"><input type="checkbox" name="gameCategory" value=" Simulation"> Simulation</label></li>
+                    <li><label class="dropdown-item"><input type="checkbox" name="gameCategory" value=" Sports"> Sports</label></li>
+                    <li><label class="dropdown-item"><input type="checkbox" name="gameCategory" value=" Stealth"> Stealth</label></li>
+                    <li><label class="dropdown-item"><input type="checkbox" name="gameCategory" value=" Strategy"> Strategy</label></li>
+                    <li><label class="dropdown-item"><input type="checkbox" name="gameCategory" value=" Survival"> Survival</label></li>
+                    <li><label class="dropdown-item"><input type="checkbox" name="gameCategory" value=" Other"> Other</label></li>
+                </ul>
+            </div>       
+        </div>
+        <div class="row mb-3 ms-2 me-2">
+            <div class="offset-sm-4 col-sm-4 d-grid p-1">
+                <input asp-for="gameImage" type="file" class="form-control" />
+            </div>
+        </div>
+        <div class="row mb-3 ms-3 me-2">
+            <div class="offset-sm-4 col-sm-2 d-grid p-0">
+                <button type="submit" class="btn btn-primary text-white ms-0 mb-2 me-2 ">Submit</button>
+            </div>
+            <div class="col-sm-2 d-grid p-0">
+                <a class="btn btn-secondary mb-2 ms-0 me-2 text-white" href="/GameCollection" role="button">Cancel</a>
+            </div>
+        </div>
+    </form>
+</div>
+
