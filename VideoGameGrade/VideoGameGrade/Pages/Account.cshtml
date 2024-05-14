@@ -37,7 +37,7 @@
         <p>Email: @Model.UserEmail</p>
     </div>
 
-    <div class="text-white m-2">
+    <div class="m-2 text-center pb-3 pt-3">
         <h4>Your Contributions</h4>
         @if (!string.IsNullOrEmpty(TempData["DeleteMsg"]?.ToString()))
         {
@@ -47,7 +47,7 @@
         }
     </div>
 
-    <h4 class="m-2">Your Games</h4>
+    <h4 class="m-2 text-center pb-3 pt-3">Your Games</h4>
 
     @if (Model.UserGames != null && Model.UserGames.Count > 0)
     {
@@ -98,10 +98,10 @@
     }
     else
     {
-        <p class="m-2">You haven't added any games yet.</p>
+        <p class="m-2 text-center pb-3 pt-3">You haven't added any games yet.</p>
     }
 
-    <h4 class="m-2">Your Trivia Questions</h4>
+    <h4 class="m-2 text-center pb-3 pt-3">Your Trivia Questions</h4>
 
     @if (Model.UserTrivia != null && Model.UserTrivia.Count > 0)
     {
@@ -134,10 +134,10 @@
     }
     else
     {
-        <p class="m-2 pb-1">You haven't added any trivia questions yet.</p>
+        <p class="m-2 text-center pb-3 pt-3">You haven't added any trivia questions yet.</p>
     }
 
-    <h4 class="m-2">Your Comments</h4>
+    <h4 class="m-2 text-center pb-3 pt-3">Your Comments</h4>
 
     @if (Model.UserComments != null && Model.UserComments.Count > 0)
     {
@@ -184,7 +184,7 @@
     }
     else
     {
-        <p class="m-2 pb-1">You haven't added any comments yet.</p>
+        <p class="m-2 text-center pb-3 pt-3">You haven't added any comments yet.</p>
     }
 </div>
 
