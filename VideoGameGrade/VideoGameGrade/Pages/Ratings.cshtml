@@ -11,7 +11,7 @@
             <h1 class="display-4 pt-3">Game Center</h1>
             <br />
             <h1 class="rate-text-color pb-3">Rate @Model.rateTitle?</h1>
-            <img src="@Html.Raw(Model.rateImage)" alt="Game Image" style="width: 400px; height: auto;" />
+            <img class="pic" src="@Html.Raw(Model.rateImage)" alt="Game Image" style="width: 400px; height: auto;" />
             <br />
             <br />
             <button type="submit" class="btn btn-outline-success btn-group-sm m-2" name="addRating" id="plus" value="add">👍</button>
@@ -57,7 +57,7 @@
         <div class="text-center">
             <div row mb-3>
                 <div class="offset-sm-1 col-lg-10 d-grid p-1">
-                    <input type="Text" class="form-control text-black" name="comment" id="comment" placeholder="Enter your tips or tricks here." autofocus />
+                    <input type="Text" class="form-control text-black me-2 pe-2" name="comment" id="comment" placeholder="Enter your tips or tricks here." autofocus />
                 </div>
                 <button class="btn btn-primary text-white m-3 b-4" name="submit" value="submit" id="submit">Submit</button>
             </div>
