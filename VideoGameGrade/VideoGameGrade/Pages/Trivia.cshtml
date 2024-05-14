@@ -6,11 +6,11 @@
 }
 
 <div class="centered-shaded-background">
-    <h1 class="rate-text-color pt-3">@TriviaModel.triviaGameName</h1>
-    <img src="@Html.Raw(@TriviaModel.triviaImage)" alt="Game Image" style="width: 100px; height: auto;" />
-    <br />
     <h1 class="display-4 pt-3">Game Trivia</h1>
-    <h3>Click here to add a trivia question</h3>
+    <h1 class="rate-text-color pt-3">For @TriviaModel.triviaGameName</h1>
+    <img src="@Html.Raw(@TriviaModel.triviaImage)" alt="Game Image" style="width: 400px; height: auto;" />
+    <br />
+    <h3 class="pt-3">Click here to add a trivia question</h3>
     <button class="btn btn-outline-light  m-2" onclick="toggleVisible()">Create Question</button>
 </div>
 
