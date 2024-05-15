@@ -66,7 +66,7 @@ Comment or rate your favorite game! Also, find useful information/ tips and play
 
 ### Step 4: Connect MySQL Workbench
 
-**To connect with MySQL workbench client, follow the steps below.**
+**To connect with MySQL workbench client, follow the steps below:**
   - Click the + symbol in the MySQL Connections tab to add a new connection.
   - Enter a name for the connection in the Connection name field.
   - Select Standard (TCP/IP) as the Connection Type.
@@ -101,7 +101,7 @@ Comment or rate your favorite game! Also, find useful information/ tips and play
   <img src="https://contrib.rocks/image?repo=it-sd-capstone/capstone-project-gameslayer" />
 </a>
 
- -  🧑‍🎓 *Joshua Werlein*
+ - 🧑‍🎓 *Joshua Werlein*
  - 🧑‍🎓 *Thomas Paulson*
  - 👩‍🎓 *Alyshia Kreher*
  - 🧑‍🎓 *Khizar Buck*
