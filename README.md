@@ -25,7 +25,7 @@ Comment or rate your favorite game! Also, find useful information/ tips and play
    - Download and install MySQL workbench (Version 8.0.30) from [https://dev.mysql.com/downloads/workbench/](https://dev.mysql.com/downloads/workbench/).
 
 ### Step 1: Clone the Repository
-**Then, you'll need to download the project files to your computer.**
+**Then, you'll need to download the project files to your computer:**
 
 1. Clone the repository from GitHub.
    - https://github.com/it-sd-capstone/capstone-project-gameslayer
@@ -67,16 +67,19 @@ Comment or rate your favorite game! Also, find useful information/ tips and play
 ### Step 4: Connect MySQL Workbench
 
 **To connect with MySQL workbench client, follow the steps below:**
-  - Click the + symbol in the MySQL Connections tab to add a new connection.
+  - First, obtain an SSL Certificate by following the steps at [Microsoft Build](https://learn.microsoft.com/en-us/azure/mysql/single-server/how-to-configure-ssl).
+  - Then open MySQL workbench and click the + symbol in the MySQL Connections tab to add a new connection.
   - Enter a name for the connection in the Connection name field.
   - Select Standard (TCP/IP) as the Connection Type.
   - Enter videogamegrade.mysql.database.azure.com in hostname field.
   - Enter gamegradeadmin as username and then enter your Password.
-  - Go to the SSL tab and update the Use SSL field to Require.
+  - Go to the SSL tab and update the Use SSL field to Require. 
   - In the SSL CA File field, enter the file location of the DigiCertGlobalRootCA.crt.pem file.
   - Click Test Connection to test the connection.
   - *If the connection is successful, click OK to save the connection.*
-
+    
+  - **To connect to the database from Visual Studio you will need to create a connection string:**
+    - conString = "Server=videogamegrade.mysql.database.azure.com;Uid=gamegradeadmin;Pwd=capstone2024!;SslMode=Required;"
 ## Testing ⚡
 - **To run the tests:**
   - Open xUnitTest.cs
