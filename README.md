@@ -1,17 +1,17 @@
 # capstone-project-gameslayer 🎮
 
 
-## Elevator Pitch 🛗📢
+## Elevator Pitch 🛗📣
 Comment or rate your favorite game! Also, find useful information/ tips and play some trivia! 
 
 
-## Video Description 📽️
+## Video Description 📺
 
 
 
 ## Installation 🚧
 
-### Prerequisites 🖥️
+### Prerequisites 🧑‍💻
 
 **Before you begin, ensure you have the following software installed:**
  - **Git**: 
@@ -44,9 +44,7 @@ Comment or rate your favorite game! Also, find useful information/ tips and play
   - HLSL Tools for Visual Studio
   - Live Share 2022
   - Web Live Preview
-  - Windows App SDK C# VS2022 Templates
   - ML.Net Model Builder 2022
-  - Single-Project MSIX Packaging Tools for VS 2022
   - Azure Data Lake and Stream Analytics Tools
   - Microsoft Library Manager
 
@@ -54,14 +52,30 @@ Comment or rate your favorite game! Also, find useful information/ tips and play
 
 **Make sure to install these packages using Nuget package manager on both solutions in Visual Studio:**
    - MySql.Data
+   - MySql.Data.EntityFramework
    - xunit
    - xunit.analyzers
-   - coverlet.collector
+   - Azure.Core
+   - Azure.Storage.common
+   - Azure.Storage.Blobs
    - Dapper
-   - Microsoft.Net.Test.Sdk
-   - MySqlConnector
-   - xunit.runner.visualstudio
- 
+   - BCrypt.Net-Next
+   - SendGrid
+   - Microsoft.EntityFrameworkCore
+   - Microsoft.VisualStudio.Web.CodeGeneration.Design
+
+### Step 4: Connect MySQL Workbench
+
+**To connect with MySQL workbench client, follow the steps below.**
+  - Click the + symbol in the MySQL Connections tab to add a new connection.
+  - Enter a name for the connection in the Connection name field.
+  - Select Standard (TCP/IP) as the Connection Type.
+  - Enter videogamegrade.mysql.database.azure.com in hostname field.
+  - Enter gamegradeadmin as username and then enter your Password.
+  - Go to the SSL tab and update the Use SSL field to Require.
+  - In the SSL CA File field, enter the file location of the DigiCertGlobalRootCA.crt.pem file.
+  - Click Test Connection to test the connection.
+  - *If the connection is successful, click OK to save the connection.*
 
 ## Testing ⚡
 - **To run the tests:**
@@ -82,9 +96,12 @@ Comment or rate your favorite game! Also, find useful information/ tips and play
   - *Option 2:* **Open the website directly.**
      - Open your web browser and navigate to https://videogamegrade.azurewebsites.net/
   
-## Authors 🧑‍🎓🧑‍🎓🧑‍🎓👩‍🎓
+## Authors ✍️ 
+<a href="https://github.com/it-sd-capstone/capstone-project-gameslayer/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=it-sd-capstone/capstone-project-gameslayer" />
+</a>
 
-- 🌟 Khizar Buck
-- 🌟 Joshua Werlein
-- 🌟 Thomas Paulson
-- 🌟 Alyshia Kreher
+ -  🧑‍🎓 *Joshua Werlein*
+ - 🧑‍🎓 *Thomas Paulson*
+ - 👩‍🎓 *Alyshia Kreher*
+ - 🧑‍🎓 *Khizar Buck*
