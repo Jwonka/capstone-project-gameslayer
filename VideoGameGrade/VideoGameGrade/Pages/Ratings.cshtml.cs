@@ -257,7 +257,7 @@ namespace VideoGameGrade.Pages
         private bool AddComment(string comment, int gameId, int rating, string rateTitle)
         {
             // Validate the comment to allow letters, numbers, and punctuation
-            if (!Regex.IsMatch(comment, @"^[a-zA-Z0-9\s.,!?-]*$"))
+            if (!Regex.IsMatch(comment, @"^[a-zA-Z0-9\s.,'!?-]*$"))
             {
                 TempData["message"] = "Comments can only contain letters, numbers, and punctuation.";
                 return false;
