@@ -2,11 +2,11 @@
 
 
 ## Elevator Pitch 🛗📣
-Comment or rate your favorite game! Also, find useful information/ tips and play some trivia! 
+**Here at Video Game Grade we are a passionate team from unique backgrounds that share a love of gaming. Our website gives all gamers an opportunity to come together and share their favorite game as well as contribute trivia questions for those coming in after them. Our website also allows the user to create their own page where they can keep track of what they have contributed. So do you also share our love of gaming? We invite you to spend some time and look around our website and hope that you enjoy and maybe learn something new!**
 
 
 ## Video Description 📺
-
+https://www.youtube.com/watch?v=RHT_2YwHT-k
 
 
 ## Installation 🚧
