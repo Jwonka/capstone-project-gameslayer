@@ -78,8 +78,6 @@ https://www.youtube.com/watch?v=RHT_2YwHT-k
   - Click Test Connection to test the connection.
   - *If the connection is successful, click OK to save the connection.*
     
-**To connect to the database from Visual Studio you will need to create a connection string:**
-   - conString = "Server=videogamegrade.mysql.database.azure.com;Uid=gamegradeadmin;Pwd=capstone2024!;SslMode=Required;"
 ## Testing ⚡
 - **To run the tests:**
   - Open xUnitTest.cs
