@@ -104,7 +104,7 @@ Comment or rate your favorite game! Also, find useful information/ tips and play
   <img src="https://contrib.rocks/image?repo=it-sd-capstone/capstone-project-gameslayer" />
 </a>
 
-🧑‍🎓 *Joshua Werlein*
-🧑‍🎓 *Thomas Paulson*
-👩‍🎓 *Alyshia Kreher*
-🧑‍🎓 *Khizar Buck*
+- 🧑‍🎓 *Joshua Werlein*
+- 🧑‍🎓 *Thomas Paulson*
+- 👩‍🎓 *Alyshia Kreher*
+- 🧑‍🎓 *Khizar Buck*
