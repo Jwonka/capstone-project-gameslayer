@@ -56,8 +56,8 @@ body {
 
 .close {
     position: absolute;
-    top: -18px;
-    right: 9px;
+    top: -16px !important;
+    right: 5px !important;
     font-size: 55px;
     cursor: pointer;
 }
@@ -147,9 +147,9 @@ body {
     }
 
     .close {
-        top: -25px;
-        right: -7px; 
-        font-size: 45px; 
+        top: -23px !important;
+        right: -7.2px !important;
+        font-size: 35px;
     }
 
     video {
@@ -168,9 +168,9 @@ body {
     }
 
     .close {
-        top: -25px;
-        right: -9px;
-        font-size: 45px; 
+        top: -19.6px !important;
+        right: -6.5px !important;
+        font-size: 40px;
     }
 }
 
