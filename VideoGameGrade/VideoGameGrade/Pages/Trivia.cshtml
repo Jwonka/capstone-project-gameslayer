@@ -4,17 +4,22 @@
 @{
     ViewData["Title"] = "Game Trivia!";
 }
+@if (User.Identity.IsAuthenticated) 
+{
+    <div class="centered-shaded-background">
+        <h1 class="display-4 pt-3">Game Trivia</h1>
+        <h1 class="rate-text-color pt-3">For @TriviaModel.triviaGameName</h1>
+        <img class="pic" src="@Html.Raw(@TriviaModel.triviaImage)" alt="Game Image" style="width: 400px; height: auto;" />
+        <br />
+        <h3 class="pt-3">Click here to add a trivia question</h3>
+        <button class="btn btn-outline-light  m-2" onclick="toggleVisible()">Create Question</button>
+    </div>
 
-<div class="centered-shaded-background">
-    <h1 class="display-4 pt-3">Game Trivia</h1>
-    <h1 class="rate-text-color pt-3">For @TriviaModel.triviaGameName</h1>
-    <img class="pic" src="@Html.Raw(@TriviaModel.triviaImage)" alt="Game Image" style="width: 400px; height: auto;" />
-    <br />
-    <h3 class="pt-3">Click here to add a trivia question</h3>
-    <button class="btn btn-outline-light  m-2" onclick="toggleVisible()">Create Question</button>
-</div>
-
-
+}
+else
+{
+    Response.Redirect("/GameCollection");
+}
 
 <!-- create a new trivia question form-->
 <div id="question" style="display: none;" class="centered-shaded-background">

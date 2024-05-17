@@ -3,79 +3,85 @@
 @{
     ViewData["Title"] = "Rate your favorite games!";
 }
-
-<div class="centered-shaded-background">
-    <form method="post" enctype="multipart/form-data">
-        @Html.AntiForgeryToken()
-        <div class="text-center">
-            <h1 class="display-4 pt-3">Game Center</h1>
-            <br />
-            <h1 class="rate-text-color pb-3">Rate @Model.rateTitle?</h1>
-            <img class="pic" src="@Html.Raw(Model.rateImage)" alt="Game Image" style="width: 400px; height: auto;" />
-            <br />
-            <br />
-            <button type="submit" class="btn btn-outline-success btn-group-sm m-2" name="addRating" id="plus" value="add">👍</button>
-            <button type="submit" class="btn btn-outline-danger btn-group-sm m-2" name="removeRating" id="minus" value="remove">👎</button>
-            <br />
-            <br />
-        </div>
-
-        @if (TempData["message"] != null)
-        {   // Success message or error messages
-            <div class="rate-text-color">
-                <div class="display-6">
-                    <h1>@TempData["message"]</h1>
-                </div>
+@if (User.Identity.IsAuthenticated)
+{
+    <div class="centered-shaded-background">
+        <form method="post" enctype="multipart/form-data">
+            @Html.AntiForgeryToken()
+            <div class="text-center">
+                <h1 class="display-4 pt-3">Game Center</h1>
+                <br />
+                <h1 class="rate-text-color pb-3">Rate @Model.rateTitle?</h1>
+                <img class="pic" src="@Html.Raw(Model.rateImage)" alt="Game Image" style="width: 400px; height: auto;" />
+                <br />
+                <br />
+                <button type="submit" class="btn btn-outline-success btn-group-sm m-2" name="addRating" id="plus" value="add">👍</button>
+                <button type="submit" class="btn btn-outline-danger btn-group-sm m-2" name="removeRating" id="minus" value="remove">👎</button>
+                <br />
                 <br />
             </div>
-        }
-        else
-        {   // Heading to display current rating of a game
-            <div class="rate-text-color">
-                <h3 class="display-6">@Model.rateTitle currently has a rating of @Model.rating.ToString().</h3>
-            </div>
-            <br />
-        }
 
-        @if (string.IsNullOrEmpty(Model.gameComment))
-        {   // Error message for games without comments
-            <div class="header-rate-text-color">
-                <div class="display-6">
-                    <h3 class="display-6">@Model.rateTitle does not have any comments.</h3>
+            @if (TempData["message"] != null)
+            {   // Success message or error messages
+                <div class="rate-text-color">
+                    <div class="display-6">
+                        <h1>@TempData["message"]</h1>
+                    </div>
                     <br />
                 </div>
-            </div>
-        }
-        else
-        {   // Normal heading
-            <div class="rate-text-color">
-                <h3 class="display-6">Add another tip or trick for @Model.rateTitle?</h3>
-                <br />
-            </div>
-        }
-
-        <div class="text-center">
-            <div row mb-3>
-                <div class="offset-sm-1 col-lg-10 d-grid p-1">
-                    <input type="Text" class="form-control text-black me-2 pe-2" name="comment" id="comment" placeholder="Enter your tips or tricks here." autofocus />
+            }
+            else
+            {   // Heading to display current rating of a game
+                <div class="rate-text-color">
+                    <h3 class="display-6">@Model.rateTitle currently has a rating of @Model.rating.ToString().</h3>
                 </div>
-                <button class="btn btn-primary text-white m-3 b-4" name="submit" value="submit" id="submit">Submit</button>
-            </div>
-        </div>
+                <br />
+            }
 
-        @foreach (var comment in Model.ratings.OrderByDescending(c => c.rateID))
-        {   // Display available comments
-            @if (comment.gameId == @Model.gameId)
-            {
-                @if (!string.IsNullOrEmpty(comment.gameComment) && !comment.gameComment.Equals(""))
-                {
-                    <div class="rate-text-color pb-3">
-                        <br />
-                        <label class="rate-text-color"><img class="m-2" src="@Html.Raw(Model.rateImage)" alt="Game Image" style="width: 100px; height: auto;" /><br />@comment.gameComment</label>
+            @if (string.IsNullOrEmpty(Model.gameComment))
+            {   // Error message for games without comments
+                <div class="header-rate-text-color">
+                    <div class="display-6">
+                        <h3 class="display-6">@Model.rateTitle does not have any comments.</h3>
                         <br />
                     </div>
+                </div>
+            }
+            else
+            {   // Normal heading
+                <div class="rate-text-color">
+                    <h3 class="display-6">Add another tip or trick for @Model.rateTitle?</h3>
+                    <br />
+                </div>
+            }
+
+            <div class="text-center">
+                <div row mb-3>
+                    <div class="offset-sm-1 col-lg-10 d-grid p-1">
+                        <input type="Text" class="form-control text-black me-2 pe-2" name="comment" id="comment" placeholder="Enter your tips or tricks here." autofocus />
+                    </div>
+                    <button class="btn btn-primary text-white m-3 b-4" name="submit" value="submit" id="submit">Submit</button>
+                </div>
+            </div>
+
+            @foreach (var comment in Model.ratings.OrderByDescending(c => c.rateID))
+            {   // Display available comments
+                @if (comment.gameId == @Model.gameId)
+                {
+                    @if (!string.IsNullOrEmpty(comment.gameComment) && !comment.gameComment.Equals(""))
+                    {
+                        <div class="rate-text-color pb-3">
+                            <br />
+                            <label class="rate-text-color"><img class="m-2" src="@Html.Raw(Model.rateImage)" alt="Game Image" style="width: 100px; height: auto;" /><br />@comment.gameComment</label>
+                            <br />
+                        </div>
+                    }
                 }
             }
-        }
-    </form>
-</div>
+        </form>
+    </div>
+}
+else
+{
+    Response.Redirect("/GameCollection");
+}
