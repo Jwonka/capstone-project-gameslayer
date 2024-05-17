@@ -141,14 +141,14 @@ body {
     .popup-content {
         width: 85%;
         height: 85%;
-        padding: 4%;
+        padding: 5.5% !important;
         margin-left: auto;
         margin-right: auto;
     }
 
     .close {
         top: -23px !important;
-        right: -7.2px !important;
+        right: -5.8px !important;
         font-size: 35px;
     }
 
@@ -169,7 +169,7 @@ body {
 
     .close {
         top: -19.6px !important;
-        right: -6.5px !important;
+        right: -4.9px !important;
         font-size: 40px;
     }
 }
